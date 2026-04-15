@@ -1,0 +1,67 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<title id="title">Redwood Digital social preview</title>
+<desc id="desc">Custom apps for local businesses in Frederick, MD. Built in days, not months.</desc>
+
+<!-- Background -->
+<rect width="1200" height="630" fill="#faf9f7"/>
+
+<!-- Soft accent glows -->
+<circle cx="180" cy="120" r="240" fill="url(#glowTL)"/>
+<circle cx="1060" cy="540" r="280" fill="url(#glowBR)"/>
+
+<!-- Inner card -->
+<rect x="78" y="74" width="1044" height="482" rx="32" fill="#ffffff" stroke="#e8e4df" stroke-width="2"/>
+
+<!-- Brand mark: rounded square with R -->
+<g transform="translate(132 130)">
+  <rect width="64" height="64" rx="14" fill="#b44a2d"/>
+  <text x="32" y="46" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="800" fill="#ffffff" text-anchor="middle">R</text>
+</g>
+
+<!-- Wordmark -->
+<text x="216" y="178" fill="#3d3a36" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="-0.5">Redwood Digital</text>
+
+<!-- Headline -->
+<text x="132" y="290" fill="#3d3a36" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="800" letter-spacing="-2">Custom apps,</text>
+<text x="132" y="362" fill="#b44a2d" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="800" letter-spacing="-2">built in days.</text>
+
+<!-- Subtitle -->
+<text x="132" y="424" fill="#7a756d" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="500">Local businesses in Frederick, MD.</text>
+
+<!-- Pill: location dot -->
+<g transform="translate(132 470)">
+  <rect width="240" height="44" rx="22" fill="#fff5ef" stroke="#e8c5b6" stroke-width="1.5"/>
+  <circle cx="26" cy="22" r="5" fill="#b44a2d"/>
+  <text x="42" y="29" fill="#b44a2d" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="0.5">FREDERICK, MARYLAND</text>
+</g>
+
+<!-- URL bottom -->
+<text x="132" y="528" fill="#a09a91" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="500">redwooddigitalfrederick.com</text>
+
+<!-- Decorative dotted grid pattern (right side) -->
+<g transform="translate(800 200)" opacity="0.55">
+  <g fill="#e8c5b6">
+    <circle cx="0" cy="0" r="3"/><circle cx="32" cy="0" r="3"/><circle cx="64" cy="0" r="3"/><circle cx="96" cy="0" r="3"/><circle cx="128" cy="0" r="3"/><circle cx="160" cy="0" r="3"/><circle cx="192" cy="0" r="3"/>
+    <circle cx="0" cy="32" r="3"/><circle cx="32" cy="32" r="3"/><circle cx="64" cy="32" r="3"/><circle cx="96" cy="32" r="3"/><circle cx="128" cy="32" r="3"/><circle cx="160" cy="32" r="3"/><circle cx="192" cy="32" r="3"/>
+    <circle cx="0" cy="64" r="3"/><circle cx="32" cy="64" r="3"/><circle cx="64" cy="64" r="3"/><circle cx="96" cy="64" r="3"/><circle cx="128" cy="64" r="3"/><circle cx="160" cy="64" r="3"/><circle cx="192" cy="64" r="3"/>
+    <circle cx="0" cy="96" r="3"/><circle cx="32" cy="96" r="3"/><circle cx="64" cy="96" r="3"/><circle cx="96" cy="96" r="3"/><circle cx="128" cy="96" r="3"/><circle cx="160" cy="96" r="3"/><circle cx="192" cy="96" r="3"/>
+    <circle cx="0" cy="128" r="3"/><circle cx="32" cy="128" r="3"/><circle cx="64" cy="128" r="3"/><circle cx="96" cy="128" r="3"/><circle cx="128" cy="128" r="3"/><circle cx="160" cy="128" r="3"/><circle cx="192" cy="128" r="3"/>
+    <circle cx="0" cy="160" r="3"/><circle cx="32" cy="160" r="3"/><circle cx="64" cy="160" r="3"/><circle cx="96" cy="160" r="3"/><circle cx="128" cy="160" r="3"/><circle cx="160" cy="160" r="3"/><circle cx="192" cy="160" r="3"/>
+  </g>
+  <!-- Highlighted accent dots -->
+  <circle cx="64" cy="64" r="5" fill="#b44a2d"/>
+  <circle cx="128" cy="96" r="5" fill="#b44a2d"/>
+  <circle cx="96" cy="128" r="5" fill="#b44a2d"/>
+</g>
+
+<defs>
+  <radialGradient id="glowTL" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(180 120) rotate(90) scale(240)">
+    <stop stop-color="#b44a2d" stop-opacity="0.10"/>
+    <stop offset="1" stop-color="#b44a2d" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="glowBR" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1060 540) rotate(90) scale(280)">
+    <stop stop-color="#b44a2d" stop-opacity="0.08"/>
+    <stop offset="1" stop-color="#b44a2d" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+</svg>
