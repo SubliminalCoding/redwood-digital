@@ -1,0 +1,68 @@
+# Netlify _redirects file
+#
+# 410 Gone responses for common probe paths used by automated scanners.
+# Returning 410 (instead of letting them 404) tells well-behaved crawlers
+# the resource will never exist, so they remove it from their lists.
+# It also keeps the requests out of normal analytics by category.
+#
+# The trailing `!` forces the redirect even if a matching file is ever
+# added later — defense against accidentally exposing one of these paths.
+# Destination is required by Netlify syntax but ignored for 4xx responses.
+
+# ──── WordPress probes (most common) ────────────────────────────────
+/wp-admin           /  410!
+/wp-admin/*         /  410!
+/wp-login.php       /  410!
+/wp-content         /  410!
+/wp-content/*       /  410!
+/wp-includes        /  410!
+/wp-includes/*      /  410!
+/wp-config.php*     /  410!
+/wp-cron.php        /  410!
+/wp-json            /  410!
+/wp-json/*          /  410!
+/xmlrpc.php         /  410!
+/wordpress          /  410!
+/wordpress/*        /  410!
+
+# ──── Other CMS probes ──────────────────────────────────────────────
+/joomla             /  410!
+/joomla/*           /  410!
+/drupal             /  410!
+/drupal/*           /  410!
+/magento            /  410!
+/magento/*          /  410!
+
+# ──── Generic admin / database tooling probes ───────────────────────
+/admin              /  410!
+/admin/*            /  410!
+/administrator      /  410!
+/administrator/*    /  410!
+/phpmyadmin         /  410!
+/phpmyadmin/*       /  410!
+/pma                /  410!
+/pma/*              /  410!
+/myadmin            /  410!
+/myadmin/*          /  410!
+
+# ──── Sensitive file probes ─────────────────────────────────────────
+/.env               /  410!
+/.env.*             /  410!
+/.git               /  410!
+/.git/*             /  410!
+/.gitignore         /  410!
+/.svn/*             /  410!
+/.htaccess          /  410!
+/.htpasswd          /  410!
+/vendor             /  410!
+/vendor/*           /  410!
+
+# ──── Backup/dump file probes ───────────────────────────────────────
+/*.sql              /  410!
+/*.bak              /  410!
+/backup             /  410!
+/backup/*           /  410!
+/backups            /  410!
+/backups/*          /  410!
+/dump.sql           /  410!
+/database.sql       /  410!
