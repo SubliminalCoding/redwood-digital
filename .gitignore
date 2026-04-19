@@ -1,0 +1,20 @@
+
+# Business strategy files (not for public deploy)
+outreach/
+targets/
+templates/
+proposals/
+portfolios/
+sales-pipeline.md
+pricing-strategy.md
+business-ideology.md
+EXECUTION-PLAN.md
+lead-tracking.md
+outreach-messages.md
+outreach-message.txt
+test-email.md
+de-slopped-email.md
+enhanced-email.md
+_preview.html
+.opencode/
+screenshots/
