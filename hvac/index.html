@@ -30,44 +30,65 @@
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  --bg: #faf9f7; --bg-card: #ffffff; --border: #e8e4df;
-  --text: #3d3a36; --text-dim: #6a655d;
+  --bg: #f4eee2; --bg-card: #fbf7ef; --bg-card-hover: #ede5d2; --border: #e8e4df;
+  --text: #3d3a36; --text-dim: #5f5a52;
   --accent: #b44a2d; --accent-light: #c2654a; --green: #2d8a68;
   --radius: 12px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --shadow-sm: 0 1px 2px rgba(20,18,14,0.04), 0 2px 8px rgba(20,18,14,0.04);
   --shadow-md: 0 4px 12px rgba(20,18,14,0.06), 0 12px 32px rgba(20,18,14,0.08);
 }
 body { font-family: 'Inter', -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { color: var(--accent-light); }
 .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
-.nav { position: sticky; top: 0; z-index: 100; background: rgba(250,249,247,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 16px 0; }
+.nav { position: sticky; top: 0; z-index: 100; background: rgba(244, 238, 226,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 16px 0; }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
 .nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--text); display: flex; align-items: center; gap: 8px; }
 .nav-logo svg { width: 28px; height: 28px; }
 
-.hero { padding: 100px 0 60px; }
-.hero h1 { font-size: 2.6rem; font-weight: 800; line-height: 1.15; margin-bottom: 20px; }
+.hero { padding: 80px 0 60px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 56px; align-items: center; }
+@media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; gap: 36px; } }
+.hero-badge { display: inline-block; padding: 6px 14px; background: rgba(180, 74, 45, 0.08); border: 1px solid rgba(180, 74, 45, 0.2); border-radius: 100px; font-size: 0.8rem; color: var(--accent); margin-bottom: 18px; }
+.hero h1 { font-size: clamp(2rem, 5.2vw, 3rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.025em; color: #1a1a1a; margin-bottom: 18px; }
+.hero h1 em { font-style: normal; background: linear-gradient(135deg, var(--accent), var(--accent-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .hero .hl { color: var(--accent); }
-.hero p.sub { font-size: 1.15rem; color: var(--text-dim); max-width: 600px; line-height: 1.7; margin-bottom: 32px; }
+.hero p.sub { font-size: 1.1rem; color: var(--text-dim); max-width: 560px; line-height: 1.65; margin-bottom: 28px; }
+.hero-visual { border-radius: 18px; overflow: hidden; aspect-ratio: 3 / 4; box-shadow: 0 10px 30px rgba(20, 18, 14, 0.12), 0 30px 80px -20px rgba(180, 74, 45, 0.2); transform: rotate(0.6deg); transition: transform 0.6s var(--ease-out); }
+.hero-visual:hover { transform: rotate(0deg) translateY(-2px); }
+.hero-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (max-width: 860px) { .hero-visual { max-width: 420px; margin: 0 auto; transform: none; } }
 
-.btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 32px; background: var(--accent); color: #fff; font-weight: 600; font-size: 1rem; border-radius: var(--radius); transition: all 0.2s; text-decoration: none; }
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 32px; background: var(--accent); color: #fff; font-weight: 600; font-size: 1rem; border-radius: var(--radius); transition: transform 0.25s var(--ease-spring), background 0.2s, box-shadow 0.25s; text-decoration: none; }
 .btn:hover { background: var(--accent-light); color: #fff; transform: translateY(-1px); box-shadow: var(--shadow-md); }
 .btn-outline { background: transparent; color: var(--accent); border: 2px solid var(--accent); }
 .btn-outline:hover { background: var(--accent); color: #fff; }
 .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
 
-.problems { padding: 60px 0; }
+.sec-label { text-transform: uppercase; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.18em; color: var(--accent); display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.sec-label::before { content: ''; width: 22px; height: 2px; background: var(--accent); border-radius: 2px; opacity: 0.5; }
+.sec-title { font-size: clamp(1.6rem, 3.2vw, 2rem); font-weight: 700; letter-spacing: -0.02em; color: #1a1a1a; line-height: 1.18; margin-bottom: 12px; }
+.sec-sub { color: var(--text-dim); font-size: 1rem; line-height: 1.65; max-width: 56ch; margin-bottom: 32px; }
+
+.problems { padding: 72px 0; background: var(--bg-card-hover); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .problems h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 32px; }
 .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
 .problem-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; }
-.problem-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.problem-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+.problem-card h3 svg { width: 20px; height: 20px; color: var(--accent); flex-shrink: 0; stroke-width: 2; }
 .problem-card p { font-size: 0.95rem; color: var(--text-dim); line-height: 1.6; }
 
 .solution { padding: 60px 0; }
 .solution h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 16px; }
 .solution > .container > p { font-size: 1.05rem; color: var(--text-dim); margin-bottom: 32px; }
 .package-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-.package { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; }
+.package { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out); }
+.package:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.topo-divider { display: block; width: 100%; height: 36px; color: var(--accent); opacity: 0.22; pointer-events: none; }
+.topo-divider svg { display: block; width: 100%; height: 100%; }
+.topo-divider.flip svg { transform: scaleY(-1); }
 .package.featured { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
 .package h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
 .package .price { font-size: 1.6rem; font-weight: 800; color: var(--accent); margin-bottom: 16px; }
@@ -105,34 +126,43 @@ footer a { color: var(--text-dim); }
 
 <section class="hero">
   <div class="container">
-    <h1>HVAC companies in Frederick:<br>get found, <span class="hl">get booked.</span></h1>
-    <p class="sub">Your customers are searching "AC repair Frederick MD" right now. If they can't find you — or can't reach you after hours — they're calling your competitor instead. We fix that.</p>
-    <div class="btn-group">
-      <a href="/free-audit.html" class="btn">Get Your Free Audit</a>
-      <a href="tel:+12272535980" class="btn btn-outline">Call (227) 253-5980</a>
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge">Frederick, MD HVAC</div>
+        <h1>The 10pm AC call has to <em>find you first.</em></h1>
+        <p class="sub">Your customers are searching "AC repair Frederick MD" right now. If they can't find you, or can't reach you after hours, they call your competitor. We fix that in a week, for $99.</p>
+        <div class="btn-group">
+          <a href="/free-audit.html" class="btn">Get Your Free Audit</a>
+          <a href="tel:+12272535980" class="btn btn-outline">Call (227) 253-5980</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="/images/outcome-home-services.jpg" alt="Home services technician on a homeowner's porch at golden hour, phone to ear, service van in the driveway" loading="eager" fetchpriority="high" width="933" height="1400">
+      </div>
     </div>
   </div>
 </section>
 
 <section class="problems">
   <div class="container">
-    <h2>Sound familiar?</h2>
+    <div class="sec-label">The leak in your funnel</div>
+    <h2 class="sec-title">Sound familiar?</h2>
     <div class="problem-grid">
       <div class="problem-card">
-        <h3>🔇 Missed after-hours calls</h3>
-        <p>Your AC breaks at 10pm. The homeowner Googles "emergency AC repair Frederick." They call you — voicemail. They call the next guy. You never knew they called.</p>
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.42-2.7"/><path d="M5 5a2 2 0 0 1 2-2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L11 11"/><line x1="22" y1="2" x2="2" y2="22"/></svg>Missed after-hours calls</h3>
+        <p>Your AC breaks at 10pm. The homeowner Googles "emergency AC repair Frederick." They call you. Voicemail. They call the next guy. You never knew they called.</p>
       </div>
       <div class="problem-card">
-        <h3>👻 Invisible on Google</h3>
-        <p>You do great work, but when people search "HVAC Frederick MD," you're not in the top 3. The companies that show up aren't better — they just have better websites.</p>
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>Invisible on Google</h3>
+        <p>You do great work, but when people search "HVAC Frederick MD," you're not in the top 3. The companies that show up aren't better. They just have better websites.</p>
       </div>
       <div class="problem-card">
-        <h3>📱 Website doesn't convert</h3>
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9l5 12 1.774-5.226L21 14 9 9z"/><path d="M16.071 16.071l4.243 4.243"/><path d="M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>Website doesn't convert</h3>
         <p>Someone lands on your site. There's no clear "Get a Free Estimate" button. No chat. No way to book online. They hit the back button and try someone else.</p>
       </div>
       <div class="problem-card">
-        <h3>⭐ No review strategy</h3>
-        <p>You have 12 Google reviews. Your competitor has 87. Guess who the homeowner trusts? Reviews aren't optional anymore — they're the new word of mouth.</p>
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>No review strategy</h3>
+        <p>You have 12 Google reviews. Your competitor has 87. Guess who the homeowner trusts? Reviews aren't optional anymore. They're the new word of mouth.</p>
       </div>
     </div>
   </div>
@@ -140,8 +170,9 @@ footer a { color: var(--text-dim); }
 
 <section class="solution">
   <div class="container">
-    <h2>What we build for HVAC companies</h2>
-    <p>Everything your business needs to show up, capture leads, and book more jobs — built by a local developer, not a faceless agency.</p>
+    <div class="sec-label">What we build</div>
+    <h2 class="sec-title">Three packages, no sales call required</h2>
+    <p class="sec-sub">Everything your HVAC business needs to show up, capture leads, and book more jobs. Built by a local developer, not a faceless agency.</p>
 
     <div class="package-grid">
       <div class="package">
@@ -185,6 +216,8 @@ footer a { color: var(--text-dim); }
     </div>
   </div>
 </section>
+
+<div class="topo-divider flip" aria-hidden="true"><svg viewBox="0 0 1200 36" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 8 Q 150 -2 300 6 T 600 8 T 900 8 T 1200 6"/><path d="M0 18 Q 150 8 300 16 T 600 18 T 900 18 T 1200 16"/><path d="M0 28 Q 150 18 300 26 T 600 28 T 900 28 T 1200 26"/></svg></div>
 
 <section class="cta-section">
   <div class="container">
