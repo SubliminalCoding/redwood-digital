@@ -2724,5 +2724,115 @@ function toggleFaq(btn) {
 </script>
 <!-- ─────────────────────────────────────────────────────────────────── -->
 
+<!-- ─── Chat Widget ──────────────────────────────────────────────────
+     Lightweight lead-capture chat bubble. No third-party dependencies.
+     Collects name + question → opens mailto with pre-filled subject.
+     Replace with Tidio/Intercom/custom chatbot when ready.
+-->
+<style>
+.chat-bubble {
+  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; box-shadow: 0 4px 16px rgba(180,74,45,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none;
+}
+.chat-bubble:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(180,74,45,0.4); }
+.chat-bubble svg { width: 28px; height: 28px; }
+.chat-panel {
+  position: fixed; bottom: 96px; right: 24px; z-index: 999;
+  width: 340px; max-width: calc(100vw - 48px);
+  background: #fff; border: 1px solid var(--border); border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  display: none; flex-direction: column; overflow: hidden;
+}
+.chat-panel.open { display: flex; }
+.chat-header {
+  background: var(--accent); color: #fff; padding: 16px 20px;
+  font-weight: 600; font-size: 0.95rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.chat-header button { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem; line-height: 1; }
+.chat-body { padding: 20px; }
+.chat-body p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 16px; }
+.chat-body input, .chat-body textarea {
+  width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px;
+  font-family: inherit; font-size: 0.9rem; margin-bottom: 10px; resize: none;
+}
+.chat-body input:focus, .chat-body textarea:focus { outline: none; border-color: var(--accent); }
+.chat-body .chat-btn {
+  width: 100%; padding: 12px; background: var(--accent); color: #fff;
+  font-weight: 600; font-size: 0.9rem; border: none; border-radius: 8px;
+  cursor: pointer; transition: background 0.2s;
+}
+.chat-body .chat-btn:hover { background: var(--accent-light); }
+.chat-success { text-align: center; padding: 24px 20px; }
+.chat-success svg { color: var(--green); margin-bottom: 12px; }
+.chat-success p { font-size: 0.95rem; color: var(--text); line-height: 1.6; }
+</style>
+
+<button class="chat-bubble" id="chatBubble" aria-label="Chat with us">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <span>👋 Quick question?</span>
+    <button id="chatClose" aria-label="Close chat">&times;</button>
+  </div>
+  <div class="chat-body" id="chatForm">
+    <p>Ask anything about our services, or leave your info and we'll get back to you within a few hours.</p>
+    <input type="text" id="chatName" placeholder="Your name" required>
+    <input type="email" id="chatEmail" placeholder="Email or phone number" required>
+    <textarea id="chatMsg" rows="3" placeholder="What can we help with?"></textarea>
+    <button class="chat-btn" id="chatSend">Send Message</button>
+  </div>
+  <div class="chat-success" id="chatSuccess" style="display:none;">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    <p><strong>Message sent!</strong><br>We'll get back to you within a few hours. If it's urgent, call <a href="tel:+12272535980">(227) 253-5980</a>.</p>
+  </div>
+</div>
+
+<script>
+(function() {
+  var bubble = document.getElementById('chatBubble');
+  var panel = document.getElementById('chatPanel');
+  var closeBtn = document.getElementById('chatClose');
+  var sendBtn = document.getElementById('chatSend');
+  var form = document.getElementById('chatForm');
+  var success = document.getElementById('chatSuccess');
+
+  bubble.addEventListener('click', function() {
+    panel.classList.toggle('open');
+    if (window.__gaEnabled && typeof gtag === 'function') {
+      gtag('event', 'chat_open');
+    }
+  });
+  closeBtn.addEventListener('click', function() { panel.classList.remove('open'); });
+
+  sendBtn.addEventListener('click', function() {
+    var name = document.getElementById('chatName').value.trim();
+    var email = document.getElementById('chatEmail').value.trim();
+    var msg = document.getElementById('chatMsg').value.trim();
+    if (!name || !email) { alert('Please enter your name and email/phone.'); return; }
+
+    // Send via mailto (upgrade to API endpoint when ready)
+    var subject = encodeURIComponent('Chat lead from ' + name);
+    var body = encodeURIComponent('Name: ' + name + '\nContact: ' + email + '\nMessage: ' + msg);
+    window.open('mailto:matthew@redwooddigitalfrederick.com?subject=' + subject + '&body=' + body, '_blank');
+
+    form.style.display = 'none';
+    success.style.display = 'block';
+
+    if (window.__gaEnabled && typeof gtag === 'function') {
+      gtag('event', 'chat_submit', { name: name });
+    }
+  });
+})();
+</script>
+<!-- ─────────────────────────────────────────────────────────────────── -->
+
 </body>
 </html>
