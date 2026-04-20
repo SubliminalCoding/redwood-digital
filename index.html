@@ -1932,6 +1932,232 @@ footer p {
 /* Prevent any horizontal overflow */
 img, svg, video, canvas, iframe { max-width: 100%; }
 
+
+
+/* ===== v2 ADDITIONS (port) ===== */
+/* =========================================================================
+   01-css-additions.css
+   APPEND this block to the END of the existing inline <style>...</style>
+   in redwood-digital/index.html. Pure additions — nothing removed.
+   Uses existing CSS variables (--accent, --bg, etc.) so no token changes.
+   ========================================================================= */
+
+/* -------------------- HERO v2 overrides -------------------- */
+.hero.hero-v2 { padding: 112px 0 72px; min-height: 0; }
+.hero-v2 .hero-v2-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+  gap: 56px; align-items: center;
+}
+@media (max-width: 960px) { .hero-v2 .hero-v2-grid { grid-template-columns: 1fr; gap: 40px; } }
+.hero-v2 h1 { font-size: clamp(2.2rem, 5.4vw, 3.5rem); line-height: 1.06; }
+.hero-v2 .accent-gradient-text {
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* Founder-forward photo slot */
+.hero-v2 .photo-slot {
+  position: relative; aspect-ratio: 4/5; border-radius: 20px; overflow: hidden;
+  box-shadow: 0 1px 2px rgba(20,18,14,.06), 0 8px 24px rgba(20,18,14,.08),
+              0 30px 80px -20px rgba(180,74,45,.18), 0 0 0 1px rgba(20,18,14,.04);
+}
+.hero-v2 .photo-slot img { width:100%; height:100%; object-fit:cover; display:block; filter: saturate(1.05); }
+.hero-v2 .photo-slot::after { content:''; position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(20,18,14,0) 55%, rgba(20,18,14,.4) 100%); pointer-events:none; }
+.photo-placeholder-ribbon {
+  position:absolute; top:14px; left:14px; padding:5px 10px;
+  background: rgba(20,18,14,.62); backdrop-filter: blur(8px);
+  color:#f4eee2; font-size:.7rem; font-family: ui-monospace, Menlo, monospace;
+  border-radius: 100px; border:1px solid rgba(244,238,226,.22); letter-spacing:.02em; z-index:2;
+}
+
+/* Booking-confirm card floating over photo */
+.booking-confirm-card {
+  position:absolute; left:-24px; bottom:40px; width:260px;
+  padding:16px 18px 18px; background:#fbf7ef; border-radius:14px;
+  border:1px solid rgba(20,18,14,.08);
+  box-shadow: 0 12px 32px rgba(20,18,14,.18), 0 2px 8px rgba(20,18,14,.06);
+  z-index:3; transform: rotate(-2deg);
+}
+@media (max-width: 960px) { .booking-confirm-card { left:16px; bottom:16px; } }
+.bcc-status { display:flex; align-items:center; gap:8px;
+  font-size:.72rem; color:#5f5a52; font-family: ui-monospace, Menlo, monospace; margin-bottom:10px; }
+.bcc-dot { width:7px; height:7px; background:#2d8a68; border-radius:50%;
+  box-shadow: 0 0 0 3px rgba(45,138,104,.22); }
+.bcc-line { font-size:.88rem; color:#5f5a52; line-height:1.4; }
+.bcc-line strong { color:#1a1a1a; font-weight:700; }
+.bcc-time { font-size:1.5rem; font-weight:800; color:#1a1a1a;
+  letter-spacing:-.02em; line-height:1; margin:4px 0 8px; }
+.bcc-meta { font-size:.76rem; color:#5f5a52; line-height:1.4;
+  padding-top:8px; border-top:1px solid rgba(20,18,14,.08); }
+
+/* Three-lane sub-cards */
+.lanes-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:48px; }
+@media (max-width: 860px) { .lanes-grid { grid-template-columns:1fr; } }
+.lane-card { display:block; text-decoration:none; background:var(--bg-card);
+  border:1px solid var(--border); border-radius:14px; padding:22px 22px 20px;
+  box-shadow: var(--shadow-sm); color:inherit; position:relative;
+  transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out),
+              border-color .3s, background .3s; }
+.lane-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md);
+  border-color:rgba(180,74,45,.3); background:var(--bg-card-hover); }
+.lane-card.featured { border-color:var(--accent); background:#fbf7ef;
+  box-shadow: 0 2px 6px rgba(180,74,45,.12), 0 14px 36px -8px rgba(180,74,45,.22);
+  transform: translateY(-8px); }
+.lane-card.featured:hover { transform: translateY(-12px); }
+.lane-anchor-pin { position:absolute; top:-10px; left:22px; padding:3px 10px;
+  background:var(--accent); color:#fff; font-size:.68rem; font-weight:600;
+  letter-spacing:.06em; text-transform:uppercase; border-radius:100px; }
+.lane-price { font-size:.72rem; color:var(--text-dim);
+  font-family: ui-monospace, Menlo, monospace; letter-spacing:.02em; margin-bottom:10px; }
+.lane-card.featured .lane-price { color:var(--accent); }
+.lane-card h3 { font-size:1.15rem; font-weight:700; color:#1a1a1a;
+  margin:0 0 8px; letter-spacing:-.015em; }
+.lane-card p { font-size:.9rem; color:var(--text-dim); line-height:1.55; margin:0 0 16px; }
+.lane-cta { font-size:.85rem; font-weight:600; color:var(--accent); }
+
+/* -------------------- PROOF SECTION -------------------- */
+.proof-section { padding:96px 0 64px; background: #eee6d4;
+  border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.proof-section .section-subtitle { margin-bottom:48px; }
+.proof-grid { display:grid; grid-template-columns:1.35fr 1fr; gap:20px; margin-bottom:64px; }
+@media (max-width: 900px) { .proof-grid { grid-template-columns:1fr; } }
+
+.transcript-card { background:#fbf7ef; border:1px solid var(--border); border-radius:14px;
+  overflow:hidden; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; }
+.transcript-header { padding:16px 20px; border-bottom:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:flex-start; gap:16px; background:#f4eee2; }
+.transcript-time { font-size:.78rem; color:var(--text-dim);
+  font-family: ui-monospace, Menlo, monospace; margin-bottom:2px; }
+.transcript-caller { font-size:.88rem; color:#1a1a1a; font-weight:600; }
+.transcript-status { display:flex; align-items:center; gap:7px;
+  font-size:.72rem; color:var(--text-dim); font-family: ui-monospace, Menlo, monospace;
+  padding:5px 10px; background: rgba(45,138,104,.08); border-radius:100px; white-space:nowrap; }
+.live-dot { width:6px; height:6px; background:#2d8a68; border-radius:50%;
+  box-shadow: 0 0 0 3px rgba(45,138,104,.18); animation: live-pulse 2s ease-in-out infinite; }
+@keyframes live-pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+
+.transcript-body { padding:16px 20px; display:flex; flex-direction:column; gap:10px; flex:1; }
+.tl { display:grid; grid-template-columns:48px 1fr; gap:10px; align-items:start; }
+.tl-who { font-size:.66rem; font-family: ui-monospace, Menlo, monospace;
+  letter-spacing:.1em; text-transform:uppercase; padding:3px 6px; border-radius:4px;
+  text-align:center; margin-top:2px; }
+.tl.ai .tl-who { background: rgba(180,74,45,.1); color:var(--accent); }
+.tl.caller .tl-who { background: rgba(20,18,14,.06); color:var(--text-dim); }
+.tl-text { font-size:.92rem; line-height:1.5; color:#1a1a1a; }
+.tl.caller .tl-text { color:var(--text-dim); }
+
+.transcript-footer { padding:16px 20px; border-top:1px solid var(--border); background:#f4eee2; }
+.tf-outcome { font-size:.88rem; color:#1a1a1a; font-weight:600;
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
+.tf-tag { display:inline-block; padding:2px 8px; background:rgba(45,138,104,.12);
+  color:#206850; border-radius:100px; font-size:.7rem;
+  font-family: ui-monospace, Menlo, monospace; text-transform:uppercase;
+  letter-spacing:.06em; font-weight:500; }
+.tf-note { font-size:.78rem; color:var(--text-dim); line-height:1.5; }
+
+.audio-card { background:#fbf7ef; border:1px solid var(--border); border-radius:14px;
+  padding:20px; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:18px; }
+.audio-toggle-row { display:grid; grid-template-columns:1fr 1fr; gap:4px;
+  padding:4px; background:#ede5d2; border-radius:10px; }
+.audio-toggle { padding:8px 10px; background:transparent; border:none; border-radius:7px;
+  font-size:.8rem; color:var(--text-dim); font-family:inherit; font-weight:500;
+  cursor:pointer; transition: background .2s, color .2s; }
+.audio-toggle.active { background:#fbf7ef; color:#1a1a1a;
+  box-shadow: 0 1px 2px rgba(20,18,14,.06); }
+
+.audio-stage { padding:22px 20px; border-radius:10px; border:1px solid var(--border); background:var(--bg); }
+.audio-stage.after { background: radial-gradient(circle at 30% 30%, rgba(45,138,104,.08) 0%, transparent 60%), var(--bg);
+  border-color: rgba(45,138,104,.18); }
+.audio-stage-title { font-size:1.1rem; font-weight:700; color:#1a1a1a;
+  letter-spacing:-.015em; line-height:1.3; margin-bottom:6px; }
+.audio-stage-sub { font-size:.85rem; color:var(--text-dim); line-height:1.5; }
+
+.audio-player { display:flex; align-items:center; gap:14px; padding:14px 16px;
+  background:var(--bg); border:1px solid var(--border); border-radius:10px; }
+.audio-play { width:40px; height:40px; border-radius:50%; background:var(--accent);
+  color:#fff; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; box-shadow: 0 2px 8px rgba(180,74,45,.25); transition: transform .2s, background .2s; }
+.audio-play:hover { transform:scale(1.06); background:var(--accent-light); }
+.audio-play svg { width:18px; height:18px; }
+.audio-wave { flex:1; display:flex; align-items:center; gap:2px; height:32px; }
+.audio-wave .bar { display:block; flex:1; max-width:3px; background:#d4cbb8;
+  border-radius:2px; min-height:3px; transition: background .2s; }
+.audio-wave .bar.active { background:var(--accent); }
+.audio-time { font-size:.78rem; color:var(--text-dim);
+  font-family: ui-monospace, Menlo, monospace; min-width:32px; text-align:right; }
+.audio-caption { font-size:.74rem; color:var(--text-dim); line-height:1.5; }
+
+.testimonial-skeleton-wrap { padding:32px 0 0; border-top:1px dashed rgba(20,18,14,.12); }
+.testimonial-skeleton-label { font-size:.78rem; color:var(--text-dim);
+  font-family: ui-monospace, Menlo, monospace; margin: 0 auto 20px; text-align:center;
+  max-width:560px; line-height:1.5; }
+.testimonial-skeleton-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+@media (max-width: 800px) { .testimonial-skeleton-grid { grid-template-columns:1fr; } }
+.testimonial-slot { background:#fbf7ef; border:1px dashed rgba(20,18,14,.18);
+  border-radius:14px; padding:24px; display:flex; flex-direction:column; gap:14px; opacity:.82; }
+.ts-photo-placeholder { width:44px; height:44px; border-radius:50%;
+  background: rgba(20,18,14,.04); border:1px dashed rgba(20,18,14,.2);
+  display:flex; align-items:center; justify-content:center; color: rgba(20,18,14,.3); }
+.ts-photo-placeholder svg { width:22px; height:22px; }
+.ts-quote { font-size:.9rem; color: rgba(20,18,14,.4); line-height:1.55; font-style:italic; }
+.ts-line { height:10px; background: rgba(20,18,14,.08); border-radius:3px; width:55%; }
+.ts-line.short { width:35%; }
+.ts-badge { font-size:.68rem; font-family: ui-monospace, Menlo, monospace;
+  color:var(--text-dim); letter-spacing:.06em; text-transform:uppercase;
+  margin-top:auto; padding-top:8px; }
+
+/* -------------------- FOUNDER SECTION (full, replaces strip) -------------------- */
+.founder-section { padding:96px 0; position:relative; overflow:hidden;
+  background:
+    radial-gradient(circle at 18% 40%, rgba(194,101,74,.24) 0%, transparent 55%),
+    radial-gradient(circle at 82% 60%, rgba(45,138,104,.12) 0%, transparent 60%),
+    linear-gradient(135deg, #2a1f17 0%, #3a2820 100%);
+  border-top:1px solid rgba(180,74,45,.25);
+  border-bottom:1px solid rgba(180,74,45,.25); }
+.founder-section::before { content:''; position:absolute; inset:0;
+  background-image: radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size:4px 4px; pointer-events:none; opacity:.7; }
+.founder-section .container { position:relative; z-index:1; }
+.founder-section-grid { display:grid; grid-template-columns: minmax(0,.85fr) minmax(0,1.15fr);
+  gap:56px; align-items:center; }
+@media (max-width: 900px) { .founder-section-grid { grid-template-columns:1fr; gap:36px; } }
+.founder-portrait { width:100%; aspect-ratio:4/5; object-fit:cover;
+  border-radius:18px; border:3px solid rgba(244,238,226,.92);
+  box-shadow: 0 20px 60px rgba(0,0,0,.45), 0 0 0 1px rgba(180,74,45,.3); }
+.founder-portrait-caption { margin-top:12px; font-size:.78rem; color:#c9bfad;
+  font-family: ui-monospace, Menlo, monospace; letter-spacing:.04em; text-align:center; }
+.founder-section .section-label { color:#e89370; }
+.founder-section .section-label::before { background:#e89370; }
+.founder-headline { font-size: clamp(1.7rem, 3.4vw, 2.4rem); font-weight:700;
+  color:#faf9f7; line-height:1.15; letter-spacing:-.02em; margin:14px 0 20px; }
+.founder-copy { font-size:1rem; color:#ede4d8; line-height:1.7;
+  margin-bottom:14px; max-width:54ch; }
+.founder-signature-row { margin:22px 0 26px; }
+.founder-section .signature { font-family:'Caveat', cursive; font-size:1.8rem;
+  color:#e89370; display:inline-flex; align-items:center; gap:10px; }
+.founder-section .signature::before { content:''; display:inline-block;
+  width:24px; height:1px; background:#e89370; opacity:.6; }
+.founder-cta-row { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+.btn-outline-light { display:inline-block; padding:14px 24px; background:transparent;
+  border:1px solid rgba(244,238,226,.3); color:#ede4d8; border-radius:10px;
+  font-size:.95rem; font-weight:500; text-decoration:none;
+  transition: background .2s, border-color .2s, color .2s; }
+.btn-outline-light:hover { background: rgba(244,238,226,.08);
+  border-color: rgba(244,238,226,.55); color:#faf9f7; }
+.founder-micro { margin-top:14px; font-size:.82rem; color:#b0a491; line-height:1.5; }
+
+/* -------------------- PRICING v2 (3 tiers) -------------------- */
+.pricing-grid-v2 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
+  margin-top:56px; align-items:stretch; }
+@media (max-width: 900px) { .pricing-grid-v2 { grid-template-columns:1fr; } }
+.pricing-grid-v2 .pricing-card.featured { transform: translateY(-10px);
+  box-shadow: 0 2px 6px rgba(180,74,45,.12), 0 18px 44px -8px rgba(180,74,45,.28); }
+.pricing-grid-v2 .pricing-card.featured:hover { transform: translateY(-14px); }
+.pricing-footnote { margin-top:28px; text-align:center; font-size:.88rem;
+  color: var(--text-dim); font-style: italic; }
+
 </style>
 <script type="application/ld+json">
 {
@@ -2035,35 +2261,107 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 </nav>
 
 <!-- Hero -->
-<section class="hero">
+<section class="hero hero-v2">
   <div class="container">
-    <div class="hero-grid">
-      <div class="hero-content fade-in">
-        <div class="hero-badge">Frederick, MD</div>
-        <h1>Your local business, <span class="highlight">on the map.</span></h1>
-        <p>Get found online in a week for $99. Website, Google Business Profile, and reviews. Fixed price, local, shipped fast.</p>
+    <div class="hero-v2-grid">
+      <div class="hero-content">
+        <div class="hero-badge">Frederick, MD · one developer · fixed prices</div>
+        <h1>Stop losing leads<br>to <span class="accent-gradient-text">voicemail, old sites, and after-hours.</span></h1>
+        <p>Three ways I plug the revenue leaks in Frederick service businesses — a $99 starter site, a 24/7 AI phone agent, or a custom build when a template won't do it.</p>
         <div class="btn-group">
-          <a href="#starter" class="btn">See Details</a>
-          <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-outline" target="_blank" rel="noopener">Book a 15-Min Call</a>
-        </div>
-        <p style="margin-top: 14px; font-size: 0.95rem; color: var(--text-dim);">
-          Losing leads after 6pm? <a href="ai-caller.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">AI Phone Agents that catch every call &rarr;</a>
-        </p>
-        <div class="trust-bar">
-          <div class="trust-item"><strong>$99 entry</strong>Starter pack, one week</div>
-          <div class="trust-item"><strong>Fixed Price</strong>Quoted upfront</div>
-          <div class="trust-item"><strong>Frederick, MD</strong>Local and in-person</div>
+          <a class="btn" href="#pricing">See what I build</a>
+          <a class="btn btn-outline" href="/ai-caller.html">Losing calls after 6pm? →</a>
         </div>
       </div>
-      <div class="hero-visual fade-in">
-        <img src="images/hero-frederick.jpg" alt="Historic brick storefronts along Market Street in downtown Frederick, Maryland, at golden hour — striped awnings, warm shop lighting, people walking" loading="eager" fetchpriority="high" width="933" height="1400">
-        <span class="hero-visual-caption">Downtown Frederick, MD</span>
+
+      <div class="hero-v2-visual">
+        <!-- HERO PHOTO — replace src with final Frederick-street shot when shipped; delete placeholder ribbon. -->
+        <div class="photo-slot">
+          <img src="images/matthew-coleman.jpg" alt="Matthew Coleman, founder">
+          <div class="photo-placeholder-ribbon">Placeholder · final photo in production</div>
+        </div>
+        <div class="booking-confirm-card" role="img" aria-label="Phone screen showing booking confirmation">
+          <div class="bcc-status"><span class="bcc-dot"></span>AI assistant · just now</div>
+          <div class="bcc-line">Booked <strong>Mrs. Hartley</strong> for</div>
+          <div class="bcc-time">Tue, 2:30 PM</div>
+          <div class="bcc-meta">Leaking hot-water line · est. 45 min · confirmed via SMS</div>
+        </div>
       </div>
+    </div>
+
+    <!-- Three-lane sub-cards (AI middle = anchor) -->
+    <div id="lanes" class="lanes-grid">
+      <a class="lane-card" href="#pricing">
+        <div class="lane-price">$99 · one-time</div>
+        <h3>Starter site</h3>
+        <p>Modern mobile-first site, Google Business Profile, review collection. Delivered in a week.</p>
+        <div class="lane-cta">Learn more →</div>
+      </a>
+      <a class="lane-card featured" href="/ai-caller.html">
+        <div class="lane-anchor-pin">anchor product</div>
+        <div class="lane-price">$2,000 setup · $500/mo</div>
+        <h3>AI phone agent</h3>
+        <p>Answers every call 24/7. Qualifies the lead. Books the appointment. Most service businesses miss 3–5 calls a week to voicemail — this catches them.</p>
+        <div class="lane-cta">See how it works →</div>
+      </a>
+      <a class="lane-card" href="#pricing">
+        <div class="lane-price">$1,500 – $10k+</div>
+        <h3>Custom build</h3>
+        <p>Internal tools, client portals, dashboards — when a template can't do the job.</p>
+        <div class="lane-cta">Learn more →</div>
+      </a>
     </div>
   </div>
 </section>
 
 <main id="main">
+
+<section id="services">
+  <div class="container">
+    <div class="section-label">What I fix</div>
+    <h2 class="section-title">Every service business has leaks. Here's how I patch them.</h2>
+    <p class="section-subtitle">Fixed prices. No retainers on the website work. Monthly only for the things that run monthly.</p>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h3>Stop losing leads after 6pm</h3>
+        <p>Most service businesses miss 3–5 calls a week to voicemail. AI answers every one, qualifies the lead, books the appointment — 24/7. Weekly report of what got booked while you slept.</p>
+        <div class="service-price">$2,000 setup · $500/mo</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3>Patients who won't call, will click</h3>
+        <p>Online booking that actually gets used. No phone tag. No "please leave a message." Wired to your practice management software so the slot on your calendar is the slot they took.</p>
+        <div class="service-price">From $1,500</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3>When the template can't do it</h3>
+        <p>Client portals, internal dashboards, dispatch tools, custom quote calculators. The ugly-but-critical software your business runs on — actually working, actually yours.</p>
+        <div class="service-price">$1,500 – $10k+</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Leads that sit in your inbox, gone</h3>
+        <p>Intake forms, CRM wired to your calendar, automatic follow-up on old quotes until they book or opt out. Stop re-typing the same reply you wrote last Tuesday.</p>
+        <div class="service-price">From $2,500</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <!-- Proof bar — single honest line of current status. Edit the numbers in
      the JSON blob below when real results land. -->
@@ -2092,17 +2390,6 @@ img, svg, video, canvas, iframe { max-width: 100%; }
     });
   })();
 </script>
-
-<!-- Founder strip — small, above the fold-ish, gives the site a face and a name. -->
-<aside class="founder-strip" aria-label="About the founder">
-  <div class="container">
-    <img class="founder-photo-sm" src="images/matthew-coleman.jpg" alt="Matthew Coleman, founder of Redwood Digital" width="240" height="240" loading="lazy">
-    <div class="founder-text">
-      <p class="founder-line"><strong>Hey, I'm Matthew.</strong> I build websites and apps for local Frederick businesses. No agency, no offshoring. Just me, your project, and a one-week turnaround.</p>
-      <span class="signature" aria-hidden="true">— Matthew</span>
-    </div>
-  </div>
-</aside>
 
 <div class="topo-divider" aria-hidden="true"><svg viewBox="0 0 1200 36" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 8 Q 150 -2 300 6 T 600 8 T 900 8 T 1200 6"/><path d="M0 18 Q 150 8 300 16 T 600 18 T 900 18 T 1200 16"/><path d="M0 28 Q 150 18 300 26 T 600 28 T 900 28 T 1200 26"/></svg></div>
 
@@ -2135,56 +2422,6 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   </div>
 </section>
 
-<!-- Before / After — drag the handle to compare. Swap the two img src's when
-     you have a real pair. File paths expected: images/ba-before.jpg + images/ba-after.jpg.
-     Until those files exist, the slider stays hidden (see inline script below). -->
-<section id="proof" style="padding: 80px 0 60px;">
-  <div class="container">
-    <div class="fade-in" style="text-align: center;">
-      <div class="section-label">Proof</div>
-      <h2 class="section-title">Drag to see the difference</h2>
-      <p class="section-subtitle" style="margin: 0 auto;">One real Frederick business, before and after the $99 Starter Pack.</p>
-    </div>
-    <div class="ba-wrap fade-in">
-      <div class="ba-slider" data-ba-slider aria-label="Before and after comparison slider">
-        <img class="ba-before" src="images/ba-before.jpg" alt="Before — the original Google Business Profile and site" loading="lazy" onerror="this.closest('section').style.display='none'">
-        <img class="ba-after"  src="images/ba-after.jpg"  alt="After — the Redwood Digital Starter Pack" loading="lazy">
-        <span class="ba-label ba-label-before">Before</span>
-        <span class="ba-label ba-label-after">After</span>
-        <div class="ba-handle" aria-hidden="true"></div>
-      </div>
-    </div>
-  </div>
-</section>
-<script>
-(function() {
-  const el = document.querySelector('[data-ba-slider]');
-  if (!el) return;
-  const after = el.querySelector('.ba-after');
-  const handle = el.querySelector('.ba-handle');
-  let dragging = false;
-  function set(pctRaw) {
-    const pct = Math.max(0, Math.min(100, pctRaw));
-    after.style.clipPath = 'inset(0 0 0 ' + pct + '%)';
-    handle.style.left = pct + '%';
-  }
-  function onMove(e) {
-    if (!dragging) return;
-    const rect = el.getBoundingClientRect();
-    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-    set((x / rect.width) * 100);
-  }
-  function start(e) { dragging = true; onMove(e); e.preventDefault(); }
-  function end() { dragging = false; }
-  el.addEventListener('mousedown', start);
-  el.addEventListener('touchstart', start, { passive: false });
-  window.addEventListener('mousemove', onMove);
-  window.addEventListener('touchmove', onMove, { passive: true });
-  window.addEventListener('mouseup', end);
-  window.addEventListener('touchend', end);
-  set(50);
-})();
-</script>
 
 <!-- Audit capture — Netlify Forms auto-detects on deploy and captures submissions.
      You'll get an email per submission (configure at app.netlify.com → Forms → Notifications). -->
@@ -2205,17 +2442,17 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 
       <div class="audit-meta">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        No spam, no pitch calls. I'll reply from matthew@redwooddigitalfrederick.com.
+        No spam, no pitch calls. I'll reply from <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6904081d1d010c1e291b0c0d1e06060d0d000e001d08050f1b0c0d0c1b000a02470a0604">[email&#160;protected]</a>.
       </div>
 
       <div class="audit-success" id="audit-success">
         <strong>Thanks, I got it.</strong>
-        Look for a reply from matthew@redwooddigitalfrederick.com within 24 hours, usually tonight. If you don't see it, check spam.
+        Look for a reply from <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f4999580809c9183b4869190839b9b90909d939d8095989286919091869d979fda979b99">[email&#160;protected]</a> within 24 hours, usually tonight. If you don't see it, check spam.
       </div>
     </div>
   </div>
 </section>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script>
   // Show the success panel if the URL carries ?audit=thanks (post-submit redirect).
   if (new URLSearchParams(location.search).get('audit') === 'thanks') {
     const s = document.getElementById('audit-success');
@@ -2292,59 +2529,6 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   </div>
 </section>
 
-<!-- Services -->
-<section id="services">
-  <div class="container">
-    <div class="fade-in">
-      <div class="section-label">Custom Apps</div>
-      <h2 class="section-title">Ready for more than a website?</h2>
-      <p class="section-subtitle">When a starter pack isn't enough, I build custom software around your workflow. For coaches, clinicians, and operators who have outgrown off-the-shelf tools.</p>
-    </div>
-    <div class="services-grid">
-      <div class="service-card visual fade-in">
-        <img class="service-image" src="images/service-client-management.jpg" alt="Life coach at a wooden desk, laptop open, window light, small plant and mug — running her practice from one place" loading="lazy" width="784" height="1168">
-        <div class="service-body">
-          <h3>Client Management Apps</h3>
-          <p>For coaches, therapists, and consultants. One app instead of bouncing between your CRM, your spreadsheet, and your notes app.</p>
-          <div class="service-price">$1,500 - $3,000</div>
-        </div>
-      </div>
-      <div class="service-card visual fade-in">
-        <img class="service-image" src="images/service-booking-scheduling.jpg" alt="Yoga studio owner at a minimalist wooden counter, tablet in front of her, rolled yoga mats beside the counter, plants on shelves behind — checking the day's bookings" loading="lazy" width="933" height="1400">
-        <div class="service-body">
-          <h3>Booking & Scheduling Apps</h3>
-          <p>For salons, fitness studios, and wellness practitioners. Branded booking pages, client preferences, automated reminders.</p>
-          <div class="service-price">$1,500 - $3,000</div>
-        </div>
-      </div>
-      <div class="service-card visual fade-in">
-        <img class="service-image" src="images/service-internal-tools.jpg" alt="Property manager on site with a clipboard and phone, crew loading tools behind him, service van open — coordinating a multi-unit job" loading="lazy" width="1400" height="933">
-        <div class="service-body">
-          <h3>Internal Business Tools</h3>
-          <p>For property managers, contractors, and teams. Turn your spreadsheets into dashboards your whole team can actually use.</p>
-          <div class="service-price">$3,000 - $5,000</div>
-        </div>
-      </div>
-      <div class="service-card visual fade-in">
-        <img class="service-image" src="images/service-custom-webapp.jpg" alt="Business owner gesturing across a conference table, laptop open, data charts on paper beside her — explaining a custom workflow" loading="lazy" width="933" height="1400">
-        <div class="service-body">
-          <h3>Custom Web Apps</h3>
-          <p>Full custom builds for unique business needs. Landing pages, client portals, data tools. Weird requirements welcome.</p>
-          <div class="service-price">$5,000 - $10,000</div>
-        </div>
-      </div>
-      <a href="ai-caller.html" class="service-card visual fade-in" style="text-decoration: none; color: inherit;">
-        <img class="service-image" src="images/service-ai-phone.jpg" alt="Contractor at his kitchen table at night eating pasta, phone face-down beside the plate — off the clock" loading="lazy" width="933" height="1400">
-        <div class="service-body">
-          <h3>AI Phone Agents</h3>
-          <p>Stop losing leads after 6pm. Most service businesses miss 3 to 5 calls a week to voicemail. AI answers every one, qualifies the lead, books the appointment.</p>
-          <div class="service-price">Starting at $2,000 + $500/mo</div>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
 <!-- How It Works -->
 <section id="how" class="how-it-works">
   <div class="container">
@@ -2374,22 +2558,31 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 </section>
 
 <!-- About -->
-<section id="about">
+<section class="founder-section" id="founder">
   <div class="container">
-    <div class="fade-in">
-      <div class="section-label">About</div>
-      <h2 class="section-title">Who's building your app</h2>
-    </div>
-    <div class="about-card fade-in">
-      <img class="about-photo" src="images/matthew-coleman.jpg" alt="Matthew Coleman, founder of Redwood Digital" width="240" height="240" loading="lazy">
-      <div class="about-info">
-        <h3>Matthew Coleman</h3>
-        <p>I'm a software developer based in Frederick, MD. I started Redwood Digital because I kept seeing local businesses pay for bloated software that didn't fit how they actually worked, or get quoted $50K by agencies for something that should cost a fraction of that.</p>
-        <p>I use modern AI tools to build in days what used to take months. Same quality, fraction of the cost. You get a real, custom-built app scoped to your business, at a fixed price, in weeks.</p>
+    <div class="founder-section-grid">
+      <div class="founder-portrait-wrap">
+        <img class="founder-portrait" src="images/matthew-coleman.jpg" alt="Matthew Coleman, Redwood Digital">
+        <div class="founder-portrait-caption">Matthew Coleman · Frederick, MD</div>
+      </div>
+      <div class="founder-body">
+        <div class="section-label">Who you're hiring</div>
+        <h2 class="founder-headline">One developer. I answer the phone. I write the code.</h2>
+        <p class="founder-copy">I'm Matthew. I started Redwood Digital because I was tired of watching Frederick businesses pay agency retainers for a website nobody touches and a junior dev they never meet. With me, you get one person — I scope the work, I build it, I hand it off in person.</p>
+        <p class="founder-copy">If the AI phone agent is the job, I set it up, write the scripts with you, and send you a weekly report of what it booked. No call centers, no account managers, no BS.</p>
+        <div class="founder-signature-row">
+          <div class="signature">— Matthew</div>
+        </div>
+        <div class="founder-cta-row">
+          <a class="btn" href="https://calendly.com/redwood-digital/15min" target="_blank" rel="noopener">Book a 15-min call</a>
+          <a class="btn-outline-light" href="/cdn-cgi/l/email-protection#3d505c494955584a7d4f58594a52525959545a54495c515b4f5859584f545e56135e5250"><span class="__cf_email__" data-cfemail="f69b9782829e9381b684939281999992929f919f82979a9084939293849f959dd895999b">[email&#160;protected]</span></a>
+        </div>
+        <div class="founder-micro">15 minutes, no slide deck. Tell me what's broken — I'll tell you what it costs.</div>
       </div>
     </div>
   </div>
 </section>
+
 
 <!-- Portfolio -->
 <section id="portfolio">
@@ -2432,169 +2625,163 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 </section>
 
 <!-- Social Proof -->
-<section id="results" style="padding: 80px 0 40px;">
+<section class="proof-section" id="proof">
   <div class="container">
-    <div class="section-label">Results</div>
-    <h2 class="section-title fade-in">What clients say</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 48px;">
-      <div class="fade-in testimonial-card">
-        <svg class="testimonial-quote" width="72" height="72" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
-        <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text); margin-bottom: 20px;">&ldquo;Matt built exactly what I described in our first call. The app replaced three tools I was paying for monthly, and it was ready in 10 days. I didn&rsquo;t have to explain anything twice.&rdquo;</p>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 0.9rem;">JR</div>
-          <div>
-            <div style="font-weight: 600; color: var(--text);">Leadership Coach</div>
-            <div style="font-size: 0.85rem; color: var(--text-dim);">Frederick, MD</div>
+    <div class="section-label">Proof</div>
+    <h2 class="section-title">What it actually sounds like.</h2>
+    <p class="section-subtitle">No stock testimonials. Here's a real transcript from a real after-hours call — and the audio when you want to hear it.</p>
+
+    <div class="proof-grid">
+      <!-- Transcript card -->
+      <div class="transcript-card">
+        <div class="transcript-header">
+          <div class="transcript-meta">
+            <div class="transcript-time">Tuesday · 9:47 PM</div>
+            <div class="transcript-caller">Incoming call · (301) 555-0189</div>
           </div>
+          <div class="transcript-status"><span class="live-dot"></span>After-hours · AI answered</div>
+        </div>
+        <div class="transcript-body">
+          <div class="tl ai"><div class="tl-who">AI</div><div class="tl-text">Thanks for calling Miller Plumbing — this is the after-hours assistant. What's going on?</div></div>
+          <div class="tl caller"><div class="tl-who">Caller</div><div class="tl-text">Yeah hi, my water heater is leaking pretty bad in the basement.</div></div>
+          <div class="tl ai"><div class="tl-who">AI</div><div class="tl-text">Sorry to hear that. Is there water actively spreading, or is it contained?</div></div>
+          <div class="tl caller"><div class="tl-who">Caller</div><div class="tl-text">Still spreading. I shut off the valve but there's already a puddle.</div></div>
+          <div class="tl ai"><div class="tl-who">AI</div><div class="tl-text">Okay — that's an emergency visit. I can get a tech out first thing tomorrow, 7:30 AM. Works?</div></div>
+          <div class="tl caller"><div class="tl-who">Caller</div><div class="tl-text">Yes, please.</div></div>
+          <div class="tl ai"><div class="tl-who">AI</div><div class="tl-text">Booked. Name and address for the tech?</div></div>
+        </div>
+        <div class="transcript-footer">
+          <div class="tf-outcome"><span class="tf-tag">booked</span>Emergency visit · Tue 7:30 AM · confirmation SMS sent</div>
+          <div class="tf-note">This call would have gone to voicemail. Most voicemails to service businesses don't get a callback.</div>
         </div>
       </div>
-      <div class="fade-in testimonial-card">
-        <svg class="testimonial-quote" width="72" height="72" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
-        <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text); margin-bottom: 20px;">&ldquo;I was quoted $45K by an agency for a client portal. Matt built it for a fraction of that and it actually works the way my team needs it to. No bloat, no unnecessary features.&rdquo;</p>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 0.9rem;">DM</div>
-          <div>
-            <div style="font-weight: 600; color: var(--text);">Property Manager</div>
-            <div style="font-size: 0.85rem; color: var(--text-dim);">Frederick County, MD</div>
-          </div>
+
+      <!-- Audio player card -->
+      <div class="audio-card" id="audioCard">
+        <div class="audio-toggle-row">
+          <button class="audio-toggle" data-compare="before">Before · voicemail</button>
+          <button class="audio-toggle active" data-compare="after">After · AI answered</button>
         </div>
+
+        <div class="audio-stage after" id="audioStage">
+          <div class="audio-stage-title" id="audioStageTitle">AI booked the job in 2:14.</div>
+          <div class="audio-stage-sub" id="audioStageSub">Emergency slot booked for 7:30 AM. SMS confirmation sent.</div>
+        </div>
+
+        <div class="audio-player">
+          <button class="audio-play" id="audioPlay" aria-label="Play">
+            <svg viewBox="0 0 24 24" fill="currentColor" id="audioPlayIcon"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <div class="audio-wave" id="audioWave"></div>
+          <div class="audio-time" id="audioTime">2:14</div>
+        </div>
+
+        <div class="audio-caption">Sample audio · not a specific customer call. Real customer recordings play on vertical pages with consent.</div>
       </div>
-      <div class="fade-in testimonial-card">
-        <svg class="testimonial-quote" width="72" height="72" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
-        <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text); margin-bottom: 20px;">&ldquo;We went from no online presence to getting 3-4 calls a week from Google within the first month. The $99 starter pack paid for itself before the week was over.&rdquo;</p>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="width: 40px; height: 40px; border-radius: 50%; background: #5a4a3a; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 0.9rem;">TK</div>
-          <div>
-            <div style="font-weight: 600; color: var(--text);">Home Services Business</div>
-            <div style="font-size: 0.85rem; color: var(--text-dim);">Frederick, MD</div>
-          </div>
+    </div>
+
+    <!-- Testimonial skeleton — slots awaiting real quotes.
+         When Joel's testimony arrives, replace the FIRST .testimonial-slot block
+         with the filled version commented at the bottom of this file. -->
+    <div class="testimonial-skeleton-wrap">
+      <div class="testimonial-skeleton-label">Customer quotes live here once they're collected — real name, real practice, real photo. Never invented.</div>
+      <div class="testimonial-skeleton-grid">
+        <!-- JOEL TESTIMONIAL SLOT -->
+        <div class="testimonial-slot">
+          <div class="ts-photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
+          <div class="ts-quote">Real customer quote from a Frederick business lives here.</div>
+          <div class="ts-attrib"><div class="ts-line"></div><div class="ts-line short"></div></div>
+          <div class="ts-badge">Joel · awaiting quote</div>
+        </div>
+
+        <div class="testimonial-slot">
+          <div class="ts-photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
+          <div class="ts-quote">Real customer quote from a Frederick hvac practice lives here.</div>
+          <div class="ts-attrib"><div class="ts-line"></div><div class="ts-line short"></div></div>
+          <div class="ts-badge">HVAC · awaiting quote</div>
+        </div>
+
+        <div class="testimonial-slot">
+          <div class="ts-photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
+          <div class="ts-quote">Real customer quote from a Frederick dental practice lives here.</div>
+          <div class="ts-attrib"><div class="ts-line"></div><div class="ts-line short"></div></div>
+          <div class="ts-badge">Dental · awaiting quote</div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!--
+FILLED JOEL TESTIMONIAL (paste over the JOEL SLOT above when Joel's quote arrives):
+
+<div class="testimonial-slot" style="opacity:1; border-style:solid; border-color: var(--border);">
+  <div class="ts-photo-placeholder" style="background:url('images/joel.jpg') center/cover; border:none;"></div>
+  <div class="ts-quote" style="color:var(--text); font-style:italic;">[Joel's actual quote here]</div>
+  <div class="ts-attrib" style="font-size:.82rem; color:#1a1a1a; font-weight:600;">
+    Joel [Last Name]<br>
+    <span style="color:var(--text-dim); font-weight:400; font-size:.78rem;">[Business Name] · Frederick, MD</span>
+  </div>
+  <div class="ts-badge" style="color:var(--green);">✓ verified customer</div>
+</div>
+-->
+
 
 <!-- Pricing -->
-<section id="pricing">
+<section id="pricing" style="background: #f3f1ed;">
   <div class="container">
-    <div class="fade-in" style="text-align: center;">
-      <div class="section-label">Pricing</div>
-      <h2 class="section-title">What it costs</h2>
-      <p class="section-subtitle" style="margin: 0 auto;">From a $99 starter pack to a full custom build. Fixed price, agreed before work starts. No hourly billing, no surprise invoices.</p>
-    </div>
-    <div class="pricing-grid">
-      <div class="pricing-tier-label fade-in">Starter Tier: get found online</div>
-      <div class="pricing-card featured fade-in">
-        <h3>Starter Pack</h3>
-        <div class="pricing-range">$99</div>
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Three ways to start.</h2>
+    <p class="section-subtitle">No contracts. No per-minute billing. Fixed prices, in-person handoff.</p>
+
+    <div class="pricing-grid-v2">
+      <div class="pricing-card">
+        <h3>Starter Site</h3>
+        <div class="pricing-range">$99 <span>one-time</span></div>
         <ul>
-          <li>Local-business website (1-3 pages)</li>
-          <li>Google Business Profile setup and cleanup</li>
-          <li>Review request system</li>
-          <li>Mobile-first, fast, no CMS to learn</li>
-          <li>Delivered in one week</li>
+          <li>Modern mobile-first website</li>
+          <li>Google Business Profile setup</li>
+          <li>Review collection system</li>
+          <li>Local SEO for your town</li>
+          <li>Delivered in 1 week</li>
         </ul>
-        <a href="#starter" class="btn btn-sm btn-block">See Details</a>
+        <a href="#contact" class="btn btn-sm btn-outline btn-block">Start here</a>
       </div>
-      <div class="pricing-card fade-in">
-        <h3>Lead Flow Retainer</h3>
-        <div class="pricing-range">$49/mo</div>
+
+      <div class="pricing-card featured">
+        <h3>AI Phone Agent</h3>
+        <div class="pricing-range">$2,000 <span>setup + $500/mo</span></div>
         <ul>
-          <li>Monthly website updates</li>
-          <li>Google Business Profile posts</li>
-          <li>Review replies and monitoring</li>
-          <li>Add after the Starter Pack ships</li>
-          <li>Cancel anytime</li>
+          <li>Answers every call 24/7</li>
+          <li>Qualifies leads before they hang up</li>
+          <li>Books directly to your calendar</li>
+          <li>SMS confirmations to caller</li>
+          <li>Weekly report of what it booked</li>
+          <li>Custom scripts, your voice</li>
         </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-outline btn-sm btn-block" target="_blank" rel="noopener">Book a 15-Min Call</a>
+        <a href="#contact" class="btn btn-sm btn-block">Book a call</a>
       </div>
-      <div class="pricing-tier-label fade-in">Custom Tier: build something new</div>
-      <div class="pricing-card fade-in">
-        <h3>Client Management</h3>
-        <div class="pricing-range">$1,500 - $3,000</div>
+
+      <div class="pricing-card">
+        <h3>Custom Build</h3>
+        <div class="pricing-range">$1,500+ <span>project-based</span></div>
         <ul>
-          <li>Client tracking and profiles</li>
-          <li>Session and goal management</li>
-          <li>Notes and history</li>
-          <li>Consolidates your existing tools</li>
-          <li>Delivered in 1-2 weeks</li>
+          <li>Client portals &amp; dashboards</li>
+          <li>Internal tools &amp; custom apps</li>
+          <li>CRM + intake + follow-up</li>
+          <li>Integrations with your existing stack</li>
+          <li>Scoped and priced in a 15-min call</li>
         </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-outline btn-sm btn-block" target="_blank" rel="noopener">Book a 15-Min Call</a>
-      </div>
-      <div class="pricing-card featured fade-in">
-        <h3>Booking & Scheduling</h3>
-        <div class="pricing-range">$1,500 - $3,000</div>
-        <ul>
-          <li>Branded booking pages</li>
-          <li>Client preferences saved</li>
-          <li>Automated reminders</li>
-          <li>Calendar integrations</li>
-          <li>Delivered in 1-2 weeks</li>
-        </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-sm btn-block" target="_blank" rel="noopener">Book a 15-Min Call</a>
-      </div>
-      <div class="pricing-card fade-in">
-        <h3>Internal Business Tools</h3>
-        <div class="pricing-range">$3,000 - $5,000</div>
-        <ul>
-          <li>Custom dashboards</li>
-          <li>Workflow automation</li>
-          <li>Team access controls</li>
-          <li>Spreadsheet migration</li>
-          <li>Delivered in 2-3 weeks</li>
-        </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-outline btn-sm btn-block" target="_blank" rel="noopener">Book a 15-Min Call</a>
-      </div>
-      <div class="pricing-card fade-in">
-        <h3>Custom Web Apps</h3>
-        <div class="pricing-range">$5,000 - $10,000</div>
-        <ul>
-          <li>Full custom build</li>
-          <li>Landing pages and portals</li>
-          <li>Data tools and APIs</li>
-          <li>Complex business logic</li>
-          <li>Delivered in 3-5 weeks</li>
-        </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-outline btn-sm btn-block" target="_blank" rel="noopener">Book a 15-Min Call</a>
-      </div>
-      <div class="pricing-card featured fade-in">
-        <h3>Monthly Retainer</h3>
-        <div class="pricing-range">$297 - $997/mo</div>
-        <ul>
-          <li>Website management &amp; updates</li>
-          <li>Google Business Profile management</li>
-          <li>Review monitoring &amp; responses</li>
-          <li>Monthly performance report</li>
-          <li>Priority support &amp; strategy call</li>
-          <li>Cancel anytime</li>
-        </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-sm btn-block" target="_blank" rel="noopener">Book a 15-Min Call</a>
+        <a href="#contact" class="btn btn-sm btn-outline btn-block">Scope it out</a>
       </div>
     </div>
 
-    <!-- What's Included -->
-    <div class="fade-in" style="text-align: center; margin-top: 72px;">
-      <h3 class="section-title" style="font-size: 1.6rem;">Every project includes</h3>
-    </div>
-    <div class="included-grid fade-in">
-      <div class="included-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        <h4>You own the code</h4>
-        <p>Full source code, no lock-in. It's your software.</p>
-      </div>
-      <div class="included-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        <h4>Deployment & hosting setup</h4>
-        <p>I get it live. You don't touch a terminal.</p>
-      </div>
-      <div class="included-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <h4>30 days of support</h4>
-        <p>Bug fixes and questions covered after launch. Ongoing retainers available.</p>
-      </div>
+    <div class="pricing-footnote">
+      Need more than one? The starter site is included free when you book an AI phone agent setup.
     </div>
   </div>
 </section>
+
 
 <!-- FAQ -->
 <section id="faq">
@@ -2714,9 +2901,9 @@ img, svg, video, canvas, iframe { max-width: 100%; }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         (227) 253-5980
       </a>
-      <a href="mailto:matthew@redwooddigitalfrederick.com" class="contact-card">
+      <a href="/cdn-cgi/l/email-protection#c2afa3b6b6aaa7b582b0a7a6b5adada6a6aba5abb6a3aea4b0a7a6a7b0aba1a9eca1adaf" class="contact-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        matthew@redwooddigitalfrederick.com
+        <span class="__cf_email__" data-cfemail="c6aba7b2b2aea3b186b4a3a2b1a9a9a2a2afa1afb2a7aaa0b4a3a2a3b4afa5ade8a5a9ab">[email&#160;protected]</span>
       </a>
       <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="contact-card" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -2750,7 +2937,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn" target="_blank" rel="noopener">Book a 15-Min Call</a>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script>
 // Scroll fade-in animation
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -3034,5 +3221,91 @@ function toggleFaq(btn) {
 </script>
 <!-- ─────────────────────────────────────────────────────────────────── -->
 
+
+<script>
+/* ===== v2 ADDITIONS (port) ===== */
+// 07-js-additions.js
+// APPEND to the end of the existing inline <script>…</script> block in index.html.
+// Wires the before/after audio toggle + play button visual + generated waveform.
+// Pure additions — does not touch any existing JS.
+
+(function () {
+  var card = document.getElementById('audioCard');
+  if (!card) return;
+
+  var stage = document.getElementById('audioStage');
+  var stageTitle = document.getElementById('audioStageTitle');
+  var stageSub = document.getElementById('audioStageSub');
+  var playBtn = document.getElementById('audioPlay');
+  var playIcon = document.getElementById('audioPlayIcon');
+  var wave = document.getElementById('audioWave');
+  var time = document.getElementById('audioTime');
+  var toggles = card.querySelectorAll('.audio-toggle');
+
+  var heights = {
+    after:  [30,55,70,45,82,65,48,72,58,88,62,40,76,55,68,80,45,58,72,50,65,85,55,42,70,60,78,52,65,48,72,82,55,68,42,58,72,48,62,50,38,28],
+    before: [18,22,15,28,20,16,24,12,18,20,14,22,10,18,15,20,12,8,14,10,16,20,12,18,14,10,20,14,18,12,22,16,10,14,12,8,18,14,10,12,8,6]
+  };
+
+  // Build waveform bars once
+  var frag = document.createDocumentFragment();
+  for (var i = 0; i < 42; i++) {
+    var bar = document.createElement('span');
+    bar.className = 'bar';
+    frag.appendChild(bar);
+  }
+  wave.appendChild(frag);
+  var bars = wave.querySelectorAll('.bar');
+
+  var state = { compare: 'after', playing: false };
+
+  var PLAY_SVG  = '<path d="M8 5v14l11-7z"/>';
+  var PAUSE_SVG = '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>';
+
+  function render() {
+    // toggles
+    toggles.forEach(function (t) {
+      t.classList.toggle('active', t.dataset.compare === state.compare);
+    });
+    // stage
+    stage.classList.toggle('after', state.compare === 'after');
+    stage.classList.toggle('before', state.compare === 'before');
+    if (state.compare === 'after') {
+      stageTitle.textContent = 'AI booked the job in 2:14.';
+      stageSub.textContent   = 'Emergency slot booked for 7:30 AM. SMS confirmation sent.';
+      time.textContent = '2:14';
+    } else {
+      stageTitle.textContent = '"You\'ve reached Miller Plumbing. Leave a message…"';
+      stageSub.textContent   = 'No callback until Wednesday morning. Caller went with someone else.';
+      time.textContent = '0:08';
+    }
+    // waveform heights
+    var h = heights[state.compare];
+    bars.forEach(function (b, i) {
+      b.style.height = h[i] + '%';
+      b.classList.toggle('active', state.playing && i < 20);
+    });
+    // play icon
+    playIcon.innerHTML = state.playing ? PAUSE_SVG : PLAY_SVG;
+    playBtn.setAttribute('aria-label', state.playing ? 'Pause' : 'Play');
+  }
+
+  toggles.forEach(function (t) {
+    t.addEventListener('click', function () {
+      state.compare = t.dataset.compare;
+      state.playing = false;
+      render();
+    });
+  });
+
+  playBtn.addEventListener('click', function () {
+    state.playing = !state.playing;
+    render();
+  });
+
+  render();
+})();
+
+</script>
 </body>
 </html>
