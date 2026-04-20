@@ -249,7 +249,8 @@ nav ul li a:hover { color: #1a1a1a; }
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 10px;
+  border-radius: 8px;
 }
 .hamburger svg { display: block; }
 
@@ -1911,6 +1912,21 @@ footer p {
 
   /* Extra bottom padding so sticky CTA doesn't cover content */
   footer { padding-bottom: 72px; }
+
+  /* Pizazz-layer mobile rules */
+  .founder-strip { padding: 24px 0; }
+  .founder-strip .container { flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+  .founder-photo-sm { width: 64px; height: 64px; }
+  .founder-line { font-size: 0.92rem; }
+  .signature { justify-content: center; font-size: 1.3rem; }
+
+  .testimonial-card { padding: 22px 18px 18px; border-left-width: 3px; }
+  .testimonial-quote { width: 48px; height: 48px; right: 8px; top: -4px; }
+
+  .topo-divider { height: 22px; }
+
+  .cta-section { padding: 56px 0; }
+  .cta-section .btn { padding: 14px 28px; font-size: 1rem; }
 }
 
 /* Prevent any horizontal overflow */
@@ -2079,7 +2095,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   <div class="container">
     <img class="founder-photo-sm" src="images/matthew-coleman.jpg" alt="Matthew Coleman, founder of Redwood Digital" width="240" height="240" loading="lazy">
     <div class="founder-text">
-      <p class="founder-line"><strong>Hey, I'm Matthew.</strong> I build websites and apps for Frederick businesses out of my home office on East Street. No agency, no offshoring. Just me, your project, and a one-week turnaround.</p>
+      <p class="founder-line"><strong>Hey, I'm Matthew.</strong> I build websites and apps for local Frederick businesses. No agency, no offshoring. Just me, your project, and a one-week turnaround.</p>
       <span class="signature" aria-hidden="true">— Matthew</span>
     </div>
   </div>
