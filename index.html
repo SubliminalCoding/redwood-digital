@@ -2946,6 +2946,20 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   border-color: rgba(244,238,226,.55); color:#faf9f7; }
 .founder-micro { margin-top:14px; font-size:.82rem; color:#b0a491; line-height:1.5; }
 
+/* -------------------- LOCAL ANCHOR (Frederick, MD photo) -------------------- */
+.local-anchor { padding:72px 0 64px; background:#faf5ea; position:relative; }
+.local-anchor::before { content:''; position:absolute; inset:0; pointer-events:none;
+  background: linear-gradient(180deg, rgba(180,74,45,.04) 0%, transparent 25%, transparent 75%, rgba(180,74,45,.04) 100%); }
+.local-anchor .container { position:relative; }
+.local-anchor-figure { margin:0 auto; max-width:1100px; text-align:center; }
+.local-anchor-img { width:100%; height:auto; display:block; border-radius:14px;
+  box-shadow: 0 2px 8px rgba(27,16,8,.08), 0 18px 40px -12px rgba(27,16,8,.2);
+  border:1px solid rgba(180,74,45,.14); }
+.local-anchor-caption { margin-top:16px; font-size:.9rem; color:#6a645a;
+  font-style:italic; letter-spacing:.01em; }
+@media (max-width: 640px) { .local-anchor { padding:56px 0 48px; }
+  .local-anchor-img { border-radius:10px; } }
+
 /* -------------------- PRICING v2 (3 tiers) -------------------- */
 .pricing-grid-v2 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
   margin-top:56px; align-items:stretch; }
@@ -3360,6 +3374,18 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   </div>
 </section>
 
+
+<!-- Local anchor — Frederick, MD -->
+<section class="local-anchor" aria-label="Based in Frederick, Maryland">
+  <div class="container">
+    <figure class="local-anchor-figure">
+      <img class="local-anchor-img" src="images/carroll-creek-frederick.jpg"
+           alt="Carroll Creek Park in downtown Frederick, Maryland — brick-lined canal, flowers, red-brick buildings"
+           loading="lazy" decoding="async" width="1600" height="1068">
+      <figcaption class="local-anchor-caption">Carroll Creek · downtown Frederick, Maryland</figcaption>
+    </figure>
+  </div>
+</section>
 
 
 <!-- Social Proof -->
