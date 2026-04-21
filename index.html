@@ -2395,7 +2395,26 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   0%, 100% { box-shadow: 0 0 0 2px #fbf7ef, 0 0 0 0 rgba(224, 58, 58, 0.55); }
   50%      { box-shadow: 0 0 0 2px #fbf7ef, 0 0 0 6px rgba(224, 58, 58, 0); }
 }
-.demo-call-icon svg { width: 22px; height: 22px; }
+.demo-call-icon svg {
+  width: 22px;
+  height: 22px;
+  transition: transform 0.45s var(--ease-spring);
+  transform-origin: 50% 80%;
+}
+.demo-call-card:hover .demo-call-icon svg {
+  animation: demo-phone-ring 0.9s cubic-bezier(0.36, 0, 0.64, 1);
+}
+@keyframes demo-phone-ring {
+  0%, 100% { transform: rotate(0); }
+  15% { transform: rotate(-12deg); }
+  30% { transform: rotate(10deg); }
+  45% { transform: rotate(-8deg); }
+  60% { transform: rotate(6deg); }
+  75% { transform: rotate(-3deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .demo-call-card:hover .demo-call-icon svg { animation: none; }
+}
 .demo-call-body strong {
   display: block;
   font-size: 0.78rem;
@@ -2627,22 +2646,31 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 .audio-caption { font-size:.74rem; color:var(--text-dim); line-height:1.5; }
 .audio-player-wrap {
   margin-top: 4px;
-  max-height: 80px;
+  max-height: 100px;
   overflow: hidden;
   opacity: 1;
-  transition: opacity 0.3s var(--ease-out), max-height 0.35s var(--ease-out), margin-top 0.3s var(--ease-out);
+  padding: 8px 10px;
+  background: linear-gradient(180deg, rgba(45, 138, 104, 0.05), rgba(45, 138, 104, 0.02));
+  border: 1px solid rgba(45, 138, 104, 0.18);
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: opacity 0.3s var(--ease-out), max-height 0.35s var(--ease-out), margin-top 0.3s var(--ease-out), padding 0.3s var(--ease-out), border-color 0.3s;
 }
 .audio-player-wrap.is-hidden {
   opacity: 0;
   max-height: 0;
   margin-top: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-color: transparent;
   pointer-events: none;
 }
 .audio-player-wrap audio {
   width: 100%;
-  height: 44px;
-  border-radius: 10px;
+  height: 40px;
+  border-radius: 8px;
   outline: none;
+  display: block;
 }
 .audio-player-wrap audio::-webkit-media-controls-panel {
   background: var(--bg);
@@ -2657,6 +2685,20 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   border-style: solid;
   border-color: var(--border);
   background: var(--bg-card);
+  position: relative;
+}
+.testimonial-slot.ts-real::before {
+  content: '\201C';
+  position: absolute;
+  top: 8px;
+  right: 20px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 4.5rem;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.14;
+  pointer-events: none;
+  font-weight: 700;
 }
 .testimonial-slot.ts-real:hover { border-color: rgba(180, 74, 45, 0.28); }
 .ts-real .ts-photo {
@@ -3346,7 +3388,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
           </audio>
         </div>
 
-        <div class="audio-caption">Actual recording of a call to our Frederick HVAC demo line. Phone-quality audio, ~1 minute. The "Before" state is what a voicemail would have been — no recording to play.</div>
+        <div class="audio-caption">Actual recording of a call to our Frederick HVAC demo line. Phone-quality audio, about one minute. The "Before" state is what a voicemail would have been, so there's nothing to play.</div>
       </div>
     </div>
 
@@ -4068,11 +4110,12 @@ function toggleFaq(btn) {
 .chat-header-title { display: inline-flex; align-items: center; gap: 8px; }
 .chat-header button {
   background: none; border: none; color: #fff; cursor: pointer;
-  font-size: 1.4rem; line-height: 1; width: 28px; height: 28px;
+  line-height: 1; width: 28px; height: 28px;
   border-radius: 6px; display: inline-flex; align-items: center; justify-content: center;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s var(--ease-out);
 }
-.chat-header button:hover { background: rgba(255, 255, 255, 0.15); }
+.chat-header button:hover { background: rgba(255, 255, 255, 0.15); transform: rotate(90deg); }
+.chat-header button svg { width: 16px; height: 16px; }
 
 /* Message thread */
 .chat-thread {
@@ -4093,7 +4136,8 @@ function toggleFaq(btn) {
   font-size: 0.92rem;
   line-height: 1.5;
   word-wrap: break-word;
-  animation: chat-msg-in 0.3s var(--ease-out) both;
+  animation: chat-msg-in 0.35s var(--ease-spring) both;
+  position: relative;
 }
 .chat-msg.assistant {
   background: var(--bg);
@@ -4101,6 +4145,23 @@ function toggleFaq(btn) {
   color: var(--text);
   align-self: flex-start;
   border-bottom-left-radius: 4px;
+  margin-left: 32px;
+}
+.chat-msg.assistant::before {
+  content: '';
+  position: absolute;
+  left: -32px;
+  bottom: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--bg-card);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%23c2654a'/><stop offset='100%25' stop-color='%23a3421f'/></linearGradient></defs><path d='M16 3 L27 26 H5 Z' fill='url(%23g)'/><path d='M16 11 L22 23 H10 Z' fill='%23fff' opacity='0.22'/><rect x='14' y='24' width='4' height='5' rx='1' fill='%235a3420'/></svg>");
+  background-size: 16px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(20, 18, 14, 0.06);
 }
 .chat-msg.user {
   background: linear-gradient(180deg, var(--accent-light), var(--accent));
@@ -4198,6 +4259,7 @@ function toggleFaq(btn) {
   flex-wrap: wrap;
   gap: 6px;
   margin-top: 6px;
+  margin-left: 32px;
 }
 .chat-suggestion {
   font-size: 0.82rem;
@@ -4207,10 +4269,26 @@ function toggleFaq(btn) {
   border: 1px solid rgba(180, 74, 45, 0.3);
   border-radius: 100px;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s var(--ease-out);
   font-family: inherit;
+  animation: chip-in 0.4s var(--ease-spring) both;
 }
-.chat-suggestion:hover { background: var(--bg-card-hover); border-color: var(--accent); }
+.chat-suggestion:nth-child(1) { animation-delay: 0.22s; }
+.chat-suggestion:nth-child(2) { animation-delay: 0.34s; }
+.chat-suggestion:nth-child(3) { animation-delay: 0.46s; }
+.chat-suggestion:nth-child(4) { animation-delay: 0.58s; }
+@keyframes chip-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.chat-suggestion:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .chat-suggestion { animation: none; }
+}
 
 /* Footer with direct contact fallback */
 .chat-footer {
@@ -4235,7 +4313,9 @@ function toggleFaq(btn) {
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       Ask us anything
     </span>
-    <button id="chatClose" aria-label="Close chat">&times;</button>
+    <button id="chatClose" aria-label="Close chat" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
   </div>
   <div class="chat-thread" id="chatThread" role="log"></div>
   <form class="chat-composer" id="chatForm" autocomplete="off">

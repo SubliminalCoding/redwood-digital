@@ -6,15 +6,15 @@
 <meta name="theme-color" content="#f4eee2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#2a1f17" media="(prefers-color-scheme: dark)">
 <title>Custom Apps | Redwood Digital Frederick</title>
-<meta name="description" content="Two custom apps Matthew Coleman built from scratch — an employee coaching app and a workplace voice-to-text tool. Both live products you can deploy inside your business.">
-<meta property="og:title" content="Custom Apps — Redwood Digital Frederick">
+<meta name="description" content="Two custom apps Matthew Coleman built from scratch: an employee coaching app and a workplace voice-to-text tool. Both live products you can deploy inside your business.">
+<meta property="og:title" content="Custom Apps | Redwood Digital Frederick">
 <meta property="og:description" content="An employee coaching app and a workplace dictation tool, both shipped. The kind of custom software Matthew builds for businesses.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://www.redwooddigitalfrederick.com/custom-apps.html">
 <meta property="og:image" content="https://www.redwooddigitalfrederick.com/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Custom Apps — Redwood Digital Frederick">
+<meta name="twitter:title" content="Custom Apps | Redwood Digital Frederick">
 <meta name="twitter:description" content="Two apps Matthew built: employee coaching + workplace voice-to-text.">
 <meta name="twitter:image" content="https://www.redwooddigitalfrederick.com/og-image.png">
 <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -152,6 +152,33 @@ nav .container { display: flex; justify-content: space-between; align-items: cen
 
 /* Hero */
 .page-hero { padding: 140px 0 56px; text-align: center; position: relative; }
+.page-hero .section-label,
+.page-hero h1,
+.page-hero p {
+  animation: hero-rise 0.75s var(--ease-out) both;
+}
+.page-hero .section-label { animation-delay: 0.1s; }
+.page-hero h1 { animation-delay: 0.22s; }
+.page-hero p { animation-delay: 0.34s; }
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll-reveal for app cards */
+.app-card {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+.app-card.in-view { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .page-hero .section-label,
+  .page-hero h1,
+  .page-hero p,
+  .app-card { animation: none; opacity: 1; transform: none; transition: none; }
+}
 .page-hero::before {
   content: ''; position: absolute; top: -20%; left: 50%;
   width: 600px; height: 600px; transform: translateX(-50%);
@@ -424,7 +451,7 @@ footer { padding: 40px 0; border-top: 1px solid var(--border); }
 
 <nav>
   <div class="container">
-    <a href="/" class="logo" aria-label="Redwood Digital — home">
+    <a href="/" class="logo" aria-label="Redwood Digital, home">
       <svg class="logo-mark" width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">
         <defs>
           <linearGradient id="logo-grad-apps" x1="0" y1="0" x2="1" y2="1">
@@ -468,7 +495,7 @@ footer { padding: 40px 0; border-top: 1px solid var(--border); }
         <div class="app-body">
           <span class="app-tag">iOS · Coaching</span>
           <h2><a href="https://mecoach.app?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=custom-apps&amp;utm_content=mecoach-card" target="_blank" rel="noopener">MeCoach</a></h2>
-          <p class="lede">A private AI coach that lives in your pocket. Voice-led sessions that help users work through what's actually on their plate — career pressure, life goals, blockers they haven't named yet.</p>
+          <p class="lede">A private AI coach that lives in your pocket. Voice-led sessions that help users work through what's actually on their plate: career pressure, life goals, blockers they haven't named yet.</p>
           <p class="pitch">
             <strong>For teams:</strong> offer it as a benefit. Employees get a safe, always-on place to think out loud, set goals, and track action items. You get retention without running coaching programs yourself. HIPAA-aware data model; private to the individual.
           </p>
@@ -476,7 +503,7 @@ footer { padding: 40px 0; border-top: 1px solid var(--border); }
             <li>Voice-first sessions that pick up where the last one ended</li>
             <li>Wheel of Life radar chart for self-assessment across career, health, relationships, finances</li>
             <li>Goals, rituals, and weekly action items tracked between sessions</li>
-            <li>Insights surface patterns over time — what's stuck, what's shifting</li>
+            <li>Insights surface patterns over time. See what's stuck, what's shifting</li>
           </ul>
           <a href="https://mecoach.app?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=custom-apps&amp;utm_content=mecoach-cta" target="_blank" rel="noopener" class="app-cta">Visit MeCoach<span class="arrow" aria-hidden="true">→</span></a>
         </div>
@@ -493,12 +520,12 @@ footer { padding: 40px 0; border-top: 1px solid var(--border); }
         <div class="app-body">
           <span class="app-tag">Mac · Windows · Linux</span>
           <h2><a href="https://usevoiceforge.com?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=custom-apps&amp;utm_content=voiceforge-card" target="_blank" rel="noopener">VoiceForge</a></h2>
-          <p class="lede">Desktop voice-to-text that lives in any app. Press a hotkey, speak, and the cleaned-up text pastes wherever your cursor was — under two seconds end to end.</p>
+          <p class="lede">Desktop voice-to-text that lives in any app. Press a hotkey, speak, and the cleaned-up text pastes wherever your cursor was, under two seconds end to end.</p>
           <p class="pitch">
-            <strong>For businesses:</strong> sales teams, field inspectors, practitioners typing notes all day. VoiceForge replaces the keyboard for anyone whose job is talking more than typing. Cross-platform, offline-capable, learns your vocabulary and technical jargon. Zero cloud dependency — the audio never leaves the machine.
+            <strong>For businesses:</strong> sales teams, field inspectors, practitioners typing notes all day. VoiceForge replaces the keyboard for anyone whose job is talking more than typing. Cross-platform, offline-capable, learns your vocabulary and technical jargon. Zero cloud dependency. The audio never leaves the machine.
           </p>
           <ul class="app-features">
-            <li>Hotkey-triggered capture anywhere on the OS — docs, email, CRM, browser</li>
+            <li>Hotkey-triggered capture anywhere on the OS: docs, email, CRM, browser</li>
             <li>Runs fully offline on the local machine; no audio sent to any server</li>
             <li>Learns proper nouns, industry terms, internal abbreviations over time</li>
             <li>Daily stats dashboard: words transcribed, avg WPM, transcription count</li>
@@ -513,7 +540,7 @@ footer { padding: 40px 0; border-top: 1px solid var(--border); }
   <section class="closing-cta">
     <div class="container">
       <h2>Want something like this built for your business?</h2>
-      <p>These are the kind of custom apps I also build on a contract basis — client portals, internal tools, industry-specific software. If you have an idea or a pain point, let's talk through it.</p>
+      <p>These are the kind of custom apps I also build on a contract basis: client portals, internal tools, industry-specific software. If you have an idea or a pain point, let's talk through it.</p>
       <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" class="btn" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Book a 15-min call
@@ -559,6 +586,24 @@ footer { padding: 40px 0; border-top: 1px solid var(--border); }
     if (!ticking) { requestAnimationFrame(update); ticking = true; }
   }, { passive: true });
   update();
+})();
+
+// App card scroll reveal — fade up as each card enters view
+(function() {
+  var cards = document.querySelectorAll('.app-card');
+  if (!cards.length || !('IntersectionObserver' in window)) {
+    cards.forEach(function(c) { c.classList.add('in-view'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in-view');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  cards.forEach(function(c) { io.observe(c); });
 })();
 </script>
 </body>
