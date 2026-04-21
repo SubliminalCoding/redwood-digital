@@ -2711,45 +2711,94 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   font-weight: 700;
 }
 .testimonial-slot.ts-real:hover { border-color: rgba(180, 74, 45, 0.28); }
-.ts-real .ts-photo {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background-size: cover;
-  background-position: center;
-  flex-shrink: 0;
-  border: 2px solid var(--bg-card);
-  box-shadow: 0 2px 8px rgba(20, 18, 14, 0.14), 0 0 0 1px var(--border);
-  transition: transform 0.4s var(--ease-spring), box-shadow 0.3s var(--ease-out);
+/* Site mockup — browser-chrome frame around the client site screenshot */
+.ts-real .site-mockup {
+  display: block;
+  margin: -4px -4px 6px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  box-shadow: 0 2px 8px rgba(20, 18, 14, 0.06);
+  text-decoration: none;
+  transition: transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-out), border-color 0.3s var(--ease-out);
+  position: relative;
 }
-.ts-real:hover .ts-photo {
-  transform: scale(1.06) rotate(-4deg);
-  box-shadow: 0 4px 12px rgba(20, 18, 14, 0.2), 0 0 0 1px rgba(180, 74, 45, 0.28);
+.ts-real .site-mockup:hover {
+  transform: translateY(-2px);
+  border-color: rgba(180, 74, 45, 0.3);
+  box-shadow: 0 8px 24px rgba(20, 18, 14, 0.12);
 }
+.ts-real .site-mockup-chrome {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #ede5d2;
+  border-bottom: 1px solid var(--border);
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.74rem;
+}
+.ts-real .mockup-dot {
+  width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+}
+.ts-real .mockup-dot:nth-of-type(1) { background: #ff5f57; }
+.ts-real .mockup-dot:nth-of-type(2) { background: #febc2e; }
+.ts-real .mockup-dot:nth-of-type(3) { background: #28c840; }
+.ts-real .mockup-url {
+  flex: 1;
+  text-align: center;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+  margin-right: 24px;
+}
+.ts-real .site-mockup img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.7s var(--ease-out);
+}
+.ts-real .site-mockup:hover img { transform: scale(1.02); }
+
 .ts-real .ts-quote {
   color: var(--text);
   font-style: italic;
   font-size: 0.95rem;
   line-height: 1.55;
+  margin-top: 6px;
+}
+.ts-real .ts-attrib-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ts-real .ts-photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  border: 2px solid var(--bg-card);
+  box-shadow: 0 2px 6px rgba(20, 18, 14, 0.14), 0 0 0 1px var(--border);
+  transition: transform 0.4s var(--ease-spring);
+}
+.ts-real:hover .ts-photo {
+  transform: scale(1.08) rotate(-4deg);
 }
 .ts-real .ts-attrib {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
 }
 .ts-real .ts-name { font-size: 0.92rem; font-weight: 700; color: var(--ink); }
-.ts-real .ts-biz { font-size: 0.82rem; color: var(--text-dim); }
-.ts-real .ts-biz a {
-  color: var(--accent);
-  font-weight: 500;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s var(--ease-out);
-}
-.ts-real .ts-biz a:hover { border-bottom-color: var(--accent); }
+.ts-real .ts-biz { font-size: 0.8rem; color: var(--text-dim); }
 .ts-real .ts-badge {
   color: var(--green);
   font-weight: 600;
   letter-spacing: 0.05em;
+  font-size: 0.72rem;
 }
 .ts-real .ts-badge::before {
   content: '✓ ';
@@ -3385,21 +3434,39 @@ img, svg, video, canvas, iframe { max-width: 100%; }
       <div class="testimonial-skeleton-label">Real customers. Real websites you can visit.</div>
       <div class="testimonial-skeleton-grid">
         <div class="testimonial-slot ts-real">
-          <div class="ts-photo" style="background-image: url('images/testimonial-joel.jpg');" role="img" aria-label="Photo of Joel Owen"></div>
+          <a class="site-mockup" href="https://allcountycc.com" target="_blank" rel="noopener" aria-label="Visit AllCounty Carpet Cleaning website — opens in new tab">
+            <div class="site-mockup-chrome" aria-hidden="true">
+              <span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span>
+              <span class="mockup-url">allcountycc.com</span>
+            </div>
+            <img src="images/clients/allcountycc.png" alt="Screenshot of allcountycc.com — AllCounty Carpet Cleaning homepage with services and Frederick-area positioning" loading="lazy" width="800" height="500">
+          </a>
           <div class="ts-quote">"Matthew did a fantastic job on my website. Quick turnaround, answers when I call, and easy to work with. I've brought him back for other projects since."</div>
-          <div class="ts-attrib">
-            <div class="ts-name">Joel Owen</div>
-            <div class="ts-biz"><a href="https://allcountycc.com" target="_blank" rel="noopener">allcountycc.com</a> · Frederick, MD</div>
+          <div class="ts-attrib-row">
+            <div class="ts-photo" style="background-image: url('images/testimonial-joel.jpg');" role="img" aria-label="Photo of Joel Owen"></div>
+            <div class="ts-attrib">
+              <div class="ts-name">Joel Owen</div>
+              <div class="ts-biz">AllCounty Carpet Cleaning · Frederick, MD</div>
+            </div>
           </div>
           <div class="ts-badge">Verified customer</div>
         </div>
 
         <div class="testimonial-slot ts-real">
-          <div class="ts-photo" style="background-image: url('images/testimonial-david.jpg');" role="img" aria-label="Photo of David"></div>
+          <a class="site-mockup" href="https://mechanicallyincleyend.com" target="_blank" rel="noopener" aria-label="Visit mechanicallyincleyend.com — opens in new tab">
+            <div class="site-mockup-chrome" aria-hidden="true">
+              <span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span>
+              <span class="mockup-url">mechanicallyincleyend.com</span>
+            </div>
+            <img src="images/clients/mechanicallyincleyend.png" alt="Screenshot of mechanicallyincleyend.com — dark-themed tradesman portfolio site with plumbing and HVAC positioning" loading="lazy" width="800" height="500">
+          </a>
           <div class="ts-quote">"The website looks great. Matthew built it quickly and it came out exactly how I wanted. No hassle start to finish."</div>
-          <div class="ts-attrib">
-            <div class="ts-name">David</div>
-            <div class="ts-biz"><a href="https://mechanicallyincleyend.com" target="_blank" rel="noopener">mechanicallyincleyend.com</a> · Gary P. Frank HVAC</div>
+          <div class="ts-attrib-row">
+            <div class="ts-photo" style="background-image: url('images/testimonial-david.jpg');" role="img" aria-label="Photo of David"></div>
+            <div class="ts-attrib">
+              <div class="ts-name">David</div>
+              <div class="ts-biz">Mechanically Incleyend · Gary P. Frank HVAC</div>
+            </div>
           </div>
           <div class="ts-badge">Verified customer</div>
         </div>
