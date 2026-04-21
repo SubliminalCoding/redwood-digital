@@ -31,8 +31,9 @@ Google."
 | `first_name` | `John` | First name only. Not "John Miller". |
 | `business_name` | `Miller Plumbing & HVAC` | |
 | `reputation_hook` | `a solid reputation for emergency service` | Hand-researched per prospect from their Google Business Profile. Never use a generic fallback — the whole point of the line is specificity. |
-| `demo_number` | `(240) 415-6185` | **Display only.** Never substitute into an `href`. |
-| `calendar_link` | `https://calendar.app.google/72xGWLJ4tVZJxpni6` | Default Google Calendar booking link. |
+| `demo_url` | `https://demo.redwooddigitalfrederick.com/demo/frederick-hvac` | URL of the live demo viewer. Ngrok rotates between restarts; confirm the current URL per send batch. Once the Cloudflare Tunnel is up, this becomes the stable production URL. |
+| `demo_number` | `(240) 415-6185` | **Display only.** Never substitute into an `href` — the tel: links are hardcoded to `tel:+12404156185` (E.164). |
+| `calendar_link` | `https://calendar.app.google/72xGWLJ4tVZJxpni6` | Default Google Calendar booking link. Currently only referenced on the demo page's post-call CTA — the email doesn't link to it directly. |
 | `unsubscribe_link` | per-recipient URL | Base64url-encoded, RFC 8058 one-click compatible. Required by CAN-SPAM. |
 
 ### `outreach-dental.html`
@@ -42,9 +43,24 @@ Google."
 | `first_name` | `Lisa` or `Dr. Lisa` | Whatever form the prospect actually goes by. First name only. |
 | `practice_name` | `Park Family Dental` | Renamed from `business_name` — dental prospects have "practices", not "businesses". |
 | `reputation_hook` | `consistently strong reviews for anxious-patient care` | Same rules as HVAC: hand-researched, never generic. Examples: `highly rated for kids' first visits`, `repeat five-star reviews for gentle cleanings`. |
+| `demo_url` | `https://demo.redwooddigitalfrederick.com/demo/frederick-hvac` | Same URL as HVAC — the demo is one surface. The dental body copy acknowledges it's pointed at a sample HVAC business and tells the prospect to pretend they're a new patient. |
 | `demo_number` | `(240) 415-6185` | Display only. |
 | `calendar_link` | `https://calendar.app.google/72xGWLJ4tVZJxpni6` | |
 | `unsubscribe_link` | per-recipient URL | |
+
+### `[PRODUCT_NAME]` — literal placeholder, not a Jinja variable
+
+Both templates embed the string `[PRODUCT_NAME]` (square brackets, capital
+letters, no braces) in body copy, the preheader, and the tagline below the
+CTA. This is **not** a `{{var}}` placeholder — it is a literal token the
+renderer must find-and-replace at send time.
+
+The current product name is **Penny** (confirmed 2026-04-21, read from the
+`PRODUCT_NAME` env var on the ai-receptionist server). If the name changes
+later, a single find-and-replace through the rendered output is all that's
+needed; the template source stays untouched.
+
+Do not bake "Penny" (or any other name) directly into the template files.
 
 ## Subject & preheader
 
@@ -52,6 +68,22 @@ Both templates:
 
 - **Subject:** `A quick test for {{first_name}}`
 - **Preheader:** hidden `<div>` in the template. Don't duplicate — the renderer should pass through the HTML as-is.
+
+## Two-action CTA
+
+Both templates drive a two-step action sequence, not a single phone call:
+
+1. **Open the demo page** (primary CTA button links to `{{demo_url}}`)
+2. **Dial `(240) 415-6185`** from the prospect's phone while the page is open
+
+The prospect watches the AI receptionist answer the call in real time — live
+transcript, audio playback, the booking landing on the calendar. Seeing the
+call + hearing the call + watching the calendar update is the pitch; the
+previous single-`tel:`-button pattern has been retired.
+
+The primary CTA button now targets `{{demo_url}}` and reads "Open the live
+demo." The italic tagline directly below the button states the second action
+and the no-sales-pitch framing.
 
 ## Telephone links
 
