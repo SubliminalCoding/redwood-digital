@@ -31,7 +31,7 @@ Google."
 | `first_name` | `John` | First name only. Not "John Miller". |
 | `business_name` | `Miller Plumbing & HVAC` | |
 | `reputation_hook` | `a solid reputation for emergency service` | Hand-researched per prospect from their Google Business Profile. Never use a generic fallback — the whole point of the line is specificity. |
-| `demo_url` | `https://demo.redwooddigitalfrederick.com/demo/frederick-hvac` | URL of the live demo viewer. Ngrok rotates between restarts; confirm the current URL per send batch. Once the Cloudflare Tunnel is up, this becomes the stable production URL. |
+| `demo_url` | `https://penny.ngrok.app/demo/frederick-hvac` | URL of the live demo viewer. Stable — reserved via ngrok paid tier, survives tunnel restarts. No per-batch URL refresh needed. |
 | `demo_number` | `(240) 415-6185` | **Display only.** Never substitute into an `href` — the tel: links are hardcoded to `tel:+12404156185` (E.164). |
 | `calendar_link` | `https://calendar.app.google/72xGWLJ4tVZJxpni6` | Default Google Calendar booking link. Currently only referenced on the demo page's post-call CTA — the email doesn't link to it directly. |
 | `unsubscribe_link` | per-recipient URL | Base64url-encoded, RFC 8058 one-click compatible. Required by CAN-SPAM. |
@@ -43,7 +43,7 @@ Google."
 | `first_name` | `Lisa` or `Dr. Lisa` | Whatever form the prospect actually goes by. First name only. |
 | `practice_name` | `Park Family Dental` | Renamed from `business_name` — dental prospects have "practices", not "businesses". |
 | `reputation_hook` | `consistently strong reviews for anxious-patient care` | Same rules as HVAC: hand-researched, never generic. Examples: `highly rated for kids' first visits`, `repeat five-star reviews for gentle cleanings`. |
-| `demo_url` | `https://demo.redwooddigitalfrederick.com/demo/frederick-hvac` | Same URL as HVAC — the demo is one surface. The dental body copy acknowledges it's pointed at a sample HVAC business and tells the prospect to pretend they're a new patient. |
+| `demo_url` | `https://penny.ngrok.app/demo/frederick-hvac` | Same URL as HVAC — the demo is one surface. The dental body copy acknowledges it's pointed at a sample HVAC business and tells the prospect to pretend they're a new patient. |
 | `demo_number` | `(240) 415-6185` | Display only. |
 | `calendar_link` | `https://calendar.app.google/72xGWLJ4tVZJxpni6` | |
 | `unsubscribe_link` | per-recipient URL | |

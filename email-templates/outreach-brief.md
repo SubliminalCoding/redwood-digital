@@ -66,31 +66,43 @@ and probably good for conversion).
 
 ## The URLs Hermes may link
 
-### Right now (dev — ngrok, URL rotates)
+### Stable host — ngrok paid tier with reserved subdomain (2026-04-21)
 
 | Path | What | Auth? | Link from email? |
 |---|---|---|---|
 | `/demo/frederick-hvac` | **Public live viewer** — dark, prospect-facing. Dial `(240) 415-6185`, watch the call unfold with PII redacted. Sticky post-call CTA with Matt's Calendly. | None | ✅ **primary** |
-| `/` | Dark product landing — hero, features, pricing, founder. | None | ⚠️ OK as secondary surface now (pricing resolved) |
+| `/` | Dark product landing — hero, features, pricing, founder. | None | ✅ OK as secondary surface (pricing resolved) |
 | `/demo/frederick-hvac?preview=1` | Static mock-data inspection mode | None | ❌ design tool only |
 | `/r/<CallSid>` | Per-call receipt page (SMS'd to caller) | URL-gated | ❌ |
 | `/admin/*` | Matt's admin | HTTP Basic | ❌ |
 
 ### Host specification — no ambiguity
 
-**During dev:** the demo URL is
-`https://<current-ngrok-subdomain>.ngrok-free.dev/demo/frederick-hvac`.
-The ngrok subdomain **rotates** between restarts. **Ask Matt for the
-current URL before each email batch.** Last-known as of 2026-04-21:
-`https://reda-rawish-combustibly.ngrok-free.dev`. Assume it changes.
+The demo URL is stable:
 
-**Production (planned):**
-`https://demo.redwooddigitalfrederick.com/demo/frederick-hvac`
-— via Cloudflare Tunnel, setup pending. Once live, this is stable and
-can be baked into templates permanently.
+```
+https://penny.ngrok.app/demo/frederick-hvac
+```
 
-**Rule of thumb:** if Matt hasn't explicitly said "the Cloudflare Tunnel
-is up and stable," use the ngrok URL and re-confirm before every send.
+Reserved via ngrok's paid tier. Survives tunnel restarts. No per-batch
+URL-refresh step needed — Hermes can bake this into templates and keep
+it across send cycles.
+
+The secondary product-landing URL is:
+
+```
+https://penny.ngrok.app/
+```
+
+If the tunnel ever goes offline (machine reboot, etc.), both URLs will
+fail until Matt restarts it with `ngrok start penny`. The DNS doesn't
+change.
+
+**Future migration (not yet planned):** if the brand eventually moves
+to a Cloudflare-managed zone on `redwooddigitalfrederick.com`, the
+demo URL swaps to `demo.redwooddigitalfrederick.com/demo/frederick-hvac`.
+Until then, `penny.ngrok.app` is the canonical host. Hermes: ignore any
+older brief language about rotating ngrok subdomains.
 
 ### Never in email
 
@@ -203,14 +215,15 @@ If a prospect asks "is my data safe on the demo":
 
 ## Open questions blocking the first batch
 
-Status as of 2026-04-21 16:15:
+Status as of 2026-04-21 16:45:
 
 1. ✅ **Product name** — locked to **Penny**.
 2. ✅ **Pricing** — resolved. Landing page no longer surfaces a dollar
    figure; says "Pilot pricing tuned to your shop."
-3. ⏳ **Demo URL** — still ngrok. Cloudflare Tunnel for
-   `demo.redwooddigitalfrederick.com` pending Matt's setup. Until then,
-   re-confirm the ngrok URL before each send batch.
+3. ✅ **Demo URL** — stable at `https://penny.ngrok.app/demo/frederick-hvac`
+   via ngrok paid tier with reserved subdomain. No per-batch URL refresh
+   needed. (Cloudflare Tunnel on a branded subdomain is a future migration,
+   not a current blocker.)
 4. ⏳ **First batch targets** — confirm the actual send list with Matt.
 5. ⏳ **Signature style** — first-person Matt recommended (matches landing
    page voice). Confirm with Matt.
