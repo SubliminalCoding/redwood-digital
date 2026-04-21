@@ -18,3 +18,6 @@ enhanced-email.md
 local-businesses.md
 _preview.html
 .opencode/
+
+# Local Netlify folder
+.netlify

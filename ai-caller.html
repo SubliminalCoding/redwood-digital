@@ -816,6 +816,74 @@ section {
   text-align: center;
 }
 
+/* Live demo call block on the ai-caller page */
+.demo-call-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  max-width: 460px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.demo-call-number-big {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 34px;
+  background: var(--bg-card);
+  border: 2px solid var(--green-bright);
+  border-radius: 16px;
+  font-size: clamp(1.6rem, 3.2vw, 2.1rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(45, 138, 104, 0.15), 0 10px 28px -8px rgba(45, 138, 104, 0.25);
+  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-out), border-color 0.3s;
+}
+.demo-call-number-big:hover {
+  color: var(--ink);
+  transform: translateY(-2px);
+  border-color: var(--green);
+  box-shadow: 0 4px 12px rgba(45, 138, 104, 0.25), 0 16px 36px -8px rgba(45, 138, 104, 0.4);
+}
+.demo-call-live-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e03a3a;
+  box-shadow: 0 0 0 0 rgba(224, 58, 58, 0.55);
+  animation: demo-live-blink 1.6s cubic-bezier(0.5, 0, 0.3, 1) infinite;
+  flex-shrink: 0;
+}
+@keyframes demo-live-blink {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(224, 58, 58, 0.55); }
+  50%      { box-shadow: 0 0 0 8px rgba(224, 58, 58, 0); }
+}
+.demo-call-note {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.55;
+  max-width: 420px;
+  text-align: center;
+  margin: 0;
+}
+.demo-call-block .btn-outline {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: transparent;
+}
+.demo-call-block .btn-outline:hover {
+  background: rgba(180, 74, 45, 0.06);
+  color: var(--accent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .demo-call-live-dot { animation: none; }
+}
+
 /* ---- CONTACT ---- */
 .contact {
   background: #f3f1ed;
@@ -1165,10 +1233,17 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 <!-- CTA -->
 <section class="cta-section">
   <div class="container fade-in" style="position: relative; z-index: 1;">
-    <div class="section-label">Ready?</div>
-    <h2 class="section-title">Hear it for yourself</h2>
-    <p class="section-subtitle">Book a 15-minute demo call. We'll show you exactly how your AI phone agent would sound and work for your business.</p>
-    <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" class="btn" target="_blank" rel="noopener">Book a Free 15-Minute Demo Call</a>
+    <div class="section-label">Hear it for yourself</div>
+    <h2 class="section-title">Call the live demo</h2>
+    <p class="section-subtitle">Our Frederick HVAC demo agent is on the other end of this number. Call it, say your AC is out, and it will triage you and book a slot. You'll get an SMS confirmation when it's done.</p>
+    <div class="demo-call-block">
+      <a class="demo-call-number-big" href="tel:+12404156185" aria-label="Call the live AI demo at 240-415-6185">
+        <span class="demo-call-live-dot" aria-hidden="true"></span>
+        <span class="demo-call-number-text">(240) 415-6185</span>
+      </a>
+      <p class="demo-call-note">Two-minute call. This line is a demo agent, not a real business. Your number isn't stored after the session.</p>
+      <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" class="btn btn-outline" target="_blank" rel="noopener">Or book a 15-min call with Matt</a>
+    </div>
   </div>
 </section>
 
@@ -1302,6 +1377,13 @@ function closeMenu() {
       track('email_click', {
         text: (a.textContent || '').trim().slice(0, 60),
         url: a.getAttribute('href') || ''
+      });
+    });
+  });
+  document.querySelectorAll('a[href="tel:+12404156185"]').forEach(function(a) {
+    a.addEventListener('click', function() {
+      track('demo_call_click', {
+        location: ((a.closest('section, header, nav, footer') || {}).id) || 'unknown'
       });
     });
   });

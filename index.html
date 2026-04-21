@@ -2348,6 +2348,108 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 .proof-grid { display:grid; grid-template-columns:1.35fr 1fr; gap:20px; margin-bottom:64px; }
 @media (max-width: 900px) { .proof-grid { grid-template-columns:1fr; } }
 
+/* Live demo call-out — visitors can actually phone the AI agent and hear it */
+.demo-call-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px;
+  align-items: center;
+  margin: 8px 0 40px;
+  padding: 20px 24px;
+  background: linear-gradient(180deg, rgba(45, 138, 104, 0.08), rgba(45, 138, 104, 0.02));
+  border: 1px solid rgba(45, 138, 104, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(45, 138, 104, 0.08), 0 8px 24px -8px rgba(45, 138, 104, 0.12);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), border-color 0.3s;
+}
+.demo-call-card:hover {
+  transform: translateY(-2px);
+  color: inherit;
+  border-color: var(--green);
+  box-shadow: 0 2px 6px rgba(45, 138, 104, 0.12), 0 16px 40px -8px rgba(45, 138, 104, 0.22);
+}
+.demo-call-icon {
+  position: relative;
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: var(--green-bright);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(45, 138, 104, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.demo-call-icon::after {
+  content: '';
+  position: absolute;
+  top: -2px; right: -2px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #e03a3a;
+  box-shadow: 0 0 0 2px #fbf7ef;
+  animation: demo-live-blink 1.6s cubic-bezier(0.5, 0, 0.3, 1) infinite;
+}
+@keyframes demo-live-blink {
+  0%, 100% { box-shadow: 0 0 0 2px #fbf7ef, 0 0 0 0 rgba(224, 58, 58, 0.55); }
+  50%      { box-shadow: 0 0 0 2px #fbf7ef, 0 0 0 6px rgba(224, 58, 58, 0); }
+}
+.demo-call-icon svg { width: 22px; height: 22px; }
+.demo-call-body strong {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--green);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.demo-call-body p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text);
+  margin: 0;
+}
+.demo-call-body small {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  margin-top: 5px;
+  line-height: 1.45;
+}
+.demo-call-number {
+  font-size: clamp(1.25rem, 2.1vw, 1.55rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  padding: 11px 20px;
+  background: var(--bg-card);
+  border: 1px solid rgba(45, 138, 104, 0.35);
+  border-radius: 12px;
+  white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: border-color 0.25s, transform 0.25s var(--ease-spring);
+}
+.demo-call-card:hover .demo-call-number {
+  border-color: var(--green);
+  transform: translateY(-1px);
+}
+@media (max-width: 760px) {
+  .demo-call-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 14px;
+    padding: 22px 20px;
+  }
+  .demo-call-icon { margin: 0 auto; }
+  .demo-call-number { justify-self: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .demo-call-icon::after { animation: none; }
+}
+
 .transcript-card { background:#fbf7ef; border:1px solid var(--border); border-radius:14px;
   overflow:hidden; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; }
 .transcript-header { padding:16px 20px; border-bottom:1px solid var(--border);
@@ -3131,6 +3233,18 @@ img, svg, video, canvas, iframe { max-width: 100%; }
     <h2 class="section-title">What it actually sounds like.</h2>
     <p class="section-subtitle">No stock testimonials. One real after-hours call, and the outcome it booked.</p>
 
+    <a class="demo-call-card" href="tel:+12404156185" aria-label="Call the live AI demo at 240-415-6185">
+      <span class="demo-call-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </span>
+      <div class="demo-call-body">
+        <strong>Try it live · Frederick HVAC demo</strong>
+        <p>Skip the transcript. Call the number, say your heater is out, and the AI will triage you and book a slot. You'll get an SMS confirmation when it's done.</p>
+        <small>This line answers as our Frederick HVAC demo agent, not a real business. Two-minute call. Your phone number isn't stored after the session.</small>
+      </div>
+      <span class="demo-call-number">(240) 415-6185</span>
+    </a>
+
     <div class="proof-grid">
       <!-- Transcript card -->
       <div class="transcript-card">
@@ -3764,13 +3878,14 @@ function toggleFaq(btn) {
 <!-- ─── GA4 funnel-event tracking ─────────────────────────────────────
      Fires custom events for the conversion funnel. No-op when
      window.__gaEnabled is false (any non-production hostname).
-       - booking_click — primary conversion (Book a 15-Min Call CTAs)
+       - booking_click  — primary conversion (Book a 15-Min Call CTAs)
+       - demo_call_click — visitor tapped the live HVAC demo number
        - email_click    — secondary conversion (matt@... mailto)
        - nav_click      — which sections draw users in
        - faq_expand     — which questions open most
        - scroll_depth   — quartile engagement signal
        - chat_open      — chat bubble clicked
-       - chat_submit    — chat form submitted
+       - chat_message   — each LLM chatbot turn
 -->
 <script>
 (function setupAnalytics() {
@@ -3806,6 +3921,15 @@ function toggleFaq(btn) {
       track('email_click', {
         text: (a.textContent || '').trim().slice(0, 60),
         url: a.getAttribute('href') || ''
+      });
+    });
+  });
+
+  // Live demo call — visitor tapped the Frederick HVAC AI number
+  document.querySelectorAll('a[href="tel:+12404156185"]').forEach(function(a) {
+    a.addEventListener('click', function() {
+      track('demo_call_click', {
+        location: ((a.closest('section, header, nav, footer') || {}).id) || 'unknown'
       });
     });
   });
