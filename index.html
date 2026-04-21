@@ -71,6 +71,47 @@ html { scrollbar-width: thin; scrollbar-color: rgba(180, 74, 45, 0.5) transparen
 ::-webkit-scrollbar-thumb:hover { background: rgba(180, 74, 45, 0.55); }
 ::-webkit-scrollbar-thumb:active { background: var(--accent); }
 
+/* Back-to-top button — appears after a meaningful scroll, mirrors chat bubble corner */
+.back-to-top {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 95;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(251, 247, 239, 0.92);
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(20, 18, 14, 0.1), 0 12px 28px rgba(20, 18, 14, 0.06);
+  opacity: 0;
+  transform: translateY(14px) scale(0.9);
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease-out), transform 0.35s var(--ease-spring),
+              background 0.25s, color 0.25s, border-color 0.25s;
+}
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.back-to-top:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.back-to-top svg { width: 18px; height: 18px; }
+@media (max-width: 768px) {
+  .back-to-top { bottom: calc(92px + env(safe-area-inset-bottom)); left: 16px; width: 42px; height: 42px; }
+  .back-to-top svg { width: 16px; height: 16px; }
+}
+
 /* Scroll-progress bar — thin accent-colored line across the top edge */
 .scroll-progress {
   position: fixed;
@@ -372,6 +413,26 @@ nav.is-scrolled {
     0 4px 14px rgba(20, 18, 14, 0.05),
     0 14px 32px -8px rgba(20, 18, 14, 0.06);
 }
+/* Nav over dark sections — lighter palette so the logo + links stay readable */
+nav.on-dark {
+  background: rgba(42, 31, 23, 0.72);
+  border-bottom-color: rgba(244, 238, 226, 0.14);
+}
+nav.on-dark.is-scrolled {
+  background: rgba(42, 31, 23, 0.92);
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.2),
+    0 4px 14px rgba(0, 0, 0, 0.25),
+    0 14px 32px -8px rgba(0, 0, 0, 0.3);
+}
+nav.on-dark .logo { color: #faf9f7; }
+nav.on-dark .logo-text em .lch,
+nav.on-dark .logo-text em { color: #e89370; }
+nav.on-dark ul li a { color: rgba(244, 238, 226, 0.72); }
+nav.on-dark ul li a:hover,
+nav.on-dark ul li a.is-active { color: #faf9f7; }
+nav.on-dark ul li a::after { background: linear-gradient(90deg, #e89370, #c2654a); }
+nav.on-dark .hamburger svg { stroke: #faf9f7; }
 nav .container {
   display: flex;
   justify-content: space-between;
@@ -797,12 +858,17 @@ section[style*="text-align"] .section-title,
   transition: opacity 0.45s var(--ease-out);
   pointer-events: none;
 }
-/* One-shot shimmer when the card enters view */
-.services-grid.cascade .service-card {
+/* Pre-entry state + staggered rise + sheen on view */
+.services-grid .service-card {
   position: relative;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s var(--ease-out), transform 0.7s var(--ease-out);
 }
 .services-grid.cascade .service-card {
+  opacity: 1;
+  transform: translateY(0);
   background-image: linear-gradient(105deg,
     transparent 40%,
     rgba(255, 255, 255, 0.55) 50%,
@@ -814,15 +880,16 @@ section[style*="text-align"] .section-title,
   background-color: var(--bg-card);
   animation: svc-shine 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
-.services-grid.cascade .service-card:nth-child(1) { animation-delay: 0.05s; }
-.services-grid.cascade .service-card:nth-child(2) { animation-delay: 0.22s; }
-.services-grid.cascade .service-card:nth-child(3) { animation-delay: 0.39s; }
-.services-grid.cascade .service-card:nth-child(4) { animation-delay: 0.56s; }
+.services-grid.cascade .service-card:nth-child(1) { transition-delay: 0.05s; animation-delay: 0.15s; }
+.services-grid.cascade .service-card:nth-child(2) { transition-delay: 0.15s; animation-delay: 0.32s; }
+.services-grid.cascade .service-card:nth-child(3) { transition-delay: 0.25s; animation-delay: 0.49s; }
+.services-grid.cascade .service-card:nth-child(4) { transition-delay: 0.35s; animation-delay: 0.66s; }
 @keyframes svc-shine {
   0%   { background-position: 160% 0; }
   100% { background-position: -60% 0; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .services-grid .service-card { opacity: 1; transform: none; transition: none; }
   .services-grid.cascade .service-card { animation: none; background-image: none; }
 }
 .service-card:hover {
@@ -2119,10 +2186,30 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 .transcript-footer { padding:16px 20px; border-top:1px solid var(--border); background:#f4eee2; }
 .tf-outcome { font-size:.88rem; color:#1a1a1a; font-weight:600;
   display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
-.tf-tag { display:inline-block; padding:2px 8px; background:rgba(45,138,104,.12);
-  color:#206850; border-radius:100px; font-size:.7rem;
-  font-family: ui-monospace, Menlo, monospace; text-transform:uppercase;
-  letter-spacing:.06em; font-weight:500; }
+.tf-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba(45, 138, 104, 0.12);
+  color: #206850;
+  border-radius: 100px;
+  font-size: .7rem;
+  font-family: ui-monospace, Menlo, monospace;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-weight: 500;
+  box-shadow: 0 0 0 0 rgba(45, 138, 104, 0);
+}
+.proof-section.revealed .tf-tag {
+  animation: booked-pulse 1.6s cubic-bezier(0.22, 1, 0.36, 1) 1.1s both;
+}
+@keyframes booked-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(45, 138, 104, 0); background: rgba(45, 138, 104, 0.12); }
+  40%  { box-shadow: 0 0 0 10px rgba(45, 138, 104, 0); background: rgba(45, 138, 104, 0.28); }
+  100% { box-shadow: 0 0 0 0 rgba(45, 138, 104, 0); background: rgba(45, 138, 104, 0.12); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .proof-section.revealed .tf-tag { animation: none; }
+}
 .tf-note { font-size:.78rem; color:var(--text-dim); line-height:1.5; }
 
 .audio-card { background:#fbf7ef; border:1px solid var(--border); border-radius:14px;
@@ -2276,6 +2363,22 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   color:#faf9f7; line-height:1.15; letter-spacing:-.02em; margin:14px 0 20px; }
 .founder-copy { font-size:1rem; color:#ede4d8; line-height:1.7;
   margin-bottom:14px; max-width:54ch; }
+.founder-copy:first-of-type::first-letter {
+  font-size: 3em;
+  float: left;
+  line-height: 0.88;
+  padding: 0.08em 0.14em 0 0;
+  margin-right: 4px;
+  font-weight: 700;
+  color: #e89370;
+  background: linear-gradient(135deg, #e89370, #c2654a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@media (max-width: 640px) {
+  .founder-copy:first-of-type::first-letter { font-size: 2.4em; }
+}
 .founder-signature-row { margin:22px 0 26px; }
 .founder-section .signature { font-family:'Caveat', cursive; font-size:1.8rem;
   color:#e89370; display:inline-flex; align-items:center; gap:10px; }
@@ -2422,6 +2525,9 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 
 <a href="#main" class="skip-link">Skip to content</a>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+<button class="back-to-top" id="backToTop" aria-label="Back to top" type="button">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
 <!-- Nav -->
 <nav>
@@ -3183,6 +3289,7 @@ function toggleFaq(btn) {
   const nav = document.querySelector('nav');
   if (!nav) return;
   const progress = document.getElementById('scrollProgress');
+  const backTop = document.getElementById('backToTop');
   let ticking = false;
   function update() {
     if (window.scrollY > 12) nav.classList.add('is-scrolled');
@@ -3192,12 +3299,52 @@ function toggleFaq(btn) {
       const pct = Math.min(100, (window.scrollY / max) * 100);
       progress.style.width = pct + '%';
     }
+    if (backTop) {
+      if (window.scrollY > 1000) backTop.classList.add('visible');
+      else backTop.classList.remove('visible');
+    }
     ticking = false;
   }
   window.addEventListener('scroll', function() {
     if (!ticking) { requestAnimationFrame(update); ticking = true; }
   }, { passive: true });
   update();
+  if (backTop) {
+    backTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+})();
+
+// Nav color inversion over dark sections (founder + CTA)
+(function() {
+  const nav = document.querySelector('nav');
+  if (!nav) return;
+  const darkSections = document.querySelectorAll('.founder-section, .cta-section');
+  if (!darkSections.length) return;
+  const io = new IntersectionObserver(function(entries) {
+    let anyIntersecting = false;
+    entries.forEach(function(e) {
+      if (e.isIntersecting && e.intersectionRatio > 0) anyIntersecting = true;
+    });
+    // Check all darkSections manually since IO only reports changed ones
+    let anyActive = false;
+    darkSections.forEach(function(s) {
+      const r = s.getBoundingClientRect();
+      // Active when the section is crossing the nav area (top ~80px)
+      if (r.top < 80 && r.bottom > 0) anyActive = true;
+    });
+    nav.classList.toggle('on-dark', anyActive);
+  }, { rootMargin: '-60px 0px 0px 0px', threshold: [0, 0.1, 0.5, 1] });
+  darkSections.forEach(function(s) { io.observe(s); });
+  window.addEventListener('scroll', function() {
+    let anyActive = false;
+    darkSections.forEach(function(s) {
+      const r = s.getBoundingClientRect();
+      if (r.top < 80 && r.bottom > 0) anyActive = true;
+    });
+    nav.classList.toggle('on-dark', anyActive);
+  }, { passive: true });
 })();
 
 // Nav active-section highlight — underline the current section's menu item
