@@ -7,42 +7,6 @@
   <meta name="color-scheme" content="light">
   <meta name="supported-color-schemes" content="light">
   <title>Redwood Digital</title>
-  {#
-    Dental / healthcare outreach template (Track B).
-    Hook: "When a new patient calls during lunch, who answers?"
-
-    The dental version is different from the HVAC one because the
-    dental pain is new-patient acquisition, not after-hours
-    emergency triage. Missed new-patient calls during lunch or at
-    5pm is where a $15k+ lifetime-value lead walks to the next
-    practice on Google.
-
-    Template docs are in Jinja {# #} syntax. A compliant Jinja
-    engine strips these at compile time. If your renderer emits
-    this block into the final HTML, you're running string-replace
-    not Jinja — fix the renderer.
-
-    VARIABLES:
-      first_name        first name only, e.g. "Lisa" or "Dr. Lisa"
-                        (whatever form the prospect actually goes by)
-      practice_name     e.g. "Park Family Dental"
-      reputation_hook   short phrase tied to something real on their
-                        Google Business Profile. Hand-researched per
-                        prospect. Never use a generic fallback.
-                        Examples:
-                          "consistently strong reviews for anxious-patient care"
-                          "highly rated for kids' first visits"
-                          "repeat five-star reviews for gentle cleanings"
-      demo_number       display only: "(240) 415-6185"
-      calendar_link     default: https://calendar.app.google/72xGWLJ4tVZJxpni6
-      unsubscribe_link  per-recipient base64url-encoded URL
-
-    SUBJECT LINE: A quick test for {{first_name}}
-    PREHEADER:    see hidden div below (don't duplicate)
-
-    TEL LINKS are hardcoded to tel:+12404156185 (E.164) throughout.
-    Don't substitute demo_number into href — display only.
-  #}
 </head>
 <body style="margin:0;padding:0;background:#f4eee2;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#3d3a36;-webkit-font-smoothing:antialiased;">
 

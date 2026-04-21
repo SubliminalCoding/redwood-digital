@@ -7,33 +7,6 @@
   <meta name="color-scheme" content="light">
   <meta name="supported-color-schemes" content="light">
   <title>Redwood Digital</title>
-  {#
-    HVAC / home-services outreach template.
-    Hook: "When an emergency call comes in at 10pm, who answers?"
-
-    Template docs live inside a Jinja {# #} comment (not an HTML comment)
-    so they are stripped at render time by any compliant Jinja engine.
-    If your renderer leaves these in the output, it's not running Jinja —
-    it's doing naive string interpolation and will also mishandle
-    variables. Fix the renderer.
-
-    VARIABLES:
-      first_name        first name only, e.g. "John" (not "John Miller")
-      business_name     e.g. "Miller Plumbing & HVAC"
-      reputation_hook   short phrase tied to something real on their
-                        Google Business Profile. Hand-researched per
-                        prospect. Never use a generic fallback — the
-                        whole point of the line is specificity.
-      demo_number       display only, e.g. "(240) 415-6185"
-      calendar_link     default: https://calendar.app.google/72xGWLJ4tVZJxpni6
-      unsubscribe_link  per-recipient base64url-encoded URL
-
-    SUBJECT LINE: A quick test for {{first_name}}
-    PREHEADER:    see hidden div below (don't duplicate)
-
-    TEL LINKS are hardcoded to tel:+12404156185 (E.164) throughout.
-    Don't substitute demo_number into href — display only.
-  #}
 </head>
 <body style="margin:0;padding:0;background:#f4eee2;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#3d3a36;-webkit-font-smoothing:antialiased;">
 
