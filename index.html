@@ -3944,7 +3944,9 @@ function toggleFaq(btn) {
     </span>
     <button id="chatClose" aria-label="Close chat">&times;</button>
   </div>
-  <form class="chat-body" id="chatForm" action="mailto:matthew@redwooddigitalfrederick.com" method="post" enctype="text/plain">
+  <form class="chat-body" id="chatForm" name="chat" method="POST" action="/?sent=chat" data-netlify="true" netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="chat">
+    <p class="sr-only" aria-hidden="true"><label>Leave this empty if you're human: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
     <p>Ask anything about our services, or leave your info and we'll get back to you within a few hours.</p>
     <label for="chatName" class="sr-only">Your name</label>
     <input type="text" id="chatName" name="Name" placeholder="Your name" required autocomplete="name">
@@ -3981,20 +3983,29 @@ function toggleFaq(btn) {
     e.preventDefault();
     var name = document.getElementById('chatName').value.trim();
     var email = document.getElementById('chatEmail').value.trim();
-    var msg = document.getElementById('chatMsg').value.trim();
     if (!name || !email) { alert('Please enter your name and email/phone.'); return; }
 
-    // Send via mailto (upgrade to API endpoint when ready)
-    var subject = encodeURIComponent('Chat lead from ' + name);
-    var body = encodeURIComponent('Name: ' + name + '\nContact: ' + email + '\nMessage: ' + msg);
-    window.open('mailto:matthew@redwooddigitalfrederick.com?subject=' + subject + '&body=' + body, '_blank');
+    sendBtn.disabled = true;
+    var originalLabel = sendBtn.textContent;
+    sendBtn.textContent = 'Sending…';
 
-    form.style.display = 'none';
-    success.style.display = 'block';
-
-    if (window.__gaEnabled && typeof gtag === 'function') {
-      gtag('event', 'chat_submit', { name: name });
-    }
+    var formData = new FormData(form);
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    }).then(function(resp) {
+      if (!resp.ok) throw new Error('status ' + resp.status);
+      form.style.display = 'none';
+      success.style.display = 'block';
+      if (window.__gaEnabled && typeof gtag === 'function') {
+        gtag('event', 'chat_submit', { name: name });
+      }
+    }).catch(function() {
+      sendBtn.disabled = false;
+      sendBtn.textContent = originalLabel;
+      alert('Could not send just now. Please try again, or call (227) 253-5980.');
+    });
   });
 })();
 </script>
