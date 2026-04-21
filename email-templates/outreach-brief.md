@@ -18,15 +18,17 @@ HVAC / service-business prospects.
 1. **Redraft HVAC + dental email templates against the new two-action flow**
    (described below). The single-`tel:`-button pattern no longer fits —
    prospects now need a browser tab open *alongside* the phone call.
-2. **Leave `[PRODUCT_NAME]` as a literal placeholder** in the drafts. The
-   product name (currently "Penny") is not locked. Don't bake "Penny" into
-   template copy Hermes will have to rewrite later.
-3. **Hold all drafts for Matt's review** before sending. Do not ship the
-   first batch until Matt has (a) confirmed the name, (b) resolved the
-   pricing discrepancy below, (c) given the production demo URL.
-4. **Do NOT link to the product landing page (`/`) from email yet.** See
-   the pricing discrepancy section below — until Matt reconciles the two
-   prices a prospect clicking around will see conflicting numbers.
+2. **Leave `[PRODUCT_NAME]` as a literal placeholder** in the drafts.
+   Current value: **Penny** (confirmed by Matt 2026-04-21). Keep the
+   placeholder in template source so if Matt swaps it later it's a
+   find-and-replace rather than rewriting copy. Render the placeholder
+   to "Penny" at send time.
+3. **Hold all drafts for Matt's review** before sending.
+4. **Linking to the product landing page `/` is now OK.** Pricing
+   discrepancy resolved (2026-04-21) — the landing page's pricing card
+   no longer shows a dollar figure; it says "Pilot pricing tuned to your
+   shop — book a 15-min call to discuss what fits." No conflict with the
+   main site's $99 starter pack messaging anymore.
 
 ---
 
@@ -69,7 +71,7 @@ and probably good for conversion).
 | Path | What | Auth? | Link from email? |
 |---|---|---|---|
 | `/demo/frederick-hvac` | **Public live viewer** — dark, prospect-facing. Dial `(240) 415-6185`, watch the call unfold with PII redacted. Sticky post-call CTA with Matt's Calendly. | None | ✅ **primary** |
-| `/` | Dark product landing — hero, features, pricing, founder. | None | ❌ **ON HOLD** (see pricing section) |
+| `/` | Dark product landing — hero, features, pricing, founder. | None | ⚠️ OK as secondary surface now (pricing resolved) |
 | `/demo/frederick-hvac?preview=1` | Static mock-data inspection mode | None | ❌ design tool only |
 | `/r/<CallSid>` | Per-call receipt page (SMS'd to caller) | URL-gated | ❌ |
 | `/admin/*` | Matt's admin | HTTP Basic | ❌ |
@@ -95,59 +97,40 @@ is up and stable," use the ngrok URL and re-confirm before every send.
 - Any `/admin/*` URL (auth-gated, not for prospects)
 - Any `/r/<CallSid>` URL (per-call, time-limited, not meant to be shared
   with cold outreach recipients)
-- The `/` landing page until pricing is reconciled
 
 ---
 
-## Pricing discrepancy — UNRESOLVED
+## Pricing — resolved (2026-04-21)
 
-This is the biggest blocker on linking to the landing page.
+The landing page's pricing card no longer surfaces a monthly dollar figure.
+It now reads:
 
-- **redwooddigitalfrederick.com** (main site, live): promotes the **$99
-  starter pack** for websites + Google Business Profile + reviews.
-- **`/` product landing** (Penny, new): pricing card shows **Free 14-day
-  pilot · then $2,497/mo**.
+> **Free 14-day pilot**
+> Pilot pricing tuned to your shop — book a 15-min call to discuss what fits.
 
-A prospect who clicks both sees "$99" and "$2,497/mo" and gets confused
-about what Redwood Digital actually sells at what price. These need to
-be reconciled in copy before the Penny landing is linkable.
+No number collision with the main site's $99 starter pack. The real price
+comes out of Matt's discovery call, not the landing page. This mirrors how
+the Camillo retainer model actually operates.
 
-**Hermes directive:** until Matt resolves this, emails **must not link**
-to `/` or to `penny.*` or to the product landing on any domain. Link
-only to the demo at `/demo/frederick-hvac`, which has its own post-call
-CTA that drives to Matt's Calendly without the pricing conflict surfacing.
-
-Once pricing is reconciled, updating templates to include the landing
-link is a one-liner.
+**Hermes:** you may now link to the product landing page `/` as a
+secondary "learn more" surface in email. The primary CTA should still
+drive to `/demo/frederick-hvac` — watching beats reading for this product.
 
 ---
 
-## Product name — placeholder policy
+## Product name — Penny (confirmed 2026-04-21)
 
-Current placeholder: **Penny** (read from `PRODUCT_NAME` env var in
-`server.py`; defaults to `Penny`). Candidates on the table include Penny,
-Tilly, Hattie, Marigold, Front Desk, Pickup, Hearth. Matt hasn't committed.
+Current value: **Penny.** Read from `PRODUCT_NAME` env var in `server.py`.
+Matt has committed for now — if he changes it later it's a one-line env
+swap + a find-and-replace through templates.
 
-**Template pattern to use:**
+**Template pattern:** use `[PRODUCT_NAME]` as a literal placeholder in
+template source. Render to "Penny" at send time. That keeps templates
+resilient to a later name change.
 
-```
-Subject: [PRODUCT_NAME] — the AI receptionist that answers your phone after hours
-
-Hey {{ first_name }},
-
-[body copy references [PRODUCT_NAME] as a literal placeholder throughout]
-
-— Matt
-Redwood Digital
-```
-
-When Matt locks the name, it's a find-and-replace across all templates
-rather than a manual rewrite per draft.
-
-Gender/pronouns in copy: if `[PRODUCT_NAME]` ends up being a female-coded
-name (Penny / Tilly / Hattie), use "she" and "her." Matt intends a female
-voice (the current deployment uses ElevenLabs "Bella"). If the final
-name is non-personified (Front Desk / Pickup), use "it." Wait for Matt.
+**Pronouns:** "she" / "her." Penny is female-personified. The current
+deployment uses the ElevenLabs "Bella" voice (warm middle-aged American
+female). Keep it consistent.
 
 ---
 
@@ -214,23 +197,23 @@ If a prospect asks "is my data safe on the demo":
   leaving the process. Never reach the SSE wire.
 - Transcripts are rendered verbatim during the call. If the prospect
   says their address aloud it appears in the transcript on screen.
-  This is a known trade-off for demo value — documented in the security
-  audit.
+  This is a known trade-off for demo value — documented in the security audit.
 
 ---
 
 ## Open questions blocking the first batch
 
-Hermes should draft but hold. Matt needs to answer before send:
+Status as of 2026-04-21 16:15:
 
-1. **Product name** — Penny, or something else?
-2. **Pricing resolution** — $99 starter vs $2,497/mo Penny. How do these
-   relate in copy?
-3. **Demo URL** — still ngrok, or Cloudflare Tunnel live?
-4. **First batch targets** — Matt previously mentioned BPM HVAC, Markool
-   HVAC, Air Doctor HVAC, Frederick Dental Suite, Frederick Dental Group.
-   Confirm the actual list.
-5. **Signature style** — Matt first-person, or "the Redwood Digital team"?
+1. ✅ **Product name** — locked to **Penny**.
+2. ✅ **Pricing** — resolved. Landing page no longer surfaces a dollar
+   figure; says "Pilot pricing tuned to your shop."
+3. ⏳ **Demo URL** — still ngrok. Cloudflare Tunnel for
+   `demo.redwooddigitalfrederick.com` pending Matt's setup. Until then,
+   re-confirm the ngrok URL before each send batch.
+4. ⏳ **First batch targets** — confirm the actual send list with Matt.
+5. ⏳ **Signature style** — first-person Matt recommended (matches landing
+   page voice). Confirm with Matt.
 
 ---
 
@@ -238,6 +221,6 @@ Hermes should draft but hold. Matt needs to answer before send:
 
 > Redraft HVAC + dental email templates around a two-action CTA (open
 > `<ngrok-demo-URL>/demo/frederick-hvac` + dial `(240) 415-6185`). Use
-> `[PRODUCT_NAME]` as a placeholder. Do NOT link to the product landing
-> page until Matt resolves the $99-vs-$2,497 pricing discrepancy. Hold
-> drafts for Matt's review before any sends.
+> `[PRODUCT_NAME]` → renders as "Penny." Primary CTA to the demo; OK
+> to link the product landing `/` as secondary. Hold drafts for Matt's
+> review before sending; re-confirm the ngrok URL per batch.
