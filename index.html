@@ -2215,7 +2215,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
           <div class="signature">— Matthew</div>
         </div>
         <div class="founder-cta-row">
-          <a class="btn" href="https://calendly.com/redwood-digital/free-15-minute-consultation" target="_blank" rel="noopener">Book a 15-min call</a>
+          <a class="btn" href="https://calendar.app.google/72xGWLJ4tVZJxpni6" target="_blank" rel="noopener">Book a 15-min call</a>
           <a class="btn-outline-light" href="mailto:matthew@redwooddigitalfrederick.com">matthew@redwooddigitalfrederick.com</a>
         </div>
         <div class="founder-micro">15 minutes, no slide deck. Tell me what's broken and I'll tell you what it costs.</div>
@@ -2392,7 +2392,7 @@ FILLED JOEL TESTIMONIAL (paste over the JOEL SLOT above when Joel's quote arrive
           <li>Weekly report of what it booked</li>
           <li>Custom scripts, your voice</li>
         </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" target="_blank" rel="noopener" class="btn btn-sm btn-block">Book a call</a>
+        <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" target="_blank" rel="noopener" class="btn btn-sm btn-block">Book a call</a>
       </div>
 
       <div class="pricing-card">
@@ -2519,7 +2519,7 @@ FILLED JOEL TESTIMONIAL (paste over the JOEL SLOT above when Joel's quote arrive
     <div class="section-label">Ready?</div>
     <h2 class="section-title">Let's talk about what you need</h2>
     <p class="section-subtitle">Book a 15-minute call. We'll talk about what you need and whether I'm the right fit. If I'm not, I'll say so.</p>
-    <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn" target="_blank" rel="noopener">Book a 15-Min Call</a>
+    <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" class="btn" target="_blank" rel="noopener">Book a 15-Min Call</a>
   </div>
 </section>
 
@@ -2538,7 +2538,7 @@ FILLED JOEL TESTIMONIAL (paste over the JOEL SLOT above when Joel's quote arrive
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         matthew@redwooddigitalfrederick.com
       </a>
-      <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="contact-card" target="_blank" rel="noopener" aria-label="Book a 15-minute consultation (opens Calendly in new tab)">
+      <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" class="contact-card" target="_blank" rel="noopener" aria-label="Book a 15-minute consultation (opens Google Calendar booking in new tab)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Book a call
       </a>
@@ -2676,7 +2676,7 @@ function toggleFaq(btn) {
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
     Call
   </a>
-  <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" target="_blank" rel="noopener" class="mobile-cta-primary">
+  <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" target="_blank" rel="noopener" class="mobile-cta-primary">
     Book a 15-Min Call
   </a>
   <button type="button" class="mobile-cta-dismiss" aria-label="Dismiss">
@@ -2689,7 +2689,7 @@ function toggleFaq(btn) {
 <!-- ─── GA4 funnel-event tracking ─────────────────────────────────────
      Fires custom events for the conversion funnel. No-op when
      window.__gaEnabled is false (any non-production hostname).
-       - calendly_click — primary conversion (Book a Demo CTAs)
+       - booking_click — primary conversion (Book a 15-Min Call CTAs)
        - email_click    — secondary conversion (matt@... mailto)
        - scroll_depth   — quartile engagement signal
 -->
@@ -2700,10 +2700,10 @@ function toggleFaq(btn) {
     gtag('event', name, params || {});
   }
 
-  // Calendly clicks — primary conversion
-  document.querySelectorAll('a[href*="calendly.com"]').forEach(function(a) {
+  // Booking clicks — primary conversion (Google Calendar appointment schedule)
+  document.querySelectorAll('a[href*="calendar.app.google"], a[href*="calendar.google.com/calendar/appointments"]').forEach(function(a) {
     a.addEventListener('click', function() {
-      track('calendly_click', {
+      track('booking_click', {
         text: (a.textContent || '').trim().slice(0, 60),
         location: ((a.closest('section, header, nav, footer') || {}).id) || 'unknown',
         url: a.getAttribute('href') || ''
