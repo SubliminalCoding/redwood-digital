@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <title>Redwood Digital</title>
+  {#
+    Dental / healthcare outreach template (Track B).
+    Hook: "When a new patient calls during lunch, who answers?"
+
+    The dental version is different from the HVAC one because the
+    dental pain is new-patient acquisition, not after-hours
+    emergency triage. Missed new-patient calls during lunch or at
+    5pm is where a $15k+ lifetime-value lead walks to the next
+    practice on Google.
+
+    Template docs are in Jinja {# #} syntax. A compliant Jinja
+    engine strips these at compile time. If your renderer emits
+    this block into the final HTML, you're running string-replace
+    not Jinja — fix the renderer.
+
+    VARIABLES:
+      first_name        first name only, e.g. "Lisa" or "Dr. Lisa"
+                        (whatever form the prospect actually goes by)
+      practice_name     e.g. "Park Family Dental"
+      reputation_hook   short phrase tied to something real on their
+                        Google Business Profile. Hand-researched per
+                        prospect. Never use a generic fallback.
+                        Examples:
+                          "consistently strong reviews for anxious-patient care"
+                          "highly rated for kids' first visits"
+                          "repeat five-star reviews for gentle cleanings"
+      demo_number       display only: "(240) 415-6185"
+      calendar_link     default: https://calendar.app.google/72xGWLJ4tVZJxpni6
+      unsubscribe_link  per-recipient base64url-encoded URL
+
+    SUBJECT LINE: A quick test for {{first_name}}
+    PREHEADER:    see hidden div below (don't duplicate)
+
+    TEL LINKS are hardcoded to tel:+12404156185 (E.164) throughout.
+    Don't substitute demo_number into href — display only.
+  #}
+</head>
+<body style="margin:0;padding:0;background:#f4eee2;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#3d3a36;-webkit-font-smoothing:antialiased;">
+
+  <!-- Hidden preheader — inbox preview line -->
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;font-size:1px;line-height:1px;color:#f4eee2;">
+    Call (240) 415-6185 yourself. Talk to the AI. Judge it on what it does.
+  </div>
+
+  <!-- Outer wrapper -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4eee2;">
+    <tr>
+      <td align="center" style="padding:28px 12px;">
+
+        <!-- Main card -->
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#fbf7ef;border:1px solid #e8e4df;border-radius:14px;overflow:hidden;">
+
+          <!-- Header block: solid redwood red with white text -->
+          <tr>
+            <td style="padding:32px 36px 34px;background:#b44a2d;background:linear-gradient(180deg,#c2654a 0%,#b44a2d 60%,#a3421f 100%);color:#ffffff;">
+              <div style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:10px;">
+                A quick test for {{first_name}}
+              </div>
+              <h1 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:27px;line-height:1.22;font-weight:700;letter-spacing:-0.4px;color:#ffffff;">
+                When a new patient calls during lunch, who answers?
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Body paragraph 1: personalized reputation reference -->
+          <tr>
+            <td style="padding:28px 36px 0;font-size:15px;line-height:1.65;color:#3d3a36;">
+              <p style="margin:0 0 18px;">
+                {{first_name}}, I was looking at {{practice_name}}'s Google reviews. You've got {{reputation_hook}}. My question: when a new patient calls at 12:15 on a Wednesday and the front desk is at lunch, does someone pick up? Or do they hang up and book with the next practice on Google?
+              </p>
+            </td>
+          </tr>
+
+          <!-- Body paragraph 2: what the product does -->
+          <tr>
+            <td style="padding:0 36px 0;font-size:15px;line-height:1.65;color:#3d3a36;">
+              <p style="margin:0 0 18px;">
+                I build AI receptionists that answer your missed calls with a real conversation. They collect new-patient info, confirm insurance, and drop appointments onto your schedule. No IVR trees. No "please leave a message after the beep." Just a conversation that sounds like a person and books the consult.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Body paragraph 3: the ask — pitch-free demo -->
+          <tr>
+            <td style="padding:0 36px 4px;font-size:15px;line-height:1.65;color:#3d3a36;">
+              <p style="margin:0 0 22px;">
+                I don't want to pitch you. <strong style="color:#1a1a1a;">I want you to call it yourself.</strong> <a href="tel:+12404156185" style="color:#b44a2d;font-weight:700;text-decoration:none;">{{demo_number}}</a> is a live demo of the AI receptionist. It's pointed at a sample HVAC business right now, but the logic is the same — pretend you're a new patient asking about scheduling, and see how it handles the call. If it books the appointment naturally, we'll talk about tuning one for {{practice_name}}. If it doesn't, no hard feelings.
+              </p>
+            </td>
+          </tr>
+
+          <!-- CTA button -->
+          <tr>
+            <td style="padding:6px 36px 8px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center" bgcolor="#b44a2d" style="background:linear-gradient(180deg,#c2654a,#b44a2d 55%,#a3421f);background-color:#b44a2d;border-radius:10px;box-shadow:0 2px 6px rgba(180,74,45,0.25),inset 0 1px 0 rgba(255,255,255,0.15);">
+                    <a href="tel:+12404156185" style="display:inline-block;padding:15px 34px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;letter-spacing:-0.005em;">
+                      Call the demo now
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Micro line below CTA -->
+          <tr>
+            <td style="padding:10px 36px 22px;font-size:13px;line-height:1.5;color:#6a645a;font-style:italic;">
+              No sales call with me. Just talk to the AI and judge it on what it does.
+            </td>
+          </tr>
+
+          <!-- Subtle divider before the feature strip -->
+          <tr>
+            <td style="padding:0 36px;">
+              <div style="height:1px;background:#f0eadb;line-height:1px;font-size:0;">&nbsp;</div>
+            </td>
+          </tr>
+
+          <!-- Three-column feature strip (dental-tuned) -->
+          <tr>
+            <td style="padding:8px 24px 10px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td width="33.3%" style="padding:12px;vertical-align:top;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4eee2;border:1px solid #e8e4df;border-radius:10px;">
+                      <tr>
+                        <td style="padding:14px 16px;">
+                          <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:6px;">Every new-patient call</div>
+                          <div style="font-size:12px;line-height:1.5;color:#6a645a;">Lunch, after hours, weekends. Nothing goes to voicemail.</div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td width="33.3%" style="padding:12px;vertical-align:top;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4eee2;border:1px solid #e8e4df;border-radius:10px;">
+                      <tr>
+                        <td style="padding:14px 16px;">
+                          <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:6px;">Books the consult</div>
+                          <div style="font-size:12px;line-height:1.5;color:#6a645a;">Collects insurance and reason-for-visit, drops onto your schedule.</div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td width="33.3%" style="padding:12px;vertical-align:top;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4eee2;border:1px solid #e8e4df;border-radius:10px;">
+                      <tr>
+                        <td style="padding:14px 16px;">
+                          <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:6px;">Built Local</div>
+                          <div style="font-size:12px;line-height:1.5;color:#6a645a;">Designed for MD practices. Frederick based.</div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Signature -->
+          <tr>
+            <td style="padding:16px 36px 26px;border-top:1px solid #f0eadb;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="padding-top:16px;font-size:14px;line-height:1.5;color:#3d3a36;">
+                    <p style="margin:0 0 6px;color:#6a645a;">— Matthew</p>
+                    <p style="margin:0;">
+                      <strong style="color:#1a1a1a;">Matthew Coleman</strong> · Founder, <a href="https://www.redwooddigitalfrederick.com" style="color:#1a1a1a;text-decoration:none;border-bottom:1px solid #e8e4df;">Redwood Digital</a><br>
+                      <span style="color:#6a645a;font-size:13px;">Custom AI for service businesses · Frederick, MD</span>
+                    </p>
+                    <p style="margin:10px 0 0;font-size:13px;">
+                      <a href="mailto:matthew@redwooddigitalfrederick.com" style="color:#b44a2d;text-decoration:none;">matthew@redwooddigitalfrederick.com</a>
+                      · <a href="tel:+12272535980" style="color:#b44a2d;text-decoration:none;">(227) 253-5980</a>
+                      · <a href="https://www.redwooddigitalfrederick.com" style="color:#b44a2d;text-decoration:none;">redwooddigitalfrederick.com</a>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+
+        <!-- Footer outside the card -->
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
+          <tr>
+            <td align="center" style="padding:18px 16px 8px;">
+              <span style="display:inline-block;padding:4px 12px 4px 10px;background:rgba(180,74,45,0.07);border:1px solid rgba(180,74,45,0.18);border-radius:100px;color:#b44a2d;font-weight:600;font-size:11px;letter-spacing:0.02em;">
+                📍 Built in Frederick, MD
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:4px 16px 22px;font-size:11px;line-height:1.5;color:#6a645a;">
+              You're receiving this because I thought Redwood Digital might be a fit for {{practice_name}}.<br>
+              Not interested? <a href="{{unsubscribe_link}}" style="color:#6a645a;">Unsubscribe</a> and I won't email you again.<br>
+              Redwood Digital Frederick LLC · 3406B Keats Terrace · Ijamsville, MD 21754
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
