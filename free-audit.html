@@ -137,7 +137,7 @@ footer a { color: var(--text-dim); }
     </ul>
 
     <div class="btn-group">
-      <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn" target="_blank" rel="noopener">Book Your Free Audit</a>
+      <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" class="btn" target="_blank" rel="noopener">Book Your Free Audit</a>
       <a href="tel:+12272535980" class="btn btn-outline">Call (227) 253-5980</a>
     </div>
   </div>
@@ -189,7 +189,7 @@ footer a { color: var(--text-dim); }
     </div>
 
     <div style="margin-top: 48px;">
-      <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn" target="_blank" rel="noopener">Book Your Free Audit</a>
+      <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" class="btn" target="_blank" rel="noopener">Book Your Free Audit</a>
     </div>
   </div>
 </section>
@@ -203,7 +203,7 @@ footer a { color: var(--text-dim); }
 
 <script>
   // Track audit page CTA clicks
-  document.querySelectorAll('a[href*="calendly.com"]').forEach(function(a) {
+  document.querySelectorAll('a[href*="calendar.app.google"], a[href*="calendar.google.com/calendar/appointments"]').forEach(function(a) {
     a.addEventListener('click', function() {
       if (window.__gaEnabled && typeof gtag === 'function') {
         gtag('event', 'audit_cta_click', { location: 'free-audit', text: (a.textContent || '').trim() });

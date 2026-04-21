@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f4eee2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2a1f17" media="(prefers-color-scheme: dark)">
 <title>AI Phone Agents | Redwood Digital Frederick</title>
 <meta name="description" content="Never miss another call or lead. AI phone agents that answer calls, qualify leads, and book appointments 24/7. Built by Redwood Digital in Frederick, MD.">
 <meta property="og:title" content="AI Phone Agents | Redwood Digital Frederick">
@@ -25,6 +27,9 @@
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
 <link rel="canonical" href="https://www.redwooddigitalfrederick.com/ai-caller.html">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23b44a2d'/><text x='16' y='22' font-size='18' font-weight='bold' text-anchor='middle' fill='white'>R</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <!-- ─── Google Analytics 4 ─────────────────────────────────────────── -->
@@ -46,32 +51,63 @@
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+html { color-scheme: light; }
+
 :root {
   --bg: #f4eee2;
   --bg-card: #fbf7ef;
   --bg-card-hover: #ede5d2;
   --border: #e8e4df;
   --text: #3d3a36;
-  --text-dim: #5f5a52;
+  --text-dim: #5a544b;
+  --text-muted: #6a645a;
   --accent: #b44a2d;
   --accent-glow: rgba(180, 74, 45, 0.15);
   --accent-light: #c2654a;
-  --green: #2d8a68;
+  --accent-deep: #a3421f;
+  --green: #206850;
+  --green-bright: #2d8a68;
+  --ink: #1a1a1a;
   --radius: 12px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --shadow-sm: 0 1px 2px rgba(20, 18, 14, 0.04), 0 2px 8px rgba(20, 18, 14, 0.04);
+  --shadow-md: 0 4px 12px rgba(20, 18, 14, 0.06), 0 12px 32px rgba(20, 18, 14, 0.08);
+  --shadow-lg: 0 10px 20px rgba(20, 18, 14, 0.08), 0 30px 60px rgba(20, 18, 14, 0.12);
 }
 
 ::selection { background: rgba(180, 74, 45, 0.2); color: #1a1a1a; }
+.founder-section ::selection,
+.cta-section ::selection { background: rgba(232, 147, 112, 0.3); color: #faf9f7; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01', 'tnum' 0;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: rgba(180, 74, 45, 0.18);
+}
+button, a { touch-action: manipulation; }
+
+h1, h2, h3, .section-title { text-wrap: balance; }
+
+/* Respect reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero::before, .hero::after { animation: none !important; }
+  .fade-in { opacity: 1; transform: none; }
 }
 
 .skip-link {
@@ -792,9 +828,9 @@ img, svg, video, canvas, iframe { max-width: 100%; }
     <div class="hero-content fade-in">
       <div class="hero-badge">AI-Powered Phone Agents</div>
       <h1>Never miss another<br><span class="highlight">call or lead.</span></h1>
-      <p>AI phone agents that answer calls, qualify leads, handle objections naturally, and book appointments for your business -- 24 hours a day, 7 days a week.</p>
+      <p>AI phone agents that answer calls, qualify leads, handle objections naturally, and book appointments for your business. 24 hours a day, 7 days a week.</p>
       <div class="btn-group">
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn" target="_blank" rel="noopener">Book a Free 15-Minute Demo Call</a>
+        <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" class="btn" target="_blank" rel="noopener">Book a Free 15-Minute Demo Call</a>
         <a href="#how" class="btn btn-outline">See How It Works</a>
       </div>
       <div class="trust-bar">
@@ -813,7 +849,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   <div class="container fade-in">
     <blockquote>
       "The AI that called you? We built it.<br>Want one for your business?"
-      <span>-- Redwood Digital</span>
+      <span>— Redwood Digital</span>
     </blockquote>
   </div>
 </section>
@@ -824,7 +860,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
     <div class="fade-in" style="text-align: center;">
       <div class="section-label">How It Works</div>
       <h2 class="section-title">Your AI phone agent in four steps</h2>
-      <p class="section-subtitle" style="margin: 0 auto;">From custom build to daily lead reports -- here's how we get you up and running.</p>
+      <p class="section-subtitle" style="margin: 0 auto;">From custom build to daily lead reports, here's how we get you up and running.</p>
     </div>
     <div class="steps">
       <div class="step fade-in">
@@ -835,12 +871,12 @@ img, svg, video, canvas, iframe { max-width: 100%; }
       <div class="step fade-in">
         <div class="step-number">2</div>
         <h3>It handles your calls</h3>
-        <p>Your AI agent answers calls, asks qualifying questions, and handles common objections -- just like your best salesperson would.</p>
+        <p>Your AI agent answers calls, asks qualifying questions, and handles common objections, just like your best salesperson would.</p>
       </div>
       <div class="step fade-in">
         <div class="step-number">3</div>
         <h3>Leads get booked</h3>
-        <p>Interested leads are automatically texted your booking link. They schedule themselves -- no back-and-forth needed.</p>
+        <p>Interested leads are automatically texted your booking link. They schedule themselves. No back-and-forth needed.</p>
       </div>
       <div class="step fade-in">
         <div class="step-number">4</div>
@@ -879,7 +915,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         </div>
         <h3>Appointment Booking</h3>
-        <p>From first call to confirmed appointment -- your AI books meetings directly on your calendar without human intervention.</p>
+        <p>From first call to confirmed appointment. Your AI books meetings directly on your calendar without human intervention.</p>
       </div>
       <div class="use-case-card fade-in">
         <div class="use-case-icon">
@@ -893,7 +929,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         </div>
         <h3>FAQ Answering</h3>
-        <p>Your AI handles common questions about pricing, hours, services, and availability -- freeing up your team for real conversations.</p>
+        <p>Your AI handles common questions about pricing, hours, services, and availability, freeing up your team for real conversations.</p>
       </div>
     </div>
   </div>
@@ -919,7 +955,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
           <li>Automated text follow-up setup</li>
           <li>Testing and refinement</li>
         </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-outline btn-sm btn-block" target="_blank" rel="noopener">Get Started</a>
+        <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" class="btn btn-outline btn-sm btn-block" target="_blank" rel="noopener">Get Started</a>
       </div>
       <div class="pricing-card featured fade-in">
         <h3>Monthly Service</h3>
@@ -932,12 +968,12 @@ img, svg, video, canvas, iframe { max-width: 100%; }
           <li>Daily lead reports</li>
           <li>Priority support</li>
         </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-sm btn-block" target="_blank" rel="noopener">Get Started</a>
+        <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" class="btn btn-sm btn-block" target="_blank" rel="noopener">Get Started</a>
       </div>
     </div>
 
     <div class="roi-banner fade-in">
-      <p>Most businesses spend <strong>$4,000 - $8,000/month</strong> on an SDR or receptionist. Your AI phone agent runs <strong>24/7 at a fraction of the cost</strong> -- and never calls in sick, never forgets a follow-up, and never misses a call.</p>
+      <p>Most businesses spend <strong>$4,000 to $8,000 per month</strong> on an SDR or receptionist. Your AI phone agent runs <strong>24/7 at a fraction of the cost</strong>. It never calls in sick, never forgets a follow-up, and never misses a call.</p>
     </div>
   </div>
 </section>
@@ -948,7 +984,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
     <div class="section-label">Ready?</div>
     <h2 class="section-title">Hear it for yourself</h2>
     <p class="section-subtitle">Book a 15-minute demo call. We'll show you exactly how your AI phone agent would sound and work for your business.</p>
-    <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn" target="_blank" rel="noopener">Book a Free 15-Minute Demo Call</a>
+    <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" class="btn" target="_blank" rel="noopener">Book a Free 15-Minute Demo Call</a>
   </div>
 </section>
 
@@ -959,15 +995,15 @@ img, svg, video, canvas, iframe { max-width: 100%; }
     <h2 class="section-title">Get in touch</h2>
     <p class="section-subtitle" style="margin: 0 auto;">Questions about AI phone agents? Reach out.</p>
     <div class="contact-methods">
-      <a href="tel:+12408150342" class="contact-card">
+      <a href="tel:+12272535980" class="contact-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        (240) 815-0342
+        (227) 253-5980
       </a>
       <a href="mailto:matthew@redwooddigitalfrederick.com" class="contact-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         matthew@redwooddigitalfrederick.com
       </a>
-      <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="contact-card" target="_blank" rel="noopener">
+      <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" class="contact-card" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Book a demo
       </a>
@@ -996,7 +1032,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 
 <!-- Sticky Mobile CTA -->
 <div class="sticky-cta" id="stickyCta">
-  <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn" target="_blank" rel="noopener">Book a Free Demo Call</a>
+  <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" class="btn" target="_blank" rel="noopener">Book a Free Demo Call</a>
 </div>
 
 <script>
@@ -1052,9 +1088,9 @@ function closeMenu() {
     if (!window.__gaEnabled || typeof gtag !== 'function') return;
     gtag('event', name, params || {});
   }
-  document.querySelectorAll('a[href*="calendly.com"]').forEach(function(a) {
+  document.querySelectorAll('a[href*="calendar.app.google"], a[href*="calendar.google.com/calendar/appointments"]').forEach(function(a) {
     a.addEventListener('click', function() {
-      track('calendly_click', {
+      track('booking_click', {
         text: (a.textContent || '').trim().slice(0, 60),
         location: ((a.closest('section, header, nav, footer') || {}).id) || 'unknown',
         url: a.getAttribute('href') || ''
