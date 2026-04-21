@@ -2648,7 +2648,62 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   background: var(--bg);
 }
 
-.testimonial-skeleton-wrap { padding:32px 0 0; border-top:1px dashed rgba(20,18,14,.12); }
+.testimonial-skeleton-wrap { padding:32px 0 0; border-top:1px solid var(--border); }
+.testimonial-skeleton-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 16px; }
+@media (max-width: 720px) { .testimonial-skeleton-grid { grid-template-columns: 1fr !important; } }
+
+.testimonial-slot.ts-real {
+  opacity: 1;
+  border-style: solid;
+  border-color: var(--border);
+  background: var(--bg-card);
+}
+.testimonial-slot.ts-real:hover { border-color: rgba(180, 74, 45, 0.28); }
+.ts-real .ts-photo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  border: 2px solid var(--bg-card);
+  box-shadow: 0 2px 8px rgba(20, 18, 14, 0.14), 0 0 0 1px var(--border);
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.3s var(--ease-out);
+}
+.ts-real:hover .ts-photo {
+  transform: scale(1.06) rotate(-4deg);
+  box-shadow: 0 4px 12px rgba(20, 18, 14, 0.2), 0 0 0 1px rgba(180, 74, 45, 0.28);
+}
+.ts-real .ts-quote {
+  color: var(--text);
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.ts-real .ts-attrib {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ts-real .ts-name { font-size: 0.92rem; font-weight: 700; color: var(--ink); }
+.ts-real .ts-biz { font-size: 0.82rem; color: var(--text-dim); }
+.ts-real .ts-biz a {
+  color: var(--accent);
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s var(--ease-out);
+}
+.ts-real .ts-biz a:hover { border-bottom-color: var(--accent); }
+.ts-real .ts-badge {
+  color: var(--green);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+.ts-real .ts-badge::before {
+  content: '✓ ';
+  font-weight: 700;
+}
+
 .custom-apps-note {
   margin-top: 36px;
   padding-top: 20px;
@@ -3295,32 +3350,28 @@ img, svg, video, canvas, iframe { max-width: 100%; }
       </div>
     </div>
 
-    <!-- Testimonial skeleton — slots awaiting real quotes.
-         When Joel's testimony arrives, replace the FIRST .testimonial-slot block
-         with the filled version commented at the bottom of this file. -->
+    <!-- Customer testimonials — real people, real websites, real photos. -->
     <div class="testimonial-skeleton-wrap">
-      <div class="testimonial-skeleton-label">Customer quotes live here once they're collected. Real name, real practice, real photo. Never invented.</div>
+      <div class="testimonial-skeleton-label">Real customers. Real websites you can visit.</div>
       <div class="testimonial-skeleton-grid">
-        <!-- PLACEHOLDER TESTIMONIALS — sample copy, replace with real quotes when collected -->
-        <div class="testimonial-slot ts-placeholder">
-          <div class="ts-photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
-          <div class="ts-quote">"The AI picked up a burst-pipe call at 11pm on a Sunday. By Monday morning I had three jobs on the calendar I didn't have to chase."</div>
-          <div class="ts-attrib"><div class="ts-name">Joel R.</div><div class="ts-biz">Plumbing · Frederick, MD</div></div>
-          <div class="ts-badge">Sample copy · awaiting real quote</div>
+        <div class="testimonial-slot ts-real">
+          <div class="ts-photo" style="background-image: url('images/testimonial-joel.jpg');" role="img" aria-label="Photo of Joel Owen"></div>
+          <div class="ts-quote">"Matthew did a fantastic job on my website. Quick turnaround, answers when I call, and easy to work with. I've brought him back for other projects since."</div>
+          <div class="ts-attrib">
+            <div class="ts-name">Joel Owen</div>
+            <div class="ts-biz"><a href="https://allcountycc.com" target="_blank" rel="noopener">allcountycc.com</a> · Frederick, MD</div>
+          </div>
+          <div class="ts-badge">Verified customer</div>
         </div>
 
-        <div class="testimonial-slot ts-placeholder">
-          <div class="ts-photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
-          <div class="ts-quote">"We were losing summer calls after 5. The agent books the appointment before the caller hangs up. One furnace install pays for the whole year."</div>
-          <div class="ts-attrib"><div class="ts-name">Dana M.</div><div class="ts-biz">HVAC · Urbana, MD</div></div>
-          <div class="ts-badge">Sample copy · awaiting real quote</div>
-        </div>
-
-        <div class="testimonial-slot ts-placeholder">
-          <div class="ts-photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
-          <div class="ts-quote">"The reminder flow alone cut our no-shows in half. I don't worry about Monday-morning schedules anymore because Matthew's setup just handles it."</div>
-          <div class="ts-attrib"><div class="ts-name">Dr. S. Patel</div><div class="ts-biz">Dental practice · Frederick, MD</div></div>
-          <div class="ts-badge">Sample copy · awaiting real quote</div>
+        <div class="testimonial-slot ts-real">
+          <div class="ts-photo" style="background-image: url('images/testimonial-david.jpg');" role="img" aria-label="Photo of David"></div>
+          <div class="ts-quote">"The website looks great. Matthew built it quickly and it came out exactly how I wanted. No hassle start to finish."</div>
+          <div class="ts-attrib">
+            <div class="ts-name">David</div>
+            <div class="ts-biz"><a href="https://mechanicallyincleyend.com" target="_blank" rel="noopener">mechanicallyincleyend.com</a> · Gary P. Frank HVAC</div>
+          </div>
+          <div class="ts-badge">Verified customer</div>
         </div>
       </div>
     </div>
@@ -3331,21 +3382,6 @@ img, svg, video, canvas, iframe { max-width: 100%; }
     </p>
   </div>
 </section>
-
-<!--
-FILLED JOEL TESTIMONIAL (paste over the JOEL SLOT above when Joel's quote arrives):
-
-<div class="testimonial-slot" style="opacity:1; border-style:solid; border-color: var(--border);">
-  <div class="ts-photo-placeholder" style="background:url('images/joel.jpg') center/cover; border:none;"></div>
-  <div class="ts-quote" style="color:var(--text); font-style:italic;">[Joel's actual quote here]</div>
-  <div class="ts-attrib" style="font-size:.82rem; color:#1a1a1a; font-weight:600;">
-    Joel [Last Name]<br>
-    <span style="color:var(--text-dim); font-weight:400; font-size:.78rem;">[Business Name] · Frederick, MD</span>
-  </div>
-  <div class="ts-badge" style="color:var(--green);">✓ verified customer</div>
-</div>
--->
-
 
 <!-- Pricing -->
 <section id="pricing" style="background: #f3f1ed;" aria-label="Pricing">
