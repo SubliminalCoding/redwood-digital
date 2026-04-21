@@ -2649,6 +2649,25 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 }
 
 .testimonial-skeleton-wrap { padding:32px 0 0; border-top:1px dashed rgba(20,18,14,.12); }
+.custom-apps-note {
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px dashed rgba(20, 18, 14, 0.12);
+  font-size: 0.92rem;
+  color: var(--text-dim);
+  text-align: center;
+  line-height: 1.55;
+}
+.custom-apps-note a {
+  color: var(--accent);
+  font-weight: 600;
+  margin-left: 4px;
+  text-decoration: none;
+  transition: color 0.2s var(--ease-out);
+}
+.custom-apps-note a:hover { color: var(--accent-light); }
+.custom-apps-note a span { display: inline-block; transition: transform 0.25s var(--ease-out); }
+.custom-apps-note a:hover span { transform: translateX(3px); }
 .testimonial-skeleton-label { font-size:.78rem; color:var(--text-dim);
   font-family: ui-monospace, Menlo, monospace; margin: 0 auto 20px; text-align:center;
   max-width:560px; line-height:1.5; }
@@ -3208,45 +3227,6 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 </section>
 
 
-<!-- Portfolio -->
-<section id="portfolio" aria-label="Portfolio">
-  <div class="container">
-    <div class="fade-in">
-      <div class="section-label">Portfolio</div>
-      <h2 class="section-title">What I've shipped</h2>
-    </div>
-    <div class="portfolio-grid">
-      <div class="portfolio-card visual fade-in">
-        <div class="portfolio-visual">
-          <div class="phone-stack" aria-hidden="true">
-            <div class="phone phone-back"><img src="screenshots/mecoach/wheel-of-life.png" alt="MeCoach Wheel of Life: rate career, health, relationships, and other life areas from 1 to 10" loading="lazy" width="504" height="1122"></div>
-            <div class="phone phone-front"><img src="screenshots/mecoach/home.png" alt="MeCoach home screen: continue your session, start something new, streak tracker, wheel of life" loading="lazy" width="504" height="1122"></div>
-          </div>
-        </div>
-        <div class="portfolio-info">
-          <div class="tag">Leadership &amp; Life Coaching</div>
-          <h3><a href="https://mecoach.app?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=portfolio&amp;utm_content=mecoach-card" target="_blank" rel="noopener" style="color: inherit; text-decoration: none; border-bottom: 1px solid var(--border);">MeCoach</a></h3>
-          <p>An iOS coaching app that keeps work moving between sessions. Voice-led coaching, goals and rituals, a Wheel of Life radar chart, and insights that surface patterns over time. Built for people who treat personal growth like a practice, not a project.</p>
-          <a href="https://mecoach.app?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=portfolio&amp;utm_content=mecoach-cta" target="_blank" rel="noopener" class="portfolio-cta">Visit MeCoach<span class="arrow" aria-hidden="true">&rarr;</span></a>
-        </div>
-      </div>
-      <div class="portfolio-card visual reverse fade-in">
-        <div class="portfolio-visual">
-          <div class="panel-stack" aria-hidden="true">
-            <div class="panel panel-back"><img src="screenshots/voiceforge/idle.png" alt="VoiceForge idle state: blue microphone, 'Press Mouse 4 to start', daily stats showing 1,922 words transcribed, 55 transcriptions, 105 WPM" loading="lazy" width="600" height="900"></div>
-            <div class="panel panel-front"><img src="screenshots/voiceforge/recording.png" alt="VoiceForge recording: pulsing red microphone, waveform visualizer, 'REC · Recording 0:05' timer" loading="lazy" width="600" height="900"></div>
-          </div>
-        </div>
-        <div class="portfolio-info">
-          <div class="tag">Voice &amp; Productivity</div>
-          <h3><a href="https://usevoiceforge.com?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=portfolio&amp;utm_content=voiceforge-card" target="_blank" rel="noopener" style="color: inherit; text-decoration: none; border-bottom: 1px solid var(--border);">VoiceForge</a></h3>
-          <p>A Mac, Windows, and Linux desktop app that turns spoken ideas into clean, workflow-ready text. Press a hotkey, speak, and the result pastes wherever your cursor was, under two seconds end to end. Learns your vocabulary, handles technical jargon, and works offline.</p>
-          <a href="https://usevoiceforge.com?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=portfolio&amp;utm_content=voiceforge-cta" target="_blank" rel="noopener" class="portfolio-cta">Visit VoiceForge<span class="arrow" aria-hidden="true">&rarr;</span></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- Social Proof -->
 <section class="proof-section" id="proof" aria-label="Proof and transcript">
@@ -3344,6 +3324,11 @@ img, svg, video, canvas, iframe { max-width: 100%; }
         </div>
       </div>
     </div>
+
+    <p class="custom-apps-note">
+      Also shipped from scratch: an employee coaching app and a workplace voice-to-text tool for teams.
+      <a href="custom-apps.html">See custom apps<span aria-hidden="true"> →</span></a>
+    </p>
   </div>
 </section>
 
@@ -3565,6 +3550,7 @@ FILLED JOEL TESTIMONIAL (paste over the JOEL SLOT above when Joel's quote arrive
       <ul class="footer-links">
         <li><a href="#services">Services</a></li>
         <li><a href="#pricing">Pricing</a></li>
+        <li><a href="custom-apps.html">Custom Apps</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="terms.html">Terms</a></li>
         <li><a href="privacy.html">Privacy</a></li>

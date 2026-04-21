@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f4eee2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2a1f17" media="(prefers-color-scheme: dark)">
+<title>Custom Apps | Redwood Digital Frederick</title>
+<meta name="description" content="Two custom apps Matthew Coleman built from scratch — an employee coaching app and a workplace voice-to-text tool. Both live products you can deploy inside your business.">
+<meta property="og:title" content="Custom Apps — Redwood Digital Frederick">
+<meta property="og:description" content="An employee coaching app and a workplace dictation tool, both shipped. The kind of custom software Matthew builds for businesses.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://www.redwooddigitalfrederick.com/custom-apps.html">
+<meta property="og:image" content="https://www.redwooddigitalfrederick.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Custom Apps — Redwood Digital Frederick">
+<meta name="twitter:description" content="Two apps Matthew built: employee coaching + workplace voice-to-text.">
+<meta name="twitter:image" content="https://www.redwooddigitalfrederick.com/og-image.png">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
+<link rel="canonical" href="https://www.redwooddigitalfrederick.com/custom-apps.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23b44a2d'/><text x='16' y='22' font-size='18' font-weight='bold' text-anchor='middle' fill='white'>R</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script>
+  window.GA_MEASUREMENT_ID = 'G-N13XHE3262';
+  window.__gaEnabled = location.hostname.endsWith('redwooddigitalfrederick.com');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N13XHE3262"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  if (window.__gaEnabled) {
+    gtag('js', new Date());
+    gtag('config', window.GA_MEASUREMENT_ID, { send_page_view: true, anonymize_ip: true });
+  }
+</script>
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { color-scheme: light; }
+
+:root {
+  --bg: #f4eee2;
+  --bg-card: #fbf7ef;
+  --bg-card-hover: #ede5d2;
+  --border: #e8e4df;
+  --text: #3d3a36;
+  --text-dim: #5a544b;
+  --text-muted: #6a645a;
+  --accent: #b44a2d;
+  --accent-glow: rgba(180, 74, 45, 0.15);
+  --accent-light: #c2654a;
+  --accent-deep: #a3421f;
+  --green: #206850;
+  --green-bright: #2d8a68;
+  --ink: #1a1a1a;
+  --radius: 12px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --shadow-sm: 0 1px 2px rgba(20, 18, 14, 0.04), 0 2px 8px rgba(20, 18, 14, 0.04);
+  --shadow-md: 0 4px 12px rgba(20, 18, 14, 0.06), 0 12px 32px rgba(20, 18, 14, 0.08);
+}
+
+::selection { background: rgba(180, 74, 45, 0.2); color: #1a1a1a; }
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01';
+  background: radial-gradient(1200px 600px at 50% -100px, rgba(180, 74, 45, 0.05), transparent 70%), var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: rgba(180, 74, 45, 0.18);
+}
+button, a { touch-action: manipulation; }
+h1, h2, h3 { text-wrap: balance; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--accent-light); }
+
+.container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+.skip-link {
+  position: fixed; top: 12px; left: 50%; transform: translateX(-50%) translateY(-140%);
+  background: var(--accent); color: #fff; padding: 10px 20px; z-index: 200;
+  font-size: 0.95rem; font-weight: 600; border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(180, 74, 45, 0.35);
+  transition: transform 0.25s var(--ease-out); text-decoration: none;
+}
+.skip-link:focus, .skip-link:focus-visible {
+  transform: translateX(-50%) translateY(0);
+  outline: 2px solid #fff; outline-offset: 2px;
+}
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 3px;
+  border-radius: 8px;
+  box-shadow: 0 0 0 4px rgba(180, 74, 45, 0.12);
+}
+
+/* Nav */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 0;
+  background: rgba(244, 238, 226, 0.72);
+  backdrop-filter: blur(14px) saturate(1.6);
+  -webkit-backdrop-filter: blur(14px) saturate(1.6);
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s var(--ease-out), border-color 0.3s var(--ease-out),
+              box-shadow 0.3s var(--ease-out), padding 0.3s var(--ease-out);
+}
+nav.is-scrolled {
+  padding: 12px 0;
+  background: rgba(244, 238, 226, 0.94);
+  border-bottom-color: var(--border);
+  box-shadow: 0 4px 14px rgba(20, 18, 14, 0.05);
+}
+nav .container { display: flex; justify-content: space-between; align-items: center; }
+.logo {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 1.18rem; font-weight: 700; color: var(--ink);
+  letter-spacing: -0.018em; text-decoration: none; line-height: 1;
+}
+.logo:hover { color: var(--ink); }
+.logo-mark { flex-shrink: 0; filter: drop-shadow(0 2px 6px rgba(180, 74, 45, 0.25)); }
+.logo-text em { font-style: normal; font-weight: 700; color: var(--accent); }
+.nav-home {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.9rem; font-weight: 500; color: var(--text-dim);
+  transition: color 0.25s var(--ease-out);
+}
+.nav-home:hover { color: var(--ink); }
+.nav-home svg { width: 16px; height: 16px; }
+
+/* Hero */
+.page-hero { padding: 140px 0 56px; text-align: center; position: relative; }
+.page-hero::before {
+  content: ''; position: absolute; top: -20%; left: 50%;
+  width: 600px; height: 600px; transform: translateX(-50%);
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+.page-hero > * { position: relative; z-index: 1; }
+.section-label {
+  display: inline-flex; align-items: center; gap: 12px;
+  text-transform: uppercase; font-size: 0.76rem; font-weight: 700;
+  letter-spacing: 0.2em; color: var(--accent); margin-bottom: 14px;
+}
+.section-label::before {
+  content: ''; width: 24px; height: 2px; opacity: 0.85;
+  background: linear-gradient(90deg, var(--accent), transparent); border-radius: 2px;
+}
+.page-hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.3rem);
+  font-weight: 800; line-height: 1.05; letter-spacing: -0.035em;
+  color: var(--ink); margin-bottom: 16px; max-width: 22ch; margin-left: auto; margin-right: auto;
+}
+.page-hero p {
+  font-size: 1.1rem; color: var(--text-dim);
+  max-width: 56ch; margin: 0 auto; line-height: 1.65;
+}
+
+/* Project cards */
+.apps-grid {
+  display: grid; grid-template-columns: 1fr; gap: 24px;
+  padding: 48px 0 88px;
+}
+
+.app-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 0;
+  align-items: stretch;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.app-card.reverse { grid-template-columns: 1fr 1.05fr; }
+.app-visual {
+  position: relative;
+  min-height: 440px;
+  background: linear-gradient(135deg, #0d0d11 0%, #1a1b22 60%, #14141a 100%);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; padding: 36px;
+}
+.app-visual::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 25% 30%, rgba(180, 74, 45, 0.18), transparent 55%),
+    radial-gradient(ellipse at 75% 70%, rgba(45, 138, 104, 0.12), transparent 55%);
+}
+.app-card.reverse .app-visual { order: 2; }
+.app-body {
+  padding: 44px 48px;
+  display: flex; flex-direction: column; justify-content: center;
+  min-width: 0;
+}
+.app-card.reverse .app-body { order: 1; }
+
+.app-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 14px 5px 10px;
+  background: linear-gradient(180deg, rgba(45, 138, 104, 0.14), rgba(45, 138, 104, 0.05));
+  border: 1px solid rgba(45, 138, 104, 0.24);
+  border-radius: 100px;
+  font-size: 0.78rem; font-weight: 500;
+  color: var(--green); letter-spacing: 0.005em;
+  margin-bottom: 16px; align-self: flex-start;
+  box-shadow: 0 1px 2px rgba(45, 138, 104, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.app-tag::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--green); box-shadow: 0 0 0 3px rgba(45, 138, 104, 0.16);
+}
+
+.app-body h2 {
+  font-size: clamp(1.55rem, 3vw, 2rem);
+  font-weight: 700; color: var(--ink);
+  letter-spacing: -0.028em; line-height: 1.1;
+  margin-bottom: 12px;
+}
+.app-body h2 a {
+  color: inherit; text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
+}
+.app-body h2 a:hover { color: var(--accent); border-color: var(--accent); }
+
+.app-body .lede {
+  font-size: 1rem; color: var(--text); line-height: 1.55;
+  margin-bottom: 16px;
+}
+.app-body .pitch {
+  font-size: 0.92rem; color: var(--text-dim); line-height: 1.55;
+  margin-bottom: 20px;
+}
+.app-body .pitch strong { color: var(--ink); font-weight: 600; }
+
+.app-features {
+  list-style: none; padding: 0; margin: 0 0 24px;
+  display: grid; gap: 8px;
+}
+.app-features li {
+  font-size: 0.9rem; color: var(--text);
+  padding-left: 24px; position: relative; line-height: 1.5;
+}
+.app-features li::before {
+  content: ''; position: absolute; left: 0; top: 6px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background-color: rgba(45, 138, 104, 0.14);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23206850' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+  background-size: 9px; background-position: center; background-repeat: no-repeat;
+  box-shadow: inset 0 0 0 1px rgba(45, 138, 104, 0.18);
+}
+
+.app-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 18px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem; font-weight: 600;
+  color: var(--text); text-decoration: none;
+  align-self: flex-start;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s var(--ease-spring);
+}
+.app-cta:hover {
+  color: var(--accent); border-color: var(--accent);
+  background: var(--bg-card-hover); transform: translateY(-1px);
+}
+.app-cta .arrow { transition: transform 0.25s var(--ease-out); }
+.app-cta:hover .arrow { transform: translateX(3px); }
+
+/* Phone stack (MeCoach) */
+.phone-stack { position: relative; width: 100%; max-width: 340px; aspect-ratio: 360 / 420; }
+.phone {
+  position: absolute; width: 62%; border-radius: 28px; padding: 6px;
+  background: linear-gradient(180deg, #26272e, #16171c);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 12px 28px rgba(0, 0, 0, 0.35),
+    0 24px 64px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  overflow: hidden;
+  transition: transform 0.55s var(--ease-out), box-shadow 0.55s var(--ease-out);
+}
+.phone img {
+  display: block; width: 100%; height: auto;
+  border-radius: 22px; background: #000;
+}
+.phone-back  { top: 0; right: 0; transform: rotate(6deg) translateY(-4px); }
+.phone-front { bottom: 0; left: 0; transform: rotate(-5deg) translateY(4px); z-index: 2; }
+.app-card:hover .phone-back  { transform: rotate(8deg) translateY(-8px); }
+.app-card:hover .phone-front { transform: rotate(-7deg) translateY(8px); }
+
+/* Panel stack (VoiceForge) */
+.panel-stack { position: relative; width: 100%; max-width: 380px; aspect-ratio: 380 / 420; }
+.panel {
+  position: absolute; width: 66%; border-radius: 14px; padding: 5px;
+  background: linear-gradient(180deg, #2a2b31, #18191e);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.panel img { display: block; width: 100%; height: auto; border-radius: 10px; }
+.panel-back  { top: 0; right: 0; transform: rotate(4deg) translateY(-6px); }
+.panel-front { bottom: 0; left: 0; transform: rotate(-4deg) translateY(6px); z-index: 2; }
+.app-card:hover .panel-back  { transform: rotate(6deg) translateY(-10px); }
+.app-card:hover .panel-front { transform: rotate(-6deg) translateY(10px); }
+
+@media (max-width: 900px) {
+  .app-card, .app-card.reverse {
+    grid-template-columns: 1fr;
+  }
+  .app-card.reverse .app-visual,
+  .app-card.reverse .app-body { order: unset; }
+  .app-visual { min-height: 360px; padding: 32px 24px; }
+  .app-body { padding: 32px 28px 36px; }
+}
+@media (max-width: 480px) {
+  .app-visual { min-height: 300px; padding: 28px 20px; }
+  .app-body { padding: 24px 22px 28px; }
+  .phone-stack { max-width: 260px; }
+  .panel-stack { max-width: 280px; }
+}
+
+/* Closing CTA */
+.closing-cta {
+  text-align: center; padding: 64px 0 96px;
+  position: relative;
+  background:
+    radial-gradient(circle at 20% 40%, rgba(194, 101, 74, 0.18) 0%, transparent 55%),
+    radial-gradient(circle at 80% 60%, rgba(45, 138, 104, 0.10) 0%, transparent 60%);
+}
+.closing-cta h2 {
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-weight: 700; color: var(--ink);
+  letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 12px;
+  max-width: 22ch; margin-left: auto; margin-right: auto;
+}
+.closing-cta p {
+  color: var(--text-dim); font-size: 1.05rem; line-height: 1.6;
+  max-width: 52ch; margin: 0 auto 28px;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 28px;
+  background: linear-gradient(180deg, var(--accent-light) 0%, var(--accent) 55%, var(--accent-deep) 100%);
+  color: #fff; font-size: 0.98rem; font-weight: 600;
+  letter-spacing: -0.005em; border-radius: 10px;
+  border: none; cursor: pointer; text-decoration: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(20, 18, 14, 0.18),
+    0 1px 2px rgba(180, 74, 45, 0.3),
+    0 2px 6px rgba(180, 74, 45, 0.15);
+  transition: transform 0.35s var(--ease-spring), filter 0.25s var(--ease-out), box-shadow 0.35s var(--ease-out);
+}
+.btn:hover {
+  color: #fff;
+  filter: brightness(1.06) saturate(1.05);
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 4px 10px rgba(180, 74, 45, 0.3),
+    0 12px 36px rgba(180, 74, 45, 0.22);
+}
+.btn svg { width: 16px; height: 16px; }
+
+/* Footer */
+footer { padding: 40px 0; border-top: 1px solid var(--border); }
+.footer-inner {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+}
+.footer-copy {
+  display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  font-size: 0.85rem; color: var(--text-dim);
+}
+.footer-mark {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px 4px 10px;
+  background: rgba(180, 74, 45, 0.07);
+  border: 1px solid rgba(180, 74, 45, 0.18);
+  border-radius: 100px;
+  color: var(--accent); font-weight: 600; font-size: 0.82rem;
+}
+.footer-sep { color: var(--border); font-weight: 600; }
+.footer-links {
+  display: flex; gap: 6px; list-style: none; flex-wrap: wrap;
+}
+.footer-links a {
+  display: inline-flex; align-items: center; min-height: 44px;
+  padding: 10px 14px; border-radius: 6px;
+  font-size: 0.88rem; color: var(--text-dim); line-height: 1;
+  transition: color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+}
+.footer-links a:hover { color: var(--accent); background: rgba(180, 74, 45, 0.06); }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav>
+  <div class="container">
+    <a href="/" class="logo" aria-label="Redwood Digital — home">
+      <svg class="logo-mark" width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">
+        <defs>
+          <linearGradient id="logo-grad-apps" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#c2654a"/>
+            <stop offset="100%" stop-color="#a3421f"/>
+          </linearGradient>
+        </defs>
+        <path d="M16 3 L27 26 H5 Z" fill="url(#logo-grad-apps)"/>
+        <path d="M16 11 L22 23 H10 Z" fill="#fff" opacity="0.22"/>
+        <rect x="14" y="24" width="4" height="5" rx="1" fill="#5a3420"/>
+      </svg>
+      <span class="logo-text">Redwood <em>Digital</em></span>
+    </a>
+    <a href="/" class="nav-home" aria-label="Back to home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Home
+    </a>
+  </div>
+</nav>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <div class="section-label">Custom Apps</div>
+      <h1>Software I've shipped that also works as a business tool.</h1>
+      <p>Two products I designed and built end to end. Each one started as a personal project and turned into something a business could deploy inside its team. The same stack, the same attention to detail, goes into the custom work I do for Frederick clients.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="apps-grid">
+
+      <!-- MeCoach -->
+      <article class="app-card">
+        <div class="app-visual">
+          <div class="phone-stack" aria-hidden="true">
+            <div class="phone phone-back"><img src="screenshots/mecoach/wheel-of-life.png" alt="MeCoach Wheel of Life: rate career, health, relationships, and other life areas from 1 to 10" loading="lazy" width="504" height="1122"></div>
+            <div class="phone phone-front"><img src="screenshots/mecoach/home.png" alt="MeCoach home screen: continue your session, start something new, streak tracker, wheel of life" loading="lazy" width="504" height="1122"></div>
+          </div>
+        </div>
+        <div class="app-body">
+          <span class="app-tag">iOS · Coaching</span>
+          <h2><a href="https://mecoach.app?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=custom-apps&amp;utm_content=mecoach-card" target="_blank" rel="noopener">MeCoach</a></h2>
+          <p class="lede">A private AI coach that lives in your pocket. Voice-led sessions that help users work through what's actually on their plate — career pressure, life goals, blockers they haven't named yet.</p>
+          <p class="pitch">
+            <strong>For teams:</strong> offer it as a benefit. Employees get a safe, always-on place to think out loud, set goals, and track action items. You get retention without running coaching programs yourself. HIPAA-aware data model; private to the individual.
+          </p>
+          <ul class="app-features">
+            <li>Voice-first sessions that pick up where the last one ended</li>
+            <li>Wheel of Life radar chart for self-assessment across career, health, relationships, finances</li>
+            <li>Goals, rituals, and weekly action items tracked between sessions</li>
+            <li>Insights surface patterns over time — what's stuck, what's shifting</li>
+          </ul>
+          <a href="https://mecoach.app?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=custom-apps&amp;utm_content=mecoach-cta" target="_blank" rel="noopener" class="app-cta">Visit MeCoach<span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <!-- VoiceForge -->
+      <article class="app-card reverse">
+        <div class="app-visual">
+          <div class="panel-stack" aria-hidden="true">
+            <div class="panel panel-back"><img src="screenshots/voiceforge/idle.png" alt="VoiceForge idle state: blue microphone, 'Press Mouse 4 to start', daily stats showing 1,922 words transcribed, 55 transcriptions, 105 WPM" loading="lazy" width="600" height="900"></div>
+            <div class="panel panel-front"><img src="screenshots/voiceforge/recording.png" alt="VoiceForge recording: pulsing red microphone, waveform visualizer, 'REC · Recording 0:05' timer" loading="lazy" width="600" height="900"></div>
+          </div>
+        </div>
+        <div class="app-body">
+          <span class="app-tag">Mac · Windows · Linux</span>
+          <h2><a href="https://usevoiceforge.com?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=custom-apps&amp;utm_content=voiceforge-card" target="_blank" rel="noopener">VoiceForge</a></h2>
+          <p class="lede">Desktop voice-to-text that lives in any app. Press a hotkey, speak, and the cleaned-up text pastes wherever your cursor was — under two seconds end to end.</p>
+          <p class="pitch">
+            <strong>For businesses:</strong> sales teams, field inspectors, practitioners typing notes all day. VoiceForge replaces the keyboard for anyone whose job is talking more than typing. Cross-platform, offline-capable, learns your vocabulary and technical jargon. Zero cloud dependency — the audio never leaves the machine.
+          </p>
+          <ul class="app-features">
+            <li>Hotkey-triggered capture anywhere on the OS — docs, email, CRM, browser</li>
+            <li>Runs fully offline on the local machine; no audio sent to any server</li>
+            <li>Learns proper nouns, industry terms, internal abbreviations over time</li>
+            <li>Daily stats dashboard: words transcribed, avg WPM, transcription count</li>
+          </ul>
+          <a href="https://usevoiceforge.com?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=custom-apps&amp;utm_content=voiceforge-cta" target="_blank" rel="noopener" class="app-cta">Visit VoiceForge<span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="closing-cta">
+    <div class="container">
+      <h2>Want something like this built for your business?</h2>
+      <p>These are the kind of custom apps I also build on a contract basis — client portals, internal tools, industry-specific software. If you have an idea or a pain point, let's talk through it.</p>
+      <a href="https://calendar.app.google/72xGWLJ4tVZJxpni6" class="btn" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book a 15-min call
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <p class="footer-copy">
+        <span class="footer-mark">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Built in Frederick, MD
+        </span>
+        <span class="footer-sep" aria-hidden="true">·</span>
+        &copy; 2026 Redwood Digital Frederick LLC
+      </p>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/#contact">Contact</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var nav = document.querySelector('nav');
+  if (!nav) return;
+  var ticking = false;
+  function update() {
+    if (window.scrollY > 12) nav.classList.add('is-scrolled');
+    else nav.classList.remove('is-scrolled');
+    ticking = false;
+  }
+  window.addEventListener('scroll', function() {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  update();
+})();
+</script>
+</body>
+</html>
