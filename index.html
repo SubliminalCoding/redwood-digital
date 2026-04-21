@@ -4362,14 +4362,18 @@ function toggleFaq(btn) {
     Or contact Matt directly: <a href="tel:+12272535980">(227) 253-5980</a> · <a href="mailto:matthew@redwooddigitalfrederick.com">email</a>
   </div>
 </div>
-<!-- Netlify Forms fallback form — detected at build time, never rendered (display:none).
-     The live chat above is the primary channel; this exists so Netlify Forms remains wired
-     for any later contact-form flow without needing a re-deploy. -->
+<!-- Netlify Forms: hidden build-time forms Netlify detects and registers.
+     Never rendered to visitors. Submissions show up in Netlify UI → Forms. -->
 <form name="chat" data-netlify="true" netlify-honeypot="bot-field" hidden>
   <input type="text" name="Name">
   <input type="text" name="Contact">
   <textarea name="Message"></textarea>
   <input name="bot-field">
+</form>
+<form name="unsubscribes" data-netlify="true" hidden>
+  <input type="text" name="email">
+  <input type="text" name="source">
+  <input type="text" name="timestamp">
 </form>
 
 <script>

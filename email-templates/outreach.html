@@ -15,8 +15,9 @@
       {{pain_point_example}}   one concrete example for their industry
       {{demo_number}}          default: "(240) 415-6185"
       {{calendar_link}}        default: https://calendar.app.google/72xGWLJ4tVZJxpni6
-      {{unsubscribe_link}}     required for CAN-SPAM compliance
-      {{physical_address}}     required for CAN-SPAM (business address + city/state)
+      {{unsubscribe_link}}     required for CAN-SPAM compliance; per-recipient token
+
+    Physical address is hardcoded in the footer below.
 
     PREHEADER: the hidden preview text at the top of the inbox.
     Keep it under 100 chars and on-brand.
@@ -161,7 +162,7 @@
             <td align="center" style="padding:4px 16px 18px;font-size:11px;line-height:1.5;color:#6a645a;">
               You're receiving this because I thought Redwood Digital might be a fit for {{business_name}}.<br>
               Not interested? <a href="{{unsubscribe_link}}" style="color:#6a645a;">Unsubscribe</a> and I won't email you again.<br>
-              {{physical_address}}
+              Redwood Digital Frederick LLC · 3406B Keats Terrace · Ijamsville, MD 21754
             </td>
           </tr>
         </table>
