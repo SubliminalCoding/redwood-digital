@@ -657,6 +657,28 @@ section {
   margin-bottom: 16px;
   line-height: 1.08;
   max-width: 22ch;
+  position: relative;
+}
+.section-title::after {
+  content: '';
+  display: block;
+  margin-top: 14px;
+  width: 44px;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 60%, transparent 100%);
+  opacity: 0.9;
+}
+[style*="text-align: center"] > .section-title::after,
+[style*="text-align:center"] > .section-title::after,
+.cta-section .section-title::after,
+.contact .section-title::after {
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-section .section-title::after,
+.founder-section .section-title::after {
+  background: linear-gradient(90deg, #e89370 0%, var(--accent-light) 60%, transparent 100%);
 }
 .section-title.wide { max-width: 28ch; }
 .section-title.center,
@@ -775,8 +797,21 @@ section[style*="text-align"] .section-title,
   justify-content: center;
   margin-bottom: 20px;
   color: var(--accent);
+  position: relative;
 }
-.service-icon svg { width: 22px; height: 22px; }
+.service-icon::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  border-radius: 20px;
+  background: radial-gradient(circle, rgba(180, 74, 45, 0.22) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+  pointer-events: none;
+  z-index: -1;
+}
+.service-card:hover .service-icon::before { opacity: 1; }
+.service-icon svg { width: 22px; height: 22px; position: relative; z-index: 1; }
 .service-card h3 {
   font-size: 1.2rem;
   font-weight: 700;
@@ -1777,6 +1812,29 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 
 /* -------------------- HERO v2 overrides -------------------- */
 .hero.hero-v2 { padding: 112px 0 72px; min-height: 0; }
+.hero-v2 .hero-badge,
+.hero-v2 h1,
+.hero-v2 .hero-content p,
+.hero-v2 .btn-group,
+.hero-v2 .photo-slot {
+  animation: hero-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-v2 .hero-badge { animation-delay: 0.1s; }
+.hero-v2 h1 { animation-delay: 0.22s; }
+.hero-v2 .hero-content p { animation-delay: 0.34s; }
+.hero-v2 .btn-group { animation-delay: 0.46s; }
+.hero-v2 .photo-slot { animation-delay: 0.2s; animation-duration: 0.9s; }
+@keyframes hero-rise {
+  0%   { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-v2 .hero-badge,
+  .hero-v2 h1,
+  .hero-v2 .hero-content p,
+  .hero-v2 .btn-group,
+  .hero-v2 .photo-slot { animation: none; }
+}
 .hero-v2 .hero-v2-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
@@ -1913,7 +1971,22 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 .lane-card h3 { font-size:1.15rem; font-weight:700; color:#1a1a1a;
   margin:0 0 8px; letter-spacing:-.015em; }
 .lane-card p { font-size:.9rem; color:var(--text-dim); line-height:1.55; margin:0 0 16px; }
-.lane-cta { font-size:.85rem; font-weight:600; color:var(--accent); }
+.lane-cta {
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.lane-cta .arrow,
+.btn-arrow .arrow {
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 0.3s var(--ease-out);
+}
+.lane-card:hover .lane-cta .arrow,
+.btn-arrow:hover .arrow { transform: translateX(4px); }
 
 /* -------------------- PROOF SECTION -------------------- */
 .proof-section { padding:96px 0 64px; background: #eee6d4;
@@ -2057,8 +2130,24 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   max-width:560px; line-height:1.5; }
 .testimonial-skeleton-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
 @media (max-width: 800px) { .testimonial-skeleton-grid { grid-template-columns:1fr; } }
-.testimonial-slot { background:#fbf7ef; border:1px dashed rgba(20,18,14,.18);
-  border-radius:14px; padding:24px; display:flex; flex-direction:column; gap:14px; opacity:.9; }
+.testimonial-slot {
+  background: #fbf7ef;
+  border: 1px dashed rgba(20, 18, 14, 0.18);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  opacity: 0.9;
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out),
+              border-color 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
+}
+.testimonial-slot:hover {
+  opacity: 1;
+  transform: translateY(-3px);
+  border-color: rgba(180, 74, 45, 0.3);
+  box-shadow: var(--shadow-sm);
+}
 .testimonial-slot.ts-placeholder { border-style: dashed; }
 .ts-photo-placeholder { width:44px; height:44px; border-radius:50%;
   background: rgba(20,18,14,.04); border:1px dashed rgba(20,18,14,.2);
@@ -2301,7 +2390,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
         <p>Three ways I plug the revenue leaks in Frederick service businesses: a $99 starter site, a 24/7 AI phone agent, or a custom build when a template won't do it.</p>
         <div class="btn-group">
           <a class="btn" href="#lanes">See what I build</a>
-          <a class="btn btn-outline" href="ai-caller.html">Losing calls after 6pm? →</a>
+          <a class="btn btn-outline btn-arrow" href="ai-caller.html">Losing calls after 6pm?<span class="arrow" aria-hidden="true">→</span></a>
         </div>
       </div>
 
@@ -2324,19 +2413,19 @@ img, svg, video, canvas, iframe { max-width: 100%; }
         <div class="lane-price">$99 · one-time</div>
         <h3>Starter site</h3>
         <p>Modern mobile-first site, Google Business Profile, review collection. Delivered in a week.</p>
-        <div class="lane-cta">Learn more →</div>
+        <div class="lane-cta">Learn more<span class="arrow" aria-hidden="true">→</span></div>
       </a>
       <a class="lane-card featured" href="ai-caller.html">
         <div class="lane-price">$2,000 setup · $500/mo</div>
         <h3>AI phone agent</h3>
         <p>Answers every call 24/7. Qualifies the lead. Books the appointment. Most service businesses miss 3 to 5 calls a week to voicemail. This catches them.</p>
-        <div class="lane-cta">See how it works →</div>
+        <div class="lane-cta">See how it works<span class="arrow" aria-hidden="true">→</span></div>
       </a>
       <a class="lane-card" href="#pricing">
         <div class="lane-price">$1,500 – $10k+</div>
         <h3>Custom build</h3>
         <p>Internal tools, client portals, dashboards. For when a template can't do the job.</p>
-        <div class="lane-cta">Learn more →</div>
+        <div class="lane-cta">Learn more<span class="arrow" aria-hidden="true">→</span></div>
       </a>
     </div>
   </div>
