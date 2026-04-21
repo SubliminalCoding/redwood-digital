@@ -531,8 +531,34 @@ nav ul li a.is-active { color: var(--ink); }
   cursor: pointer;
   padding: 10px;
   border-radius: 8px;
+  position: relative;
+  width: 44px;
+  height: 44px;
 }
-.hamburger svg { display: block; }
+.hamburger-lines {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 22px;
+  height: 14px;
+}
+.hamburger-lines span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 0.35s var(--ease-spring), opacity 0.2s var(--ease-out), top 0.35s var(--ease-spring), background 0.25s;
+}
+.hamburger-lines span:nth-child(1) { top: 0; }
+.hamburger-lines span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.hamburger-lines span:nth-child(3) { top: 100%; transform: translateY(-100%); }
+nav ul.open ~ .hamburger .hamburger-lines span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+nav ul.open ~ .hamburger .hamburger-lines span:nth-child(2) { opacity: 0; transform: translateX(-8px); }
+nav ul.open ~ .hamburger .hamburger-lines span:nth-child(3) { top: 50%; transform: translateY(-50%) rotate(-45deg); }
+nav.on-dark .hamburger-lines span { background: #faf9f7; }
 
 @media (max-width: 640px) {
   nav ul {
@@ -571,8 +597,6 @@ nav ul li a.is-active { color: var(--ink); }
     to { opacity: 1; transform: translateY(0); }
   }
   .hamburger { display: block; z-index: 102; }
-  nav ul.open ~ .hamburger .hamburger-open { display: none; }
-  nav ul.open ~ .hamburger .hamburger-close { display: block; }
 }
 
 /* ---- HERO ---- */
@@ -605,6 +629,43 @@ nav ul li a.is-active { color: var(--ink); }
   pointer-events: none;
   animation: float 12s ease-in-out infinite reverse;
 }
+/* Scroll hint chevron at the bottom of the hero */
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--accent);
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+  transition: opacity 0.4s var(--ease-out);
+  animation: scroll-hint-bounce 2.2s cubic-bezier(0.5, 0, 0.3, 1) infinite;
+}
+.hero-scroll-hint.visible { opacity: 0.7; }
+.hero-scroll-hint-label {
+  font-size: 0.7rem;
+  font-family: ui-monospace, Menlo, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.hero-scroll-hint svg { width: 18px; height: 18px; }
+@keyframes scroll-hint-bounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 8px); }
+}
+@media (max-width: 768px) {
+  .hero-scroll-hint { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll-hint { animation: none; }
+}
+
 /* Third orb follows mouse position in the hero on devices with a pointer */
 .hero-cursor-orb {
   position: absolute;
@@ -1988,8 +2049,25 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   max-width: 52ch;
 }
 .hero-v2 .accent-gradient-text {
-  background: linear-gradient(135deg, var(--accent), var(--accent-light));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  background: linear-gradient(135deg,
+    var(--accent) 0%,
+    var(--accent-light) 25%,
+    #e89370 50%,
+    var(--accent-light) 75%,
+    var(--accent) 100%);
+  background-size: 220% 220%;
+  background-position: 0% 0%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: grad-drift 18s ease-in-out infinite;
+}
+@keyframes grad-drift {
+  0%, 100% { background-position: 0% 0%; }
+  50%      { background-position: 100% 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-v2 .accent-gradient-text { animation: none; }
 }
 
 /* Hero visual container — must be positioned so the floating card anchors to it */
@@ -2257,8 +2335,15 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 }
 .audio-toggle.active { color: var(--ink); }
 
-.audio-stage { padding:22px 20px; border-radius:10px; border:1px solid var(--border); background:var(--bg);
-  transition: background 0.45s var(--ease-out), border-color 0.45s var(--ease-out); position: relative; overflow: hidden; }
+.audio-stage {
+  padding: 22px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  transition: background 0.45s var(--ease-out), border-color 0.45s var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
 .audio-stage::before {
   content: '';
   position: absolute;
@@ -2268,8 +2353,19 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   transition: opacity 0.4s var(--ease-out);
   pointer-events: none;
 }
-.audio-stage.after { background: radial-gradient(circle at 30% 30%, rgba(45,138,104,.1) 0%, transparent 60%), var(--bg);
-  border-color: rgba(45,138,104,.22); }
+/* Before — muted grayscale sadness-of-voicemail look */
+.audio-stage.before {
+  background: linear-gradient(135deg, rgba(20, 18, 14, 0.04), rgba(20, 18, 14, 0.08)), var(--bg);
+  border-color: rgba(20, 18, 14, 0.12);
+  filter: saturate(0.55);
+}
+.audio-stage.before .audio-stage-title { color: var(--text-dim); font-style: italic; }
+/* After — live green call-took-the-call look */
+.audio-stage.after {
+  background: radial-gradient(circle at 30% 30%, rgba(45, 138, 104, 0.1) 0%, transparent 60%), var(--bg);
+  border-color: rgba(45, 138, 104, 0.22);
+  filter: saturate(1);
+}
 .audio-stage.after::before { opacity: 1; }
 .audio-stage-title,
 .audio-stage-sub {
@@ -2311,10 +2407,26 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   box-shadow: var(--shadow-sm);
 }
 .testimonial-slot.ts-placeholder { border-style: dashed; }
-.ts-photo-placeholder { width:44px; height:44px; border-radius:50%;
-  background: rgba(20,18,14,.04); border:1px dashed rgba(20,18,14,.2);
-  display:flex; align-items:center; justify-content:center; color: rgba(20,18,14,.35); }
-.ts-photo-placeholder svg { width:22px; height:22px; }
+.ts-photo-placeholder {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(20, 18, 14, 0.04);
+  border: 1px dashed rgba(20, 18, 14, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(20, 18, 14, 0.35);
+  transition: transform 0.4s var(--ease-spring), background 0.3s var(--ease-out),
+              border-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
+}
+.testimonial-slot:hover .ts-photo-placeholder {
+  transform: scale(1.08) rotate(-6deg);
+  background: rgba(180, 74, 45, 0.08);
+  border-color: rgba(180, 74, 45, 0.3);
+  color: var(--accent);
+}
+.ts-photo-placeholder svg { width: 22px; height: 22px; }
 .ts-quote { font-size:.95rem; color: var(--text); line-height:1.55; font-style:italic; }
 .ts-attrib { display:flex; flex-direction:column; gap:2px; }
 .ts-name { font-size:.88rem; font-weight:600; color: var(--ink); }
@@ -2555,8 +2667,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
       <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
     </ul>
     <button class="hamburger" onclick="toggleMenu()" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-menu">
-      <svg class="hamburger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      <svg class="hamburger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <span class="hamburger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
   </div>
 </nav>
@@ -2564,6 +2675,10 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 <!-- Hero -->
 <section class="hero hero-v2">
   <div class="hero-cursor-orb" aria-hidden="true"></div>
+  <div class="hero-scroll-hint" id="heroScrollHint" aria-hidden="true">
+    <span class="hero-scroll-hint-label">scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
   <div class="container">
     <div class="hero-v2-grid">
       <div class="hero-content">
@@ -3213,6 +3328,23 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
   [...text.childNodes].forEach(wrap);
 })();
 
+// Hero scroll hint — visible briefly on load, fades after 120px of scroll
+(function() {
+  const hint = document.getElementById('heroScrollHint');
+  if (!hint) return;
+  setTimeout(function() { hint.classList.add('visible'); }, 1400);
+  let removed = false;
+  function onScroll() {
+    if (removed) return;
+    if (window.scrollY > 120) {
+      hint.classList.remove('visible');
+      removed = true;
+      window.removeEventListener('scroll', onScroll);
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
 // Hero cursor-following orb — tracks mouse with easing, skips on touch devices
 (function() {
   const hero = document.querySelector('.hero-v2');
@@ -3241,8 +3373,6 @@ function toggleMenu() {
   const menu = document.getElementById('nav-menu');
   const isOpen = menu.classList.toggle('open');
   const hamburger = document.querySelector('.hamburger');
-  hamburger.querySelector('.hamburger-open').style.display = isOpen ? 'none' : 'block';
-  hamburger.querySelector('.hamburger-close').style.display = isOpen ? 'block' : 'none';
   hamburger.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
   hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -3256,8 +3386,7 @@ function closeMenu() {
   if (!menu.classList.contains('open')) return;
   menu.classList.remove('open');
   const hamburger = document.querySelector('.hamburger');
-  hamburger.querySelector('.hamburger-open').style.display = 'block';
-  hamburger.querySelector('.hamburger-close').style.display = 'none';
+  hamburger.setAttribute('aria-label', 'Open navigation menu');
   hamburger.setAttribute('aria-expanded', 'false');
   document.body.style.overflow = '';
   hamburger.focus();
