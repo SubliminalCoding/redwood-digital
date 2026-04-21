@@ -31,6 +31,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="images/matthew-coleman.jpg" fetchpriority="high">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
 
 <!-- ─── Google Analytics 4 ───────────────────────────────────────────
@@ -267,6 +268,34 @@ h1, h2, h3, .section-title, .hero h1, .founder-headline {
   }
   .hero::before, .hero::after { animation: none !important; }
   .fade-in { opacity: 1; transform: none; }
+}
+
+/* Noscript banner — visible only when JavaScript is disabled */
+.noscript-banner {
+  position: relative;
+  z-index: 103;
+  padding: 14px 22px;
+  background: linear-gradient(180deg, rgba(180, 74, 45, 0.12), rgba(180, 74, 45, 0.06));
+  border-bottom: 1px solid rgba(180, 74, 45, 0.2);
+  color: var(--text);
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.55;
+}
+.noscript-banner strong { color: var(--accent); }
+.noscript-banner a { color: var(--accent); font-weight: 600; text-decoration: underline; }
+
+/* Screen-reader-only utility — keeps labels accessible without showing them visually */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Skip link for accessibility — slides in from top on keyboard focus */
@@ -2055,6 +2084,32 @@ footer p {
 /* Prevent any horizontal overflow */
 img, svg, video, canvas, iframe { max-width: 100%; }
 
+/* Print — strip fixed/animated UI, render external link URLs, simplify colors */
+@media print {
+  nav, .scroll-progress, .back-to-top, .chat-bubble, .chat-panel,
+  .mobile-cta, .hero-scroll-hint, .hero-cursor-orb,
+  body::after { display: none !important; }
+  body { background: #fff; color: #000; }
+  * { box-shadow: none !important; filter: none !important; animation: none !important; text-shadow: none !important; }
+  section { page-break-inside: avoid; padding: 24px 0; }
+  .hero, .hero-v2 { padding: 24px 0; }
+  .hero-v2 .photo-slot, .founder-portrait-wrap { page-break-inside: avoid; }
+  a[href^="http"]::after, a[href^="mailto:"]::after, a[href^="tel:"]::after {
+    content: " (" attr(href) ")";
+    font-size: 85%;
+    color: #555;
+    word-break: break-all;
+  }
+  a[href^="#"]::after { content: ""; }
+  .founder-section, .cta-section, .proof-bar {
+    background: #fff !important;
+    color: #000 !important;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+  }
+  .founder-section *, .cta-section * { color: #000 !important; }
+}
+
 
 
 /* ===== v2 ADDITIONS (port) ===== */
@@ -2728,6 +2783,13 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 <body>
 
 <a href="#main" class="skip-link">Skip to content</a>
+<noscript>
+  <div class="noscript-banner" role="alert">
+    <strong>JavaScript is off —</strong> the animations won't run, but the site works.
+    Reach Matt directly: <a href="tel:+12272535980">(227) 253-5980</a>
+    or <a href="mailto:matthew@redwooddigitalfrederick.com">matthew@redwooddigitalfrederick.com</a>.
+  </div>
+</noscript>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 <button class="back-to-top" id="backToTop" aria-label="Back to top" type="button">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
@@ -3764,13 +3826,17 @@ function toggleFaq(btn) {
   border: 1px solid var(--border);
   border-radius: 10px;
   font-family: inherit;
-  font-size: 0.92rem;
+  /* 16px on mobile to prevent iOS auto-zoom on focus */
+  font-size: 16px;
   color: var(--text);
   background: var(--bg);
   margin-bottom: 10px;
   resize: none;
   transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), background 0.2s;
   outline: none;
+}
+@media (min-width: 481px) {
+  .chat-body input, .chat-body textarea { font-size: 0.92rem; }
 }
 .chat-body input:hover, .chat-body textarea:hover {
   border-color: rgba(180, 74, 45, 0.28);
@@ -3800,10 +3866,13 @@ function toggleFaq(btn) {
   </div>
   <div class="chat-body" id="chatForm">
     <p>Ask anything about our services, or leave your info and we'll get back to you within a few hours.</p>
-    <input type="text" id="chatName" placeholder="Your name" required>
-    <input type="email" id="chatEmail" placeholder="Email or phone number" required>
-    <textarea id="chatMsg" rows="3" placeholder="What can we help with?"></textarea>
-    <button class="chat-btn" id="chatSend">Send Message</button>
+    <label for="chatName" class="sr-only">Your name</label>
+    <input type="text" id="chatName" name="name" placeholder="Your name" required autocomplete="name">
+    <label for="chatEmail" class="sr-only">Email or phone</label>
+    <input type="text" id="chatEmail" name="contact" placeholder="Email or phone number" required autocomplete="email" inputmode="email">
+    <label for="chatMsg" class="sr-only">What can we help with?</label>
+    <textarea id="chatMsg" name="message" rows="3" placeholder="What can we help with?"></textarea>
+    <button class="chat-btn" id="chatSend" type="button">Send Message</button>
   </div>
   <div class="chat-success" id="chatSuccess" style="display:none;">
     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -3886,23 +3955,44 @@ function toggleFaq(btn) {
     }
   }
 
-  toggles.forEach(function (t) {
-    t.addEventListener('click', function () {
-      if (state.compare === t.dataset.compare) return;
-      // Fade out current text, swap, fade back in
-      stageTitle.classList.add('is-swapping');
-      stageSub.classList.add('is-swapping');
-      setTimeout(function() {
-        state.compare = t.dataset.compare;
-        toggles.forEach(function (x) {
-          x.setAttribute('aria-selected', x.dataset.compare === state.compare ? 'true' : 'false');
-        });
-        render();
-        requestAnimationFrame(function() {
-          stageTitle.classList.remove('is-swapping');
-          stageSub.classList.remove('is-swapping');
-        });
-      }, 220);
+  function activate(which, focusTarget) {
+    if (state.compare === which) return;
+    stageTitle.classList.add('is-swapping');
+    stageSub.classList.add('is-swapping');
+    setTimeout(function() {
+      state.compare = which;
+      toggles.forEach(function (x) {
+        const isActive = x.dataset.compare === state.compare;
+        x.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        x.tabIndex = isActive ? 0 : -1;
+      });
+      render();
+      if (focusTarget) focusTarget.focus();
+      requestAnimationFrame(function() {
+        stageTitle.classList.remove('is-swapping');
+        stageSub.classList.remove('is-swapping');
+      });
+    }, 220);
+  }
+  // Initial tabindex: selected tab is focusable, others not (standard tablist pattern)
+  toggles.forEach(function(t) {
+    t.tabIndex = t.dataset.compare === state.compare ? 0 : -1;
+  });
+  toggles.forEach(function (t, idx) {
+    t.addEventListener('click', function () { activate(t.dataset.compare); });
+    t.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const next = toggles[(idx + (e.key === 'ArrowRight' ? 1 : toggles.length - 1)) % toggles.length];
+        activate(next.dataset.compare, next);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        activate(toggles[0].dataset.compare, toggles[0]);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        const last = toggles[toggles.length - 1];
+        activate(last.dataset.compare, last);
+      }
     });
   });
 
