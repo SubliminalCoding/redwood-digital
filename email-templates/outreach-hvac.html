@@ -8,27 +8,32 @@
   <meta name="supported-color-schemes" content="light">
   <title>Redwood Digital</title>
   <!--
-    HVAC-specific outreach template.
-    Hook: "When an emergency call comes in at 10 PM, who answers?"
+    HVAC / home-services outreach template.
+    Hook: "When an emergency call comes in at 10pm, who answers?"
+    Format: solid red header block + conversational 3-paragraph body +
+    CTA + three-column feature strip + signature + compliance footer.
 
     VARIABLES (Jinja2-style):
       {{name}}                 first name, e.g. "John"
       {{business_name}}        e.g. "Miller Plumbing & HVAC"
-      {{missed_calls}}         e.g. "4" (integer, weekly average)
-      {{revenue_estimate}}     e.g. "$3,200" (rough weekly missed-revenue calc)
+      {{reputation_hook}}      short phrase tied to something real you
+                               saw on their Google listing, e.g.
+                               "a solid reputation for emergency service",
+                               "consistently good reviews for same-day repair",
+                               "high ratings for commercial HVAC"
       {{demo_number}}          default: "(240) 415-6185"
       {{calendar_link}}        default: https://calendar.app.google/72xGWLJ4tVZJxpni6
       {{unsubscribe_link}}     required: per-recipient base64url-encoded URL
 
-    SUBJECT LINE: When an emergency call comes in at 10 PM, who answers?
-    PREHEADER:    (see hidden div at top of body — keep under 100 chars)
+    SUBJECT LINE: A quick test for {{name}}
+    PREHEADER:    see hidden div below
   -->
 </head>
 <body style="margin:0;padding:0;background:#f4eee2;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#3d3a36;-webkit-font-smoothing:antialiased;">
 
-  <!-- Hidden preheader — inbox preview text -->
+  <!-- Hidden preheader — inbox preview line -->
   <div style="display:none;max-height:0;overflow:hidden;opacity:0;font-size:1px;line-height:1px;color:#f4eee2;">
-    You missed {{missed_calls}} calls last week. Roughly {{revenue_estimate}} walked to a competitor.
+    Call {{demo_number}} yourself. Talk to the AI. Judge it on what it does.
   </div>
 
   <!-- Outer wrapper -->
@@ -37,128 +42,103 @@
       <td align="center" style="padding:28px 12px;">
 
         <!-- Main card -->
-        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#fbf7ef;border:1px solid #e8e4df;border-radius:14px;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#fbf7ef;border:1px solid #e8e4df;border-radius:14px;overflow:hidden;">
 
-          <!-- Header: logo mark + wordmark -->
+          <!-- Header block: solid redwood red with white text -->
           <tr>
-            <td style="padding:22px 28px 14px;border-bottom:1px solid #f0eadb;">
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td style="width:28px;height:28px;background:#b44a2d;border-radius:6px;color:#ffffff;font-size:15px;font-weight:700;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:28px;">R</td>
-                  <td style="padding-left:10px;font-size:16px;font-weight:700;color:#1a1a1a;letter-spacing:-0.2px;">Redwood <span style="color:#b44a2d;">Digital</span></td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Eyebrow: personalized address -->
-          <tr>
-            <td style="padding:24px 28px 0;">
-              <div style="font-size:11px;font-weight:700;color:#b44a2d;text-transform:uppercase;letter-spacing:0.16em;">
-                For {{name}} · {{business_name}}
+            <td style="padding:32px 36px 34px;background:#b44a2d;background:linear-gradient(180deg,#c2654a 0%,#b44a2d 60%,#a3421f 100%);color:#ffffff;">
+              <div style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:10px;">
+                A quick test for {{name}}
               </div>
-            </td>
-          </tr>
-
-          <!-- Hook question -->
-          <tr>
-            <td style="padding:12px 28px 0;">
-              <h1 style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:26px;line-height:1.2;font-weight:800;letter-spacing:-0.5px;color:#1a1a1a;">
-                When an emergency call comes in at 10 PM, who answers?
+              <h1 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:27px;line-height:1.22;font-weight:700;letter-spacing:-0.4px;color:#ffffff;">
+                When an emergency call comes in at 10pm, who answers?
               </h1>
             </td>
           </tr>
 
-          <!-- Subhead: the stat -->
+          <!-- Body paragraph 1: personalized reputation reference -->
           <tr>
-            <td style="padding:14px 28px 4px;font-size:15px;line-height:1.6;color:#3d3a36;">
-              <p style="margin:0;">
-                Most HVAC shops in Frederick miss <strong style="color:#1a1a1a;">3 to 5 calls a week</strong> after hours. For a business doing average tickets, that's roughly <strong style="color:#1a1a1a;">{{revenue_estimate}}</strong> of work walking to the next number in the caller's phone.
+            <td style="padding:28px 36px 0;font-size:15px;line-height:1.65;color:#3d3a36;">
+              <p style="margin:0 0 18px;">
+                {{name}}, I was looking at {{business_name}}'s Google reviews. You've got {{reputation_hook}}. My question: when a customer calls at 9pm on a Saturday and your team isn't in, does someone pick up? Or do they hang up and call the next plumber on Google?
               </p>
             </td>
           </tr>
 
-          <!-- Scenario callout — left-bar accent -->
+          <!-- Body paragraph 2: what the product does -->
           <tr>
-            <td style="padding:20px 28px 4px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4eee2;border-left:4px solid #b44a2d;border-radius:0 10px 10px 0;">
-                <tr>
-                  <td style="padding:18px 22px;">
-                    <p style="margin:0 0 12px;font-size:15px;line-height:1.55;color:#1a1a1a;font-style:italic;">
-                      Picture {{business_name}}'s AI receptionist picking up that 10 PM emergency instead of the voicemail box.
-                    </p>
-                    <p style="margin:0;font-size:15px;line-height:1.55;color:#3d3a36;font-style:italic;">
-                      It talks with the caller, figures out what the job is, and drops it on your calendar for the first slot tomorrow. You wake up to a booked appointment and a confirmation text already sent.
-                    </p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Big CTA card: try the real demo number -->
-          <tr>
-            <td style="padding:22px 28px 10px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:linear-gradient(180deg,#c2654a,#b44a2d 55%,#a3421f);background-color:#b44a2d;border-radius:14px;">
-                <tr>
-                  <td align="center" style="padding:26px 20px 24px;">
-                    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);text-transform:uppercase;letter-spacing:0.18em;margin-bottom:10px;">
-                      Try it on a real call
-                    </div>
-                    <a href="tel:{{demo_number}}" style="display:inline-block;font-size:28px;font-weight:800;color:#ffffff;letter-spacing:-0.3px;text-decoration:none;margin-bottom:8px;">
-                      {{demo_number}}
-                    </a>
-                    <p style="margin:6px 0 0;font-size:13px;line-height:1.5;color:rgba(255,255,255,0.9);">
-                      Call the number. Say "my AC is out." Hear the product in under two minutes. No pitch.
-                    </p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- "How it works" — three-column icon strip -->
-          <tr>
-            <td style="padding:14px 20px 4px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td align="center" width="33%" style="padding:18px 8px;">
-                    <div style="width:38px;height:38px;line-height:38px;margin:0 auto 10px;background:rgba(180,74,45,0.1);border-radius:50%;color:#b44a2d;font-size:18px;font-weight:700;">✓</div>
-                    <div style="font-size:13px;font-weight:700;color:#1a1a1a;line-height:1.3;">Answers every call</div>
-                    <div style="font-size:11px;color:#6a645a;line-height:1.4;margin-top:4px;">24/7, nights, weekends</div>
-                  </td>
-                  <td align="center" width="33%" style="padding:18px 8px;">
-                    <div style="width:38px;height:38px;line-height:38px;margin:0 auto 10px;background:rgba(180,74,45,0.1);border-radius:50%;color:#b44a2d;font-size:18px;font-weight:700;">✓</div>
-                    <div style="font-size:13px;font-weight:700;color:#1a1a1a;line-height:1.3;">Books the job</div>
-                    <div style="font-size:11px;color:#6a645a;line-height:1.4;margin-top:4px;">Straight to your calendar</div>
-                  </td>
-                  <td align="center" width="33%" style="padding:18px 8px;">
-                    <div style="width:38px;height:38px;line-height:38px;margin:0 auto 10px;background:rgba(180,74,45,0.1);border-radius:50%;color:#b44a2d;font-size:18px;font-weight:700;">✓</div>
-                    <div style="font-size:13px;font-weight:700;color:#1a1a1a;line-height:1.3;">Tuned for MD HVAC</div>
-                    <div style="font-size:11px;color:#6a645a;line-height:1.4;margin-top:4px;">Service areas, parts, seasonal jobs</div>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Price line + secondary CTA -->
-          <tr>
-            <td style="padding:8px 28px 8px;font-size:14px;line-height:1.6;color:#3d3a36;text-align:center;">
-              <p style="margin:0;">
-                $2,000 setup, $500 a month, no contract, delivered in a week.
+            <td style="padding:0 36px 0;font-size:15px;line-height:1.65;color:#3d3a36;">
+              <p style="margin:0 0 18px;">
+                I build AI receptionists that answer your missed calls with a real conversation. They book appointments, collect basic info, and route urgent jobs to you instantly. No IVR menus. No "press 1 for billing." Just a conversation that sounds like a person and captures the lead.
               </p>
             </td>
           </tr>
 
+          <!-- Body paragraph 3: the ask — pitch-free demo -->
           <tr>
-            <td style="padding:8px 28px 28px;" align="center">
+            <td style="padding:0 36px 4px;font-size:15px;line-height:1.65;color:#3d3a36;">
+              <p style="margin:0 0 22px;">
+                I don't want to pitch you. <strong style="color:#1a1a1a;">I want you to call it yourself.</strong> <a href="tel:{{demo_number}}" style="color:#b44a2d;font-weight:700;text-decoration:none;">{{demo_number}}</a> is a live demo of the AI receptionist. Give it a real question about plumbing or HVAC. Talk to it like you'd talk to a customer. If it books the job right, we'll talk about fitting it into your operation. If it doesn't, no hard feelings.
+              </p>
+            </td>
+          </tr>
+
+          <!-- CTA button -->
+          <tr>
+            <td style="padding:6px 36px 8px;">
               <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td align="center" bgcolor="#fbf7ef" style="border:1px solid #b44a2d;border-radius:10px;">
-                    <a href="{{calendar_link}}" target="_blank" style="display:inline-block;padding:11px 24px;font-size:14px;font-weight:600;color:#b44a2d;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
-                      Or book a 15-min call with me →
+                  <td align="center" bgcolor="#b44a2d" style="background:linear-gradient(180deg,#c2654a,#b44a2d 55%,#a3421f);background-color:#b44a2d;border-radius:10px;box-shadow:0 2px 6px rgba(180,74,45,0.25);">
+                    <a href="tel:{{demo_number}}" style="display:inline-block;padding:14px 30px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;letter-spacing:-0.005em;">
+                      Call the demo now
                     </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Micro line below CTA -->
+          <tr>
+            <td style="padding:10px 36px 26px;font-size:13px;line-height:1.5;color:#6a645a;font-style:italic;">
+              No sales call with me. Just talk to the AI and judge it on what it does.
+            </td>
+          </tr>
+
+          <!-- Three-column feature strip -->
+          <tr>
+            <td style="padding:4px 24px 10px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td width="33.3%" style="padding:12px;vertical-align:top;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4eee2;border:1px solid #e8e4df;border-radius:10px;">
+                      <tr>
+                        <td style="padding:14px 16px;">
+                          <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:6px;">24/7 Answer</div>
+                          <div style="font-size:12px;line-height:1.5;color:#6a645a;">No after-hours gap. Every call goes somewhere.</div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td width="33.3%" style="padding:12px;vertical-align:top;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4eee2;border:1px solid #e8e4df;border-radius:10px;">
+                      <tr>
+                        <td style="padding:14px 16px;">
+                          <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:6px;">Books Jobs</div>
+                          <div style="font-size:12px;line-height:1.5;color:#6a645a;">Collects details, confirms time, drops to your calendar.</div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td width="33.3%" style="padding:12px;vertical-align:top;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4eee2;border:1px solid #e8e4df;border-radius:10px;">
+                      <tr>
+                        <td style="padding:14px 16px;">
+                          <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:6px;">Built Local</div>
+                          <div style="font-size:12px;line-height:1.5;color:#6a645a;">Designed for MD service businesses. Frederick based.</div>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
@@ -167,10 +147,10 @@
 
           <!-- Signature -->
           <tr>
-            <td style="padding:0 28px 26px;border-top:1px solid #f0eadb;">
+            <td style="padding:16px 36px 26px;border-top:1px solid #f0eadb;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td style="padding-top:18px;font-size:14px;line-height:1.5;color:#3d3a36;">
+                  <td style="padding-top:16px;font-size:14px;line-height:1.5;color:#3d3a36;">
                     <p style="margin:0 0 6px;color:#6a645a;">— Matthew</p>
                     <p style="margin:0;">
                       <strong style="color:#1a1a1a;">Matthew Coleman</strong> · Founder, Redwood Digital<br>
@@ -191,7 +171,7 @@
         <!-- Footer outside the card -->
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
           <tr>
-            <td align="center" style="padding:18px 16px 8px;font-size:12px;line-height:1.5;color:#6a645a;">
+            <td align="center" style="padding:18px 16px 8px;">
               <span style="display:inline-block;padding:4px 12px 4px 10px;background:rgba(180,74,45,0.07);border:1px solid rgba(180,74,45,0.18);border-radius:100px;color:#b44a2d;font-weight:600;font-size:11px;letter-spacing:0.02em;">
                 📍 Built in Frederick, MD
               </span>
