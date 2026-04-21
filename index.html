@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f4eee2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2a1f17" media="(prefers-color-scheme: dark)">
 <title>Redwood Digital | $99 Starter Pack + Custom Apps for Frederick, MD Businesses</title>
 <meta name="description" content="$99 starter pack: website, Google Business Profile, and reviews in a week. Custom apps for when you need more. Serving Frederick, MD. Fixed pricing, no surprises.">
 <meta property="og:title" content="Redwood Digital | $99 Starter Pack + Custom Apps, Frederick MD">
@@ -26,6 +28,9 @@
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
 <link rel="canonical" href="https://www.redwooddigitalfrederick.com">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23b44a2d'/><text x='16' y='22' font-size='18' font-weight='bold' text-anchor='middle' fill='white'>R</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="images/matthew-coleman.jpg" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
 
 <!-- ─── Google Analytics 4 ───────────────────────────────────────────
@@ -51,67 +56,153 @@
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+html { color-scheme: light; }
+
 :root {
   --bg: #f4eee2;
   --bg-card: #fbf7ef;
   --bg-card-hover: #ede5d2;
   --border: #e8e4df;
   --text: #3d3a36;
-  --text-dim: #5f5a52;
+  --text-dim: #5a544b;        /* a11y: AA vs --bg — was #5f5a52 (5.4:1) → now 6.1:1 */
+  --text-muted: #6a645a;      /* a11y: AA for 14px+ — was #837d72 (3.4:1, failed) → now 4.7:1 */
   --accent: #b44a2d;
   --accent-glow: rgba(180, 74, 45, 0.15);
   --accent-light: #c2654a;
-  --green: #2d8a68;
+  --accent-deep: #a3421f;
+  --green: #206850;           /* a11y: small-text AA — was #2d8a68 (3.4:1, failed) → now 4.9:1 */
+  --green-bright: #2d8a68;    /* keep for badges/backgrounds where contrast isn't needed */
+  --ink: #1a1a1a;
   --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 20px;
   /* Unified motion + depth tokens for Stripe-grade consistency */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --shadow-xs: 0 1px 2px rgba(20, 18, 14, 0.04);
   --shadow-sm: 0 1px 2px rgba(20, 18, 14, 0.04), 0 2px 8px rgba(20, 18, 14, 0.04);
   --shadow-md: 0 4px 12px rgba(20, 18, 14, 0.06), 0 12px 32px rgba(20, 18, 14, 0.08);
   --shadow-lg: 0 10px 20px rgba(20, 18, 14, 0.08), 0 30px 60px rgba(20, 18, 14, 0.12);
+  --shadow-accent: 0 4px 12px rgba(180, 74, 45, 0.18), 0 18px 44px -10px rgba(180, 74, 45, 0.28);
+  /* Modular type scale — 1.125 ratio anchored at 1rem */
+  --fs-xs: 0.78rem;
+  --fs-sm: 0.88rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.333rem;
+  --fs-xl: 1.777rem;
+  --fs-2xl: 2.369rem;
+  --fs-3xl: 3.157rem;
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
 }
 
 ::selection { background: rgba(180, 74, 45, 0.2); color: #1a1a1a; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+@media (max-width: 640px) { html { scroll-padding-top: 76px; } }
 
-/* Anchor-target scroll-margin so sticky nav doesn't clip headings.
-   Fixes: clicking "See Details" no longer hides the Starter Pack title behind the nav. */
+/* Anchor-target scroll-margin so sticky nav doesn't clip headings */
 section[id] { scroll-margin-top: 88px; }
 @media (max-width: 640px) { section[id] { scroll-margin-top: 72px; } }
 
+/* Defer paint for below-fold sections — faster LCP */
+.portfolio-grid, .faq-list, footer {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1200px;
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-  background: var(--bg);
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01', 'tnum' 0;
+  background:
+    radial-gradient(1200px 600px at 50% -100px, rgba(180, 74, 45, 0.05), transparent 70%),
+    var(--bg);
   color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: rgba(180, 74, 45, 0.18);
+}
+button, a { touch-action: manipulation; }
+@media (hover: none) and (pointer: coarse) {
+  .btn:hover { transform: none; filter: none; }
+  .service-card:hover, .lane-card:hover, .pricing-card:hover,
+  .portfolio-card.visual:hover { transform: none; }
 }
 
-/* Skip link for accessibility */
+h1, h2, h3, .section-title, .hero h1, .founder-headline {
+  text-wrap: balance;
+}
+
+.pricing-range, .lane-price, .bcc-time, .transcript-time {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1, 'cv11';
+}
+
+/* Global reduced-motion — disables ambient loops + heavy transitions, preserves state change */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero::before, .hero::after { animation: none !important; }
+  .fade-in { opacity: 1; transform: none; }
+}
+
+/* Skip link for accessibility — slides in from top on keyboard focus */
 .skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-140%);
   background: var(--accent);
   color: #fff;
-  padding: 8px 16px;
+  padding: 10px 20px;
   z-index: 200;
-  font-size: 0.9rem;
-  transition: top 0.2s;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(180, 74, 45, 0.35);
+  transition: transform 0.25s var(--ease-out);
+  text-decoration: none;
 }
-.skip-link:focus {
-  top: 0;
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateX(-50%) translateY(0);
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 /* Focus styles — branded ring with a subtle glow, matches button language */
-a:focus-visible, button:focus-visible, .service-card:focus-visible, .btn:focus-visible {
+a, button, .service-card, .btn {
+  transition-property: outline-offset, box-shadow;
+}
+a:focus-visible, button:focus-visible, .service-card:focus-visible, .btn:focus-visible, .lane-card:focus-visible {
   outline: 2px solid var(--accent-light);
   outline-offset: 3px;
   border-radius: 8px;
   box-shadow: 0 0 0 4px rgba(180, 74, 45, 0.12);
+}
+/* Dark-background focus ring — visible against warm-brown panels */
+.founder-section a:focus-visible, .founder-section button:focus-visible,
+.cta-section a:focus-visible, .cta-section button:focus-visible {
+  outline-color: #fff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.18);
 }
 @supports (not (selector(:focus-visible))) {
   a:focus, button:focus {
@@ -141,7 +232,7 @@ a:hover { color: var(--accent-light); }
   position: fixed;
   left: 12px;
   right: 12px;
-  bottom: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom));
   z-index: 90;
   display: none;
   gap: 8px;
@@ -152,7 +243,7 @@ a:hover { color: var(--accent-light); }
   border: 1px solid var(--border);
   border-radius: 14px;
   box-shadow: 0 6px 20px rgba(20, 18, 14, 0.1), 0 16px 40px rgba(20, 18, 14, 0.08);
-  transform: translateY(120%);
+  transform: translateY(calc(120% + env(safe-area-inset-bottom)));
   transition: transform 0.45s var(--ease-out);
 }
 .mobile-cta.visible { transform: translateY(0); }
@@ -170,8 +261,16 @@ a:hover { color: var(--accent-light); }
   line-height: 1;
 }
 .mobile-cta .mobile-cta-primary {
-  background: var(--accent);
+  background: linear-gradient(180deg, var(--accent-light) 0%, var(--accent) 55%, var(--accent-deep) 100%);
   color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(20, 18, 14, 0.18),
+    0 2px 6px rgba(180, 74, 45, 0.22);
+}
+.mobile-cta .mobile-cta-primary:hover,
+.mobile-cta .mobile-cta-primary:focus-visible {
+  filter: brightness(1.06);
 }
 .mobile-cta .mobile-cta-secondary {
   background: transparent;
@@ -206,17 +305,25 @@ nav {
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 16px 0;
+  padding: 18px 0;
   background: rgba(244, 238, 226, 0.72);
   backdrop-filter: blur(14px) saturate(1.6);
   -webkit-backdrop-filter: blur(14px) saturate(1.6);
   border-bottom: 1px solid transparent;
-  transition: background 0.3s var(--ease-out), border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  transition:
+    background 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out),
+    box-shadow 0.3s var(--ease-out),
+    padding 0.3s var(--ease-out);
 }
 nav.is-scrolled {
-  background: rgba(244, 238, 226, 0.92);
+  padding: 12px 0;
+  background: rgba(244, 238, 226, 0.94);
   border-bottom-color: var(--border);
-  box-shadow: 0 1px 0 rgba(20, 18, 14, 0.015), 0 8px 24px rgba(20, 18, 14, 0.04);
+  box-shadow:
+    0 1px 0 rgba(20, 18, 14, 0.02),
+    0 4px 14px rgba(20, 18, 14, 0.05),
+    0 14px 32px -8px rgba(20, 18, 14, 0.06);
 }
 nav .container {
   display: flex;
@@ -224,24 +331,61 @@ nav .container {
   align-items: center;
 }
 .logo {
-  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.18rem;
   font-weight: 700;
-  color: #1a1a1a;
-  letter-spacing: -0.5px;
+  color: var(--ink);
+  letter-spacing: -0.018em;
+  text-decoration: none;
+  line-height: 1;
+  transition: transform 0.25s var(--ease-out);
 }
-.logo span { color: var(--accent); }
+.logo:hover { transform: translateY(-1px); color: var(--ink); }
+.logo:hover::after { transform: scaleX(0); }
+.logo-mark {
+  display: block;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 6px rgba(180, 74, 45, 0.25));
+  transition: transform 0.5s var(--ease-spring);
+}
+.logo:hover .logo-mark { transform: rotate(-6deg); }
+.logo-text { font-family: inherit; font-style: normal; }
+.logo-text em {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--accent);
+}
 nav ul {
   list-style: none;
   display: flex;
   gap: 28px;
 }
 nav ul li a {
+  position: relative;
   color: var(--text-dim);
   font-size: 0.9rem;
   font-weight: 500;
-  transition: color 0.2s;
+  padding: 4px 0;
+  transition: color 0.25s var(--ease-out);
+}
+nav ul li a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s var(--ease-out);
 }
 nav ul li a:hover { color: #1a1a1a; }
+nav ul li a:hover::after { transform: scaleX(1); }
+@media (max-width: 640px) { nav ul li a::after { display: none; } }
 
 /* Hamburger menu */
 .hamburger {
@@ -330,78 +474,29 @@ nav ul li a:hover { color: #1a1a1a; }
   50% { transform: translateX(-45%) translateY(20px); }
 }
 .hero .container { position: relative; z-index: 1; }
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: 64px;
-  align-items: center;
-}
-@media (max-width: 960px) {
-  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
-}
 .hero-content { position: relative; z-index: 1; max-width: 640px; }
-.hero-visual {
-  position: relative;
-  aspect-ratio: 3 / 4;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow:
-    0 1px 2px rgba(20, 18, 14, 0.06),
-    0 8px 24px rgba(20, 18, 14, 0.08),
-    0 30px 80px -20px rgba(180, 74, 45, 0.18),
-    0 0 0 1px rgba(20, 18, 14, 0.04);
-  transform: rotate(0.8deg);
-  transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out);
-}
-.hero-visual:hover {
-  transform: rotate(0deg) scale(1.015) translateY(-2px);
-  box-shadow:
-    0 4px 8px rgba(20, 18, 14, 0.06),
-    0 16px 40px rgba(20, 18, 14, 0.1),
-    0 40px 100px -20px rgba(180, 74, 45, 0.22),
-    0 0 0 1px rgba(20, 18, 14, 0.04);
-}
-.hero-visual img {
-  transition: transform 1.2s var(--ease-out);
-}
-.hero-visual:hover img { transform: scale(1.03); }
-.hero-visual img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
-.hero-visual::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(20, 18, 14, 0) 60%, rgba(20, 18, 14, 0.35) 100%);
-  pointer-events: none;
-}
-.hero-visual-caption {
-  position: absolute;
-  left: 24px;
-  bottom: 20px;
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  z-index: 1;
-}
-@media (max-width: 960px) {
-  .hero-visual { max-width: 480px; margin: 0 auto; transform: none; }
-}
 .hero-badge {
-  display: inline-block;
-  padding: 6px 16px;
-  background: rgba(180, 74, 45, 0.08);
-  border: 1px solid rgba(180, 74, 45, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 10px;
+  background: linear-gradient(180deg, rgba(180, 74, 45, 0.12), rgba(180, 74, 45, 0.06));
+  border: 1px solid rgba(180, 74, 45, 0.22);
   border-radius: 100px;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 500;
   color: var(--accent);
-  margin-bottom: 24px;
+  letter-spacing: 0.005em;
+  margin-bottom: 22px;
+  box-shadow: 0 1px 2px rgba(180, 74, 45, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.hero-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(180, 74, 45, 0.18);
 }
 .hero h1 {
   font-size: clamp(2.4rem, 6vw, 4rem);
@@ -432,7 +527,7 @@ nav ul li a:hover { color: #1a1a1a; }
 .btn {
   display: inline-block;
   padding: 14px 32px;
-  background: var(--accent);
+  background: linear-gradient(180deg, var(--accent-light) 0%, var(--accent) 55%, #a3421f 100%);
   color: #fff;
   font-size: 0.98rem;
   font-weight: 600;
@@ -440,18 +535,33 @@ nav ul li a:hover { color: #1a1a1a; }
   border-radius: 10px;
   border: none;
   cursor: pointer;
-  transition: transform 0.35s var(--ease-spring), background 0.25s var(--ease-out), box-shadow 0.35s var(--ease-out);
+  transition: transform 0.35s var(--ease-spring), filter 0.25s var(--ease-out), box-shadow 0.35s var(--ease-out);
   text-decoration: none;
   text-align: center;
-  box-shadow: 0 1px 2px rgba(180, 74, 45, 0.3), 0 2px 6px rgba(180, 74, 45, 0.15);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(20, 18, 14, 0.18),
+    0 1px 2px rgba(180, 74, 45, 0.3),
+    0 2px 6px rgba(180, 74, 45, 0.15);
 }
 .btn:hover {
-  background: var(--accent-light);
   color: #fff;
+  filter: brightness(1.06) saturate(1.05);
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(180, 74, 45, 0.3), 0 12px 36px rgba(180, 74, 45, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(20, 18, 14, 0.16),
+    0 4px 10px rgba(180, 74, 45, 0.3),
+    0 12px 36px rgba(180, 74, 45, 0.22);
 }
-.btn:active { transform: translateY(0); transition-duration: 0.1s; }
+.btn:active {
+  transform: translateY(0);
+  filter: brightness(0.96);
+  transition-duration: 0.08s;
+  box-shadow:
+    inset 0 2px 4px rgba(20, 18, 14, 0.2),
+    0 1px 2px rgba(180, 74, 45, 0.25);
+}
 .btn-outline {
   background: transparent;
   border: 1px solid var(--border);
@@ -469,75 +579,58 @@ nav ul li a:hover { color: #1a1a1a; }
 }
 .btn-block { width: 100%; }
 
-/* Trust bar — promoted to stat strip with bigger numbers */
-.trust-bar {
-  display: flex;
-  gap: 44px;
-  margin-top: 56px;
-  padding-top: 32px;
-  border-top: 1px solid var(--border);
-  position: relative;
-  z-index: 1;
-}
-.trust-item {
-  font-size: 0.78rem;
-  color: var(--text-dim);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  line-height: 1.4;
-}
-.trust-item strong {
-  display: block;
-  font-size: clamp(1.6rem, 3vw, 2rem);
-  font-weight: 800;
-  color: var(--accent);
-  letter-spacing: -0.025em;
-  margin-bottom: 4px;
-  text-transform: none;
-  font-feature-settings: 'tnum' 1;
-}
-@media (max-width: 640px) {
-  .trust-bar { flex-wrap: wrap; gap: 20px 32px; padding-top: 24px; margin-top: 36px; }
-  .trust-item { min-width: calc(50% - 16px); }
-  .trust-item strong { font-size: 1.4rem; }
-}
-
 /* ---- SECTIONS ---- */
 section {
   padding: 100px 0;
 }
 .section-label {
   text-transform: uppercase;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
   color: var(--accent);
   margin-bottom: 14px;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 .section-label::before {
   content: '';
-  width: 22px;
+  width: 24px;
   height: 2px;
-  background: var(--accent);
+  background: linear-gradient(90deg, var(--accent), transparent);
   border-radius: 2px;
-  opacity: 0.5;
+  opacity: 0.85;
 }
 .section-title {
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   font-weight: 700;
-  color: #1a1a1a;
-  letter-spacing: -0.025em;
+  color: var(--ink);
+  letter-spacing: -0.028em;
   margin-bottom: 16px;
-  line-height: 1.1;
+  line-height: 1.08;
+  max-width: 22ch;
+}
+.section-title.wide { max-width: 28ch; }
+.section-title.center,
+[style*="text-align: center"] > .section-title,
+[style*="text-align:center"] > .section-title,
+section[style*="text-align"] .section-title,
+.cta-section .section-title,
+.contact .section-title {
+  margin-left: auto;
+  margin-right: auto;
+}
+[style*="text-align: center"] > .section-label,
+[style*="text-align:center"] > .section-label {
+  margin-left: auto;
+  margin-right: auto;
 }
 .section-subtitle {
   font-size: 1.05rem;
   color: var(--text-dim);
-  max-width: 560px;
-  line-height: 1.7;
+  max-width: 60ch;
+  line-height: 1.65;
 }
 
 /* ---- SERVICES ---- */
@@ -573,6 +666,15 @@ section {
   transition: opacity 0.3s var(--ease-out);
   z-index: 2;
 }
+.service-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 120% 50% at 50% -10%, rgba(180, 74, 45, 0.06) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.45s var(--ease-out);
+  pointer-events: none;
+}
 .service-card:hover {
   border-color: rgba(180, 74, 45, 0.3);
   background: var(--bg-card-hover);
@@ -580,10 +682,14 @@ section {
   box-shadow: var(--shadow-md);
 }
 .service-card:hover::before { opacity: 1; }
-.service-card.visual .service-image {
-  transition: transform 0.8s var(--ease-out);
+.service-card:hover::after { opacity: 1; }
+.service-card .service-icon {
+  transition: transform 0.4s var(--ease-spring), background 0.3s var(--ease-out);
 }
-.service-card.visual:hover .service-image { transform: scale(1.04); }
+.service-card:hover .service-icon {
+  transform: translateY(-2px) rotate(-4deg);
+  background: rgba(180, 74, 45, 0.14);
+}
 .service-icon {
   width: 44px;
   height: 44px;
@@ -609,35 +715,20 @@ section {
   margin-bottom: 16px;
 }
 .service-price {
-  font-size: 0.85rem;
+  display: inline-block;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--green);
+  background: rgba(45, 138, 104, 0.08);
+  border: 1px solid rgba(45, 138, 104, 0.2);
+  padding: 4px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.005em;
+  font-variant-numeric: tabular-nums;
 }
 
-/* Visual variant — image header instead of icon */
-.service-card.visual {
-  padding: 0;
-}
-.service-card.visual .service-image {
-  display: block;
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  object-position: center;
-  border-bottom: 1px solid var(--border);
-}
-.service-card.visual .service-body {
-  padding: 26px 32px 32px;
-}
-.service-card.visual h3 {
-  letter-spacing: -0.018em;
-}
 .service-card h3 {
   letter-spacing: -0.015em;
-}
-.service-card.visual h3 { margin-top: 0; }
-@media (max-width: 640px) {
-  .service-card.visual .service-body { padding: 22px 24px 26px; }
 }
 
 /* Staggered card animations */
@@ -663,8 +754,27 @@ section {
     left: calc(33.33% + 20px);
     right: calc(33.33% + 20px);
     height: 2px;
-    background: repeating-linear-gradient(90deg, var(--accent) 0, var(--accent) 8px, transparent 8px, transparent 16px);
-    opacity: 0.3;
+    background: linear-gradient(90deg,
+      rgba(180, 74, 45, 0) 0%,
+      rgba(180, 74, 45, 0.38) 12%,
+      rgba(180, 74, 45, 0.38) 88%,
+      rgba(180, 74, 45, 0) 100%);
+    border-radius: 2px;
+  }
+  .steps::after {
+    content: '';
+    position: absolute;
+    top: 26px;
+    left: calc(33.33% + 20px);
+    right: calc(33.33% + 20px);
+    height: 6px;
+    background: linear-gradient(90deg,
+      rgba(180, 74, 45, 0) 0%,
+      rgba(180, 74, 45, 0.08) 20%,
+      rgba(180, 74, 45, 0.08) 80%,
+      rgba(180, 74, 45, 0) 100%);
+    filter: blur(3px);
+    pointer-events: none;
   }
 }
 @media (max-width: 700px) {
@@ -703,44 +813,6 @@ section {
 .steps .step:nth-child(2) { transition-delay: 0.15s; }
 .steps .step:nth-child(3) { transition-delay: 0.3s; }
 
-/* ---- ABOUT ---- */
-.about-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 48px;
-  margin-top: 56px;
-  display: flex;
-  gap: 40px;
-  align-items: center;
-}
-@media (max-width: 700px) {
-  .about-card { flex-direction: column; padding: 32px; gap: 24px; text-align: center; }
-}
-.about-photo {
-  flex-shrink: 0;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
-  border: 3px solid #fff;
-}
-.about-info h3 {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 12px;
-}
-.about-info p {
-  color: var(--text-dim);
-  font-size: 0.95rem;
-  line-height: 1.7;
-  margin-bottom: 8px;
-}
-
 /* ---- PORTFOLIO ---- */
 .portfolio-grid {
   display: grid;
@@ -759,20 +831,6 @@ section {
 }
 @media (max-width: 700px) {
   .portfolio-card { flex-direction: column; padding: 32px; gap: 24px; }
-}
-.portfolio-badge {
-  flex-shrink: 0;
-  width: 100px;
-  height: 100px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-light));
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.4rem;
-  font-weight: 800;
-  color: #fff;
-  box-shadow: 0 8px 32px var(--accent-glow);
 }
 .portfolio-info h3 {
   font-size: 1.4rem;
@@ -938,251 +996,6 @@ section {
   .panel-stack  { max-width: 280px; }
 }
 
-/* ---- RETAINER STRIP ---- */
-.retainer-strip {
-  margin-top: 48px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: linear-gradient(135deg, rgba(45, 138, 104, 0.05) 0%, var(--bg-card-hover) 100%);
-  padding: 28px 32px;
-}
-.retainer-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-.retainer-tag {
-  display: inline-block;
-  padding: 3px 10px;
-  background: rgba(45, 138, 104, 0.12);
-  border: 1px solid rgba(45, 138, 104, 0.3);
-  border-radius: 100px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 10px;
-}
-.retainer-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 4px;
-}
-.retainer-sub {
-  color: var(--text-dim);
-  font-size: 0.95rem;
-  line-height: 1.55;
-  max-width: 56ch;
-  margin: 0;
-}
-
-/* ---- AUDIT CAPTURE FORM ---- */
-.audit-section {
-  padding: 80px 0;
-  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-card-hover) 100%);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.audit-card {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 40px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  box-shadow: var(--shadow-md);
-}
-@media (max-width: 640px) {
-  .audit-card { padding: 28px 22px; border-radius: 14px; }
-}
-.audit-card .audit-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--green);
-  background: rgba(45, 138, 104, 0.08);
-  padding: 6px 12px;
-  border-radius: 100px;
-  border: 1px solid rgba(45, 138, 104, 0.2);
-  margin-bottom: 18px;
-}
-.audit-card h3 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 700;
-  color: #1a1a1a;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
-  margin-bottom: 12px;
-}
-.audit-card .audit-lede {
-  font-size: 1rem;
-  color: var(--text-dim);
-  line-height: 1.6;
-  margin-bottom: 26px;
-  max-width: 52ch;
-}
-.audit-form {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr auto;
-  gap: 10px;
-}
-@media (max-width: 640px) {
-  .audit-form { grid-template-columns: 1fr; }
-}
-.audit-form .audit-input {
-  padding: 14px 16px;
-  font-size: 0.95rem;
-  font-family: inherit;
-  color: var(--text);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  outline: none;
-  transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
-}
-.audit-form .audit-input::placeholder { color: var(--text-dim); opacity: 0.7; }
-.audit-form .audit-input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(180, 74, 45, 0.12);
-}
-.audit-form .audit-submit {
-  padding: 14px 28px;
-  white-space: nowrap;
-}
-.audit-meta {
-  margin-top: 14px;
-  font-size: 0.82rem;
-  color: var(--text-dim);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.audit-meta svg { color: var(--green); flex-shrink: 0; }
-.audit-success {
-  display: none;
-  padding: 20px 24px;
-  background: rgba(45, 138, 104, 0.06);
-  border: 1px solid rgba(45, 138, 104, 0.25);
-  border-radius: 12px;
-  color: var(--text);
-  line-height: 1.5;
-}
-.audit-success.visible { display: block; }
-.audit-success strong { color: var(--green); display: block; margin-bottom: 4px; }
-
-/* ---- BEFORE/AFTER SLIDER ---- */
-.ba-wrap {
-  max-width: 980px;
-  margin: 56px auto 0;
-}
-.ba-slider {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  user-select: none;
-  touch-action: none;
-  cursor: ew-resize;
-  background: var(--bg-card-hover);
-}
-.ba-slider img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-.ba-slider .ba-after {
-  clip-path: inset(0 0 0 50%);
-  transition: clip-path 0.08s linear;
-}
-.ba-handle {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 2px;
-  background: #fff;
-  transform: translateX(-1px);
-  pointer-events: none;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 0 24px rgba(0, 0, 0, 0.35);
-  transition: left 0.08s linear;
-}
-.ba-handle::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 44px;
-  height: 44px;
-  background: #fff;
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
-.ba-handle::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 18px;
-  height: 18px;
-  border-left: 2px solid var(--accent);
-  border-right: 2px solid var(--accent);
-  border-top: 2px solid transparent;
-  border-bottom: 2px solid transparent;
-  /* little chevrons */
-  background:
-    linear-gradient(45deg, transparent 44%, var(--accent) 44% 56%, transparent 56%) no-repeat,
-    linear-gradient(-45deg, transparent 44%, var(--accent) 44% 56%, transparent 56%) no-repeat;
-  background-size: 8px 8px, 8px 8px;
-  background-position: 1px 5px, 9px 5px;
-  border: none;
-}
-.ba-label {
-  position: absolute;
-  top: 16px;
-  padding: 6px 14px;
-  background: rgba(20, 18, 14, 0.72);
-  color: #fff;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border-radius: 100px;
-  backdrop-filter: blur(8px);
-}
-.ba-label-before { left: 16px; }
-.ba-label-after  { right: 16px; }
-.ba-placeholder {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  color: var(--text-dim);
-  font-size: 0.88rem;
-  padding: 24px;
-  text-align: center;
-}
-.ba-placeholder strong { color: var(--text); font-size: 0.95rem; }
-.ba-placeholder small { font-size: 0.78rem; }
 
 /* ---- PROOF BAR ---- */
 .proof-bar {
@@ -1230,52 +1043,6 @@ section {
   .proof-bar .proof-divider { margin: 0 8px; }
 }
 
-/* ---- FOUNDER STRIP — dark warm contrast band, anchors the page tonally ---- */
-.founder-strip {
-  background:
-    radial-gradient(circle at 18% 50%, rgba(194, 101, 74, 0.22) 0%, transparent 55%),
-    radial-gradient(circle at 80% 30%, rgba(45, 138, 104, 0.10) 0%, transparent 60%),
-    linear-gradient(135deg, #2a1f17 0%, #3a2820 100%);
-  border-top: 1px solid rgba(180, 74, 45, 0.25);
-  border-bottom: 1px solid rgba(180, 74, 45, 0.25);
-  padding: 32px 0;
-  position: relative;
-  overflow: hidden;
-}
-.founder-strip::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 4px 4px;
-  pointer-events: none;
-  opacity: 0.7;
-}
-.founder-strip .container {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  max-width: 920px;
-  position: relative;
-  z-index: 1;
-}
-.founder-photo-sm {
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-  border: 2px solid rgba(244, 238, 226, 0.95);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(180, 74, 45, 0.4);
-}
-.founder-text { flex: 1; min-width: 0; }
-.founder-line {
-  font-size: 0.95rem;
-  color: #ede4d8;
-  line-height: 1.55;
-  margin: 0;
-}
-.founder-line strong { color: #faf9f7; font-weight: 700; }
 .signature {
   font-family: 'Caveat', cursive;
   font-size: 1.55rem;
@@ -1295,10 +1062,6 @@ section {
   opacity: 0.6;
 }
 @media (max-width: 640px) {
-  .founder-strip { padding: 24px 0; }
-  .founder-strip .container { gap: 16px; }
-  .founder-photo-sm { width: 56px; height: 56px; }
-  .founder-line { font-size: 0.88rem; }
   .signature { font-size: 1.35rem; }
 }
 
@@ -1314,88 +1077,6 @@ section {
 }
 .topo-divider svg { display: block; width: 100%; height: 100%; }
 .topo-divider.flip svg { transform: scaleY(-1); }
-
-/* ---- OUTCOMES ---- */
-.outcomes-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  margin-top: 56px;
-}
-@media (max-width: 800px) {
-  .outcomes-grid { grid-template-columns: 1fr; }
-}
-.outcome-card {
-  position: relative;
-  border-radius: var(--radius);
-  overflow: hidden;
-  aspect-ratio: 4 / 5;
-  background: var(--bg-card-hover);
-  border: 1px solid var(--border);
-  transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
-  will-change: transform;
-  box-shadow: var(--shadow-sm);
-}
-.outcome-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-}
-.outcome-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  transition: transform 1s var(--ease-out);
-}
-.outcome-card:hover img { transform: scale(1.04); }
-.outcome-card .outcome-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 28px 28px 26px;
-  color: #fff;
-  background: linear-gradient(180deg,
-    rgba(20, 18, 14, 0) 35%,
-    rgba(20, 18, 14, 0.35) 58%,
-    rgba(20, 18, 14, 0.75) 82%,
-    rgba(20, 18, 14, 0.92) 100%);
-  z-index: 1;
-}
-.outcome-card .outcome-tag {
-  display: inline-block;
-  align-self: flex-start;
-  padding: 4px 12px;
-  background: rgba(255, 255, 255, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(6px);
-  border-radius: 100px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  margin-bottom: 14px;
-}
-.outcome-card .outcome-headline {
-  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
-  font-weight: 700;
-  letter-spacing: -0.4px;
-  line-height: 1.2;
-  margin-bottom: 8px;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
-}
-.outcome-card .outcome-sub {
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.88);
-  max-width: 46ch;
-}
-@media (max-width: 640px) {
-  .outcome-card { aspect-ratio: 3 / 4; }
-  .outcome-card .outcome-overlay { padding: 22px; }
-}
 
 /* ---- PRICING ---- */
 .pricing-grid {
@@ -1445,6 +1126,20 @@ section {
 }
 .pricing-tier-label:first-child::before { display: none; }
 .pricing-tier-label:first-child { padding-top: 0; }
+.pricing-card {
+  position: relative;
+  overflow: hidden;
+}
+.pricing-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 100% 80% at 50% -20%, rgba(180, 74, 45, 0.05) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out);
+  pointer-events: none;
+}
+.pricing-card:hover::before { opacity: 1; }
 .pricing-card.featured {
   border-color: var(--accent);
   position: relative;
@@ -1472,15 +1167,23 @@ section {
   margin-bottom: 6px;
 }
 .pricing-range {
-  font-size: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 2rem;
   font-weight: 800;
-  color: #1a1a1a;
-  margin: 12px 0 16px;
+  color: var(--ink);
+  letter-spacing: -0.028em;
+  line-height: 1.05;
+  margin: 14px 0 18px;
+  min-height: 62px;
 }
 .pricing-range span {
-  font-size: 0.9rem;
-  font-weight: 400;
-  color: var(--text-dim);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
 }
 .pricing-card ul {
   list-style: none;
@@ -1488,58 +1191,36 @@ section {
   flex-grow: 1;
 }
 .pricing-card ul li {
-  font-size: 0.9rem;
-  color: var(--text-dim);
-  padding: 6px 0;
-  padding-left: 20px;
+  font-size: 0.92rem;
+  color: var(--text);
+  padding: 8px 0 8px 30px;
   position: relative;
+  line-height: 1.5;
 }
 .pricing-card ul li::before {
-  content: '\2713';
+  content: '';
   position: absolute;
   left: 0;
-  color: var(--green);
-  font-weight: 600;
+  top: 11px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: rgba(45, 138, 104, 0.14);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23206850' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+  background-size: 11px;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 0 0 1px rgba(45, 138, 104, 0.18);
+}
+.pricing-card.featured ul li::before {
+  background-color: rgba(180, 74, 45, 0.12);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b44a2d' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+  box-shadow: inset 0 0 0 1px rgba(180, 74, 45, 0.22);
 }
 .pricing-grid .pricing-card:nth-child(1) { transition-delay: 0s; }
 .pricing-grid .pricing-card:nth-child(2) { transition-delay: 0.1s; }
 .pricing-grid .pricing-card:nth-child(3) { transition-delay: 0.2s; }
 .pricing-grid .pricing-card:nth-child(4) { transition-delay: 0.3s; }
-
-/* ---- INCLUDED ---- */
-.included-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 40px;
-}
-@media (max-width: 700px) {
-  .included-grid { grid-template-columns: 1fr; }
-}
-.included-item {
-  text-align: center;
-  padding: 28px 20px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
-.included-item svg {
-  width: 24px;
-  height: 24px;
-  color: var(--accent-light);
-  margin-bottom: 12px;
-}
-.included-item h4 {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 6px;
-}
-.included-item p {
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  line-height: 1.5;
-}
 
 /* ---- FAQ ---- */
 .faq-list {
@@ -1600,17 +1281,19 @@ section {
 .faq-question:hover svg { color: var(--accent-light); }
 .faq-item.open .faq-question { color: var(--accent); }
 .faq-item.open .faq-question svg {
-  transform: rotate(45deg);
+  transform: rotate(180deg);
   color: var(--accent);
 }
 .faq-answer {
-  max-height: 0;
+  display: grid;
+  grid-template-rows: 0fr;
   overflow: hidden;
-  transition: max-height 0.5s var(--ease-out), padding 0.4s var(--ease-out), opacity 0.3s var(--ease-out);
   opacity: 0;
+  transition: grid-template-rows 0.42s var(--ease-out), padding 0.4s var(--ease-out), opacity 0.3s var(--ease-out);
 }
+.faq-answer > * { min-height: 0; }
 .faq-item.open .faq-answer {
-  max-height: 280px;
+  grid-template-rows: 1fr;
   padding-bottom: 22px;
   opacity: 1;
 }
@@ -1626,8 +1309,8 @@ section {
   padding: 120px 0;
   position: relative;
   background:
-    radial-gradient(circle at 20% 40%, rgba(194, 101, 74, 0.28) 0%, transparent 55%),
-    radial-gradient(circle at 80% 60%, rgba(45, 138, 104, 0.14) 0%, transparent 60%),
+    radial-gradient(circle at 20% 40%, rgba(194, 101, 74, 0.3) 0%, transparent 55%),
+    radial-gradient(circle at 80% 60%, rgba(45, 138, 104, 0.16) 0%, transparent 60%),
     linear-gradient(135deg, #2a1f17 0%, #3a2820 100%);
   border-top: 1px solid rgba(180, 74, 45, 0.3);
   border-bottom: 1px solid rgba(180, 74, 45, 0.3);
@@ -1637,10 +1320,35 @@ section {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 4px 4px;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 4px 4px, 8px 8px;
+  background-position: 0 0, 2px 2px;
   pointer-events: none;
-  opacity: 0.7;
+  opacity: 0.8;
+  mask-image: radial-gradient(ellipse at center, #000 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 40%, transparent 100%);
+}
+.cta-section::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  width: 800px;
+  height: 800px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(232, 147, 112, 0.18) 0%, transparent 55%);
+  pointer-events: none;
+  filter: blur(20px);
+  animation: cta-orb 14s ease-in-out infinite;
+}
+@keyframes cta-orb {
+  0%, 100% { transform: translateX(-50%) translateY(0) scale(1); }
+  50% { transform: translateX(-48%) translateY(30px) scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-section::after { animation: none; }
 }
 .cta-section .section-label {
   color: #e89370;
@@ -1664,36 +1372,41 @@ section {
 .cta-section .btn {
   font-size: 1.05rem;
   padding: 16px 38px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(180, 74, 45, 0.5);
+  position: relative;
+  z-index: 1;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(20, 18, 14, 0.2),
+    0 4px 14px rgba(0, 0, 0, 0.35),
+    0 1px 2px rgba(180, 74, 45, 0.5),
+    0 12px 40px -8px rgba(180, 74, 45, 0.55);
+}
+.cta-section .btn::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 14px;
+  box-shadow: 0 0 0 0 rgba(232, 147, 112, 0.5);
+  pointer-events: none;
+  animation: cta-pulse 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes cta-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(232, 147, 112, 0.45); }
+  70%  { box-shadow: 0 0 0 14px rgba(232, 147, 112, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(232, 147, 112, 0); }
+}
+.cta-section .btn:hover::after { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .cta-section .btn::after { animation: none; display: none; }
 }
 .cta-section .btn:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(180, 74, 45, 0.6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -1px 0 rgba(20, 18, 14, 0.18),
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 1px 4px rgba(180, 74, 45, 0.6),
+    0 20px 56px -8px rgba(180, 74, 45, 0.7);
   transform: translateY(-2px);
-}
-
-/* ---- TESTIMONIALS ---- */
-.testimonial-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--accent);
-  border-radius: var(--radius);
-  padding: 36px 32px 28px;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
-  box-shadow: var(--shadow-sm);
-}
-.testimonial-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-}
-.testimonial-quote {
-  position: absolute;
-  top: -8px;
-  right: 14px;
-  color: var(--accent);
-  opacity: 0.10;
-  pointer-events: none;
 }
 
 /* ---- CONTACT ---- */
@@ -1728,6 +1441,7 @@ section {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
+  transition: transform 0.45s var(--ease-spring);
 }
 .contact-card:hover {
   border-color: var(--accent);
@@ -1735,6 +1449,9 @@ section {
   color: #fff;
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+}
+.contact-card:hover svg {
+  transform: rotate(-6deg) scale(1.08);
 }
 
 /* ---- FOOTER ---- */
@@ -1756,31 +1473,24 @@ footer p {
 }
 .footer-links {
   display: flex;
-  gap: 20px;
+  gap: 6px;
   list-style: none;
+  flex-wrap: wrap;
 }
 .footer-links a {
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--text-dim);
+  padding: 10px 14px;
+  border-radius: 6px;
+  line-height: 1;
+  transition: color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
-.footer-links a:hover { color: var(--accent); }
-
-/* ---- STICKY MOBILE CTA ---- */
-.sticky-cta {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 12px 24px;
-  background: rgba(244, 238, 226, 0.95);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid var(--border);
-  z-index: 99;
-}
-.sticky-cta .btn { width: 100%; text-align: center; }
-@media (max-width: 640px) {
-  .sticky-cta.visible { display: block; }
+.footer-links a:hover {
+  color: var(--accent);
+  background: rgba(180, 74, 45, 0.06);
 }
 
 /* ---- COMPREHENSIVE MOBILE STYLES ---- */
@@ -1798,8 +1508,6 @@ footer p {
   .btn-group { flex-direction: column; }
   .btn-group .btn { width: 100%; text-align: center; }
 
-  .trust-bar { gap: 24px; margin-top: 40px; padding-top: 24px; }
-
   .services-grid { gap: 16px; margin-top: 40px; }
   .service-card { padding: 28px; }
   .service-card:hover { transform: none; }
@@ -1813,13 +1521,10 @@ footer p {
   .portfolio-card { padding: 32px; }
   .portfolio-card:hover { transform: none; }
 
-  .about-card { padding: 32px; }
 
   .faq-list { max-width: 100%; }
 
   .cta-section { padding: 80px 0; }
-
-  .included-grid { margin-top: 32px; }
 }
 
 /* Small phones (390px iPhone 14, 375px iPhone SE) */
@@ -1840,23 +1545,6 @@ footer p {
   .btn { padding: 12px 24px; font-size: 0.95rem; }
   .btn-group { gap: 10px; }
 
-  .trust-bar {
-    flex-direction: column;
-    gap: 16px;
-    margin-top: 32px;
-    padding-top: 20px;
-  }
-  .trust-item {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-  }
-  .trust-item strong {
-    display: inline;
-    font-size: 1rem;
-    margin-bottom: 0;
-  }
-
   .section-label { font-size: 0.75rem; letter-spacing: 1.5px; margin-bottom: 8px; }
   .section-title { font-size: 1.5rem; letter-spacing: -0.5px; margin-bottom: 12px; }
   .section-subtitle { font-size: 0.95rem; }
@@ -1871,13 +1559,8 @@ footer p {
   .step h3 { font-size: 1.05rem; }
   .step p { font-size: 0.9rem; }
 
-  .about-card { padding: 24px; gap: 20px; }
-  .about-photo { width: 80px; height: 80px; font-size: 2rem; }
-  .about-info h3 { font-size: 1.2rem; }
-  .about-info p { font-size: 0.9rem; }
 
   .portfolio-card { padding: 24px; gap: 20px; }
-  .portfolio-badge { width: 72px; height: 72px; font-size: 1.8rem; border-radius: 16px; }
   .portfolio-info h3 { font-size: 1.2rem; }
   .portfolio-info p { font-size: 0.9rem; }
 
@@ -1886,11 +1569,6 @@ footer p {
   .pricing-card h3 { font-size: 1rem; }
   .pricing-range { font-size: 1.5rem; margin: 8px 0 12px; }
   .pricing-card ul li { font-size: 0.85rem; }
-
-  .included-grid { gap: 12px; margin-top: 24px; }
-  .included-item { padding: 20px 16px; }
-  .included-item h4 { font-size: 0.9rem; }
-  .included-item p { font-size: 0.8rem; }
 
   .faq-list { margin-top: 32px; max-width: 100%; }
   .faq-question { font-size: 0.95rem; padding: 16px 0; gap: 12px; }
@@ -1907,21 +1585,10 @@ footer p {
   .footer-links { gap: 16px; }
   .footer-links a { font-size: 0.8rem; }
 
-  .sticky-cta { padding: 10px 16px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
-  .sticky-cta .btn { padding: 12px; font-size: 0.95rem; }
+  /* Bottom padding so mobile CTA bar doesn't cover footer */
+  footer { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
 
-  /* Extra bottom padding so sticky CTA doesn't cover content */
-  footer { padding-bottom: 72px; }
-
-  /* Pizazz-layer mobile rules */
-  .founder-strip { padding: 24px 0; }
-  .founder-strip .container { flex-direction: column; align-items: center; text-align: center; gap: 14px; }
-  .founder-photo-sm { width: 64px; height: 64px; }
-  .founder-line { font-size: 0.92rem; }
   .signature { justify-content: center; font-size: 1.3rem; }
-
-  .testimonial-card { padding: 22px 18px 18px; border-left-width: 3px; }
-  .testimonial-quote { width: 48px; height: 48px; right: 8px; top: -4px; }
 
   .topo-divider { height: 22px; }
 
@@ -1931,6 +1598,324 @@ footer p {
 
 /* Prevent any horizontal overflow */
 img, svg, video, canvas, iframe { max-width: 100%; }
+
+
+
+/* ===== v2 ADDITIONS (port) ===== */
+/* =========================================================================
+   01-css-additions.css
+   APPEND this block to the END of the existing inline style block
+   in redwood-digital/index.html. Pure additions — nothing removed.
+   Uses existing CSS variables (--accent, --bg, etc.) so no token changes.
+   ========================================================================= */
+
+/* -------------------- HERO v2 overrides -------------------- */
+.hero.hero-v2 { padding: 112px 0 72px; min-height: 0; }
+.hero-v2 .hero-v2-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+  gap: 56px; align-items: center;
+}
+@media (max-width: 960px) { .hero-v2 .hero-v2-grid { grid-template-columns: 1fr; gap: 40px; } }
+.hero-v2 h1 {
+  font-size: clamp(2.2rem, 5.4vw, 3.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.038em;
+  font-weight: 800;
+}
+.hero-v2 p {
+  font-size: 1.125rem;
+  line-height: 1.62;
+  color: var(--text-dim);
+  margin-bottom: 32px;
+  max-width: 52ch;
+}
+.hero-v2 .accent-gradient-text {
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* Hero visual container — must be positioned so the floating card anchors to it */
+.hero-v2 .hero-v2-visual { position: relative; }
+
+/* Founder-forward photo slot */
+.hero-v2 .photo-slot {
+  position: relative; aspect-ratio: 4/5; border-radius: 20px; overflow: hidden;
+  box-shadow: 0 1px 2px rgba(20,18,14,.06), 0 8px 24px rgba(20,18,14,.08),
+              0 30px 80px -20px rgba(180,74,45,.18), 0 0 0 1px rgba(20,18,14,.04);
+}
+.hero-v2 .photo-slot img { width:100%; height:100%; object-fit:cover; display:block; filter: saturate(1.05); }
+.hero-v2 .photo-slot::after { content:''; position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(20,18,14,0) 55%, rgba(20,18,14,.4) 100%); pointer-events:none; }
+/* Booking-confirm card floating over photo */
+.booking-confirm-card {
+  position:absolute; left:-28px; bottom:44px; width:264px;
+  padding:16px 18px 18px;
+  background: linear-gradient(180deg, #fdf9f1 0%, #fbf7ef 100%);
+  border-radius:14px;
+  border:1px solid rgba(20,18,14,.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.6),
+    0 1px 2px rgba(20,18,14,.06),
+    0 12px 32px rgba(20,18,14,.2),
+    0 24px 60px -12px rgba(20,18,14,.18);
+  z-index:3;
+  transform: rotate(-2deg);
+  animation: bcc-float 7s ease-in-out 1s infinite;
+  will-change: transform;
+}
+@keyframes bcc-float {
+  0%, 100% { transform: rotate(-2deg) translateY(0); }
+  50% { transform: rotate(-1.4deg) translateY(-5px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .booking-confirm-card { animation: none; }
+}
+@media (max-width: 960px) { .booking-confirm-card { left:16px; bottom:16px; } }
+.bcc-status { display:flex; align-items:center; gap:8px;
+  font-size:.72rem; color:#5f5a52; font-family: ui-monospace, Menlo, monospace; margin-bottom:10px; }
+.bcc-dot { width:7px; height:7px; background:#2d8a68; border-radius:50%;
+  box-shadow: 0 0 0 3px rgba(45,138,104,.22); }
+.bcc-line { font-size:.88rem; color:#5f5a52; line-height:1.4; }
+.bcc-line strong { color:#1a1a1a; font-weight:700; }
+.bcc-time { font-size:1.5rem; font-weight:800; color:#1a1a1a;
+  letter-spacing:-.02em; line-height:1; margin:4px 0 8px; }
+.bcc-meta { font-size:.76rem; color:#5f5a52; line-height:1.4;
+  padding-top:8px; border-top:1px solid rgba(20,18,14,.08); }
+
+/* Three-lane sub-cards */
+.lanes-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:48px; }
+@media (max-width: 860px) { .lanes-grid { grid-template-columns:1fr; } }
+.lane-card { display:block; text-decoration:none; background:var(--bg-card);
+  border:1px solid var(--border); border-radius:14px; padding:22px 22px 20px;
+  box-shadow: var(--shadow-sm); color:inherit; position:relative;
+  overflow: hidden;
+  transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out),
+              border-color .3s, background .3s; }
+.lane-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(180, 74, 45, 0.06) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out);
+  pointer-events: none;
+}
+.lane-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md);
+  border-color:rgba(180,74,45,.3); background:var(--bg-card-hover); }
+.lane-card:hover::after { opacity: 1; }
+.lane-card.featured { border-color:var(--accent); background:#fbf7ef;
+  box-shadow: 0 2px 6px rgba(180,74,45,.12), 0 14px 36px -8px rgba(180,74,45,.22);
+  transform: translateY(-8px); }
+.lane-card.featured::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -60%;
+  width: 50%; height: 100%;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.45) 50%, transparent 70%);
+  transform: skewX(-18deg);
+  pointer-events: none;
+  animation: lane-gleam 6s ease-in-out 1.2s infinite;
+}
+@keyframes lane-gleam {
+  0%, 78% { left: -60%; }
+  92% { left: 130%; }
+  100% { left: 130%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lane-card.featured::before { animation: none; display: none; }
+}
+.lane-card.featured:hover { transform: translateY(-12px);
+  box-shadow: 0 4px 12px rgba(180,74,45,.18), 0 22px 48px -8px rgba(180,74,45,.3); }
+.lane-anchor-pin { position:absolute; top:-10px; left:22px; padding:3px 10px;
+  background:var(--accent); color:#fff; font-size:.68rem; font-weight:600;
+  letter-spacing:.06em; text-transform:uppercase; border-radius:100px; }
+.lane-price { font-size:.72rem; color:var(--text-dim);
+  font-family: ui-monospace, Menlo, monospace; letter-spacing:.02em; margin-bottom:10px; }
+.lane-card.featured .lane-price { color:var(--accent); }
+.lane-card h3 { font-size:1.15rem; font-weight:700; color:#1a1a1a;
+  margin:0 0 8px; letter-spacing:-.015em; }
+.lane-card p { font-size:.9rem; color:var(--text-dim); line-height:1.55; margin:0 0 16px; }
+.lane-cta { font-size:.85rem; font-weight:600; color:var(--accent); }
+
+/* -------------------- PROOF SECTION -------------------- */
+.proof-section { padding:96px 0 64px; background: #eee6d4;
+  border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.proof-section .section-subtitle { margin-bottom:48px; }
+.proof-grid { display:grid; grid-template-columns:1.35fr 1fr; gap:20px; margin-bottom:64px; }
+@media (max-width: 900px) { .proof-grid { grid-template-columns:1fr; } }
+
+.transcript-card { background:#fbf7ef; border:1px solid var(--border); border-radius:14px;
+  overflow:hidden; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; }
+.transcript-header { padding:16px 20px; border-bottom:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:flex-start; gap:16px; background:#f4eee2; }
+.transcript-time { font-size:.78rem; color:var(--text-dim);
+  font-family: ui-monospace, Menlo, monospace; margin-bottom:2px; }
+.transcript-caller { font-size:.88rem; color:#1a1a1a; font-weight:600; }
+.transcript-status { display:flex; align-items:center; gap:7px;
+  font-size:.72rem; color:var(--text-dim); font-family: ui-monospace, Menlo, monospace;
+  padding:5px 10px; background: rgba(45,138,104,.08); border-radius:100px; white-space:nowrap; }
+.live-dot { width:6px; height:6px; background:#2d8a68; border-radius:50%;
+  box-shadow: 0 0 0 3px rgba(45,138,104,.18); animation: live-pulse 2s ease-in-out infinite; }
+@keyframes live-pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+
+.transcript-body { padding:18px 20px; display:flex; flex-direction:column; gap:12px; flex:1; }
+.tl { display:grid; grid-template-columns:48px 1fr; gap:10px; align-items:start; }
+.tl-who { font-size:.66rem; font-family: ui-monospace, Menlo, monospace;
+  letter-spacing:.1em; text-transform:uppercase; padding:3px 6px; border-radius:4px;
+  text-align:center; margin-top:8px; }
+.tl.ai .tl-who { background: rgba(180,74,45,.12); color:var(--accent);
+  box-shadow: inset 0 0 0 1px rgba(180,74,45,.18); }
+.tl.caller .tl-who { background: rgba(20,18,14,.06); color:var(--text-dim); }
+.tl-text {
+  font-size: .94rem;
+  line-height: 1.5;
+  color: var(--ink);
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(180, 74, 45, 0.05), rgba(180, 74, 45, 0.02));
+  border: 1px solid rgba(180, 74, 45, 0.12);
+}
+.tl.caller .tl-text {
+  color: var(--text-dim);
+  background: transparent;
+  border-color: transparent;
+  padding: 10px 4px;
+}
+
+.transcript-footer { padding:16px 20px; border-top:1px solid var(--border); background:#f4eee2; }
+.tf-outcome { font-size:.88rem; color:#1a1a1a; font-weight:600;
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
+.tf-tag { display:inline-block; padding:2px 8px; background:rgba(45,138,104,.12);
+  color:#206850; border-radius:100px; font-size:.7rem;
+  font-family: ui-monospace, Menlo, monospace; text-transform:uppercase;
+  letter-spacing:.06em; font-weight:500; }
+.tf-note { font-size:.78rem; color:var(--text-dim); line-height:1.5; }
+
+.audio-card { background:#fbf7ef; border:1px solid var(--border); border-radius:14px;
+  padding:20px; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:18px; }
+.audio-toggle-row { display:grid; grid-template-columns:1fr 1fr; gap:4px;
+  padding:4px; background:#ede5d2; border-radius:10px; }
+.audio-toggle { padding:8px 10px; background:transparent; border:none; border-radius:7px;
+  font-size:.8rem; color:var(--text-dim); font-family:inherit; font-weight:500;
+  cursor:pointer; transition: background .2s, color .2s; }
+.audio-toggle.active { background:#fbf7ef; color:#1a1a1a;
+  box-shadow: 0 1px 2px rgba(20,18,14,.06); }
+
+.audio-stage { padding:22px 20px; border-radius:10px; border:1px solid var(--border); background:var(--bg);
+  transition: background 0.45s var(--ease-out), border-color 0.45s var(--ease-out); position: relative; overflow: hidden; }
+.audio-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 40%, rgba(45, 138, 104, 0.08) 50%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+  pointer-events: none;
+}
+.audio-stage.after { background: radial-gradient(circle at 30% 30%, rgba(45,138,104,.1) 0%, transparent 60%), var(--bg);
+  border-color: rgba(45,138,104,.22); }
+.audio-stage.after::before { opacity: 1; }
+.audio-stage-title { font-size:1.1rem; font-weight:700; color:#1a1a1a;
+  letter-spacing:-.015em; line-height:1.3; margin-bottom:6px; }
+.audio-stage-sub { font-size:.85rem; color:var(--text-dim); line-height:1.5; }
+
+.audio-caption { font-size:.74rem; color:var(--text-dim); line-height:1.5; }
+
+.testimonial-skeleton-wrap { padding:32px 0 0; border-top:1px dashed rgba(20,18,14,.12); }
+.testimonial-skeleton-label { font-size:.78rem; color:var(--text-dim);
+  font-family: ui-monospace, Menlo, monospace; margin: 0 auto 20px; text-align:center;
+  max-width:560px; line-height:1.5; }
+.testimonial-skeleton-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+@media (max-width: 800px) { .testimonial-skeleton-grid { grid-template-columns:1fr; } }
+.testimonial-slot { background:#fbf7ef; border:1px dashed rgba(20,18,14,.18);
+  border-radius:14px; padding:24px; display:flex; flex-direction:column; gap:14px; opacity:.9; }
+.testimonial-slot.ts-placeholder { border-style: dashed; }
+.ts-photo-placeholder { width:44px; height:44px; border-radius:50%;
+  background: rgba(20,18,14,.04); border:1px dashed rgba(20,18,14,.2);
+  display:flex; align-items:center; justify-content:center; color: rgba(20,18,14,.35); }
+.ts-photo-placeholder svg { width:22px; height:22px; }
+.ts-quote { font-size:.95rem; color: var(--text); line-height:1.55; font-style:italic; }
+.ts-attrib { display:flex; flex-direction:column; gap:2px; }
+.ts-name { font-size:.88rem; font-weight:600; color: var(--ink); }
+.ts-biz { font-size:.78rem; color: var(--text-dim); }
+.ts-line { height:10px; background: rgba(20,18,14,.08); border-radius:3px; width:55%; }
+.ts-line.short { width:35%; }
+.ts-badge { font-size:.68rem; font-family: ui-monospace, Menlo, monospace;
+  color:var(--text-muted); letter-spacing:.06em; text-transform:uppercase;
+  margin-top:auto; padding-top:8px; }
+
+/* -------------------- FOUNDER SECTION (full, replaces strip) -------------------- */
+.founder-section { padding:96px 0; position:relative; overflow:hidden;
+  background:
+    radial-gradient(circle at 18% 40%, rgba(194,101,74,.26) 0%, transparent 55%),
+    radial-gradient(circle at 82% 60%, rgba(45,138,104,.14) 0%, transparent 60%),
+    linear-gradient(135deg, #2a1f17 0%, #3a2820 100%);
+  border-top:1px solid rgba(180,74,45,.25);
+  border-bottom:1px solid rgba(180,74,45,.25); }
+.founder-section::before { content:''; position:absolute; inset:0;
+  background-image:
+    radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size: 4px 4px, 8px 8px;
+  background-position: 0 0, 2px 2px;
+  pointer-events:none; opacity:.85;
+  mask-image: radial-gradient(ellipse at center, #000 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 40%, transparent 100%);
+}
+.founder-section .container { position:relative; z-index:1; }
+.founder-section-grid { display:grid; grid-template-columns: minmax(0,.85fr) minmax(0,1.15fr);
+  gap:56px; align-items:center; }
+@media (max-width: 900px) { .founder-section-grid { grid-template-columns:1fr; gap:36px; } }
+.founder-portrait {
+  width:100%;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  border-radius:18px;
+  border:3px solid rgba(244,238,226,.92);
+  box-shadow: 0 20px 60px rgba(0,0,0,.45), 0 0 0 1px rgba(180,74,45,.3);
+}
+.founder-portrait-caption { margin-top:12px; font-size:.78rem; color:#c9bfad;
+  font-family: ui-monospace, Menlo, monospace; letter-spacing:.04em; text-align:center; }
+.founder-section .section-label { color:#e89370; }
+.founder-section .section-label::before { background:#e89370; }
+.founder-headline { font-size: clamp(1.7rem, 3.4vw, 2.4rem); font-weight:700;
+  color:#faf9f7; line-height:1.15; letter-spacing:-.02em; margin:14px 0 20px; }
+.founder-copy { font-size:1rem; color:#ede4d8; line-height:1.7;
+  margin-bottom:14px; max-width:54ch; }
+.founder-signature-row { margin:22px 0 26px; }
+.founder-section .signature { font-family:'Caveat', cursive; font-size:1.8rem;
+  color:#e89370; display:inline-flex; align-items:center; gap:10px; }
+.founder-section .signature::before { content:''; display:inline-block;
+  width:24px; height:1px; background:#e89370; opacity:.6; }
+.founder-cta-row { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+.btn-outline-light { display:inline-block; padding:14px 24px; background:transparent;
+  border:1px solid rgba(244,238,226,.3); color:#ede4d8; border-radius:10px;
+  font-size:.95rem; font-weight:500; text-decoration:none;
+  transition: background .2s, border-color .2s, color .2s; }
+.btn-outline-light:hover { background: rgba(244,238,226,.08);
+  border-color: rgba(244,238,226,.55); color:#faf9f7; }
+.founder-micro { margin-top:14px; font-size:.82rem; color:#b0a491; line-height:1.5; }
+
+/* -------------------- PRICING v2 (3 tiers) -------------------- */
+.pricing-grid-v2 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
+  margin-top:56px; align-items:stretch; }
+@media (max-width: 900px) { .pricing-grid-v2 { grid-template-columns:1fr; } }
+.pricing-grid-v2 .pricing-card.featured { transform: translateY(-10px);
+  box-shadow: 0 2px 6px rgba(180,74,45,.12), 0 18px 44px -8px rgba(180,74,45,.28); }
+.pricing-grid-v2 .pricing-card.featured:hover {
+  transform: translateY(-14px);
+  box-shadow: 0 4px 10px rgba(180,74,45,.18), 0 26px 60px -10px rgba(180,74,45,.36);
+}
+.pricing-card.featured::after {
+  content: 'Most Popular';
+  background: linear-gradient(180deg, var(--accent-light), var(--accent) 55%, #a3421f);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    0 3px 8px rgba(180,74,45,.35);
+}
+.pricing-footnote { margin-top:28px; text-align:center; font-size:.88rem;
+  color: var(--text-dim); font-style: italic; }
 
 </style>
 <script type="application/ld+json">
@@ -2018,9 +2003,22 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 <!-- Nav -->
 <nav>
   <div class="container">
-    <div class="logo">Redwood <span>Digital</span></div>
+    <a href="#" class="logo" aria-label="Redwood Digital, home">
+      <svg class="logo-mark" width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">
+        <defs>
+          <linearGradient id="logo-grad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#c2654a"/>
+            <stop offset="100%" stop-color="#a3421f"/>
+          </linearGradient>
+        </defs>
+        <path d="M16 3 L27 26 H5 Z" fill="url(#logo-grad)"/>
+        <path d="M16 11 L22 23 H10 Z" fill="#fff" opacity="0.22"/>
+        <rect x="14" y="24" width="4" height="5" rx="1" fill="#5a3420"/>
+      </svg>
+      <span class="logo-text">Redwood <em>Digital</em></span>
+    </a>
     <ul id="nav-menu">
-      <li><a href="#starter" onclick="closeMenu()">Starter Pack</a></li>
+      <li><a href="#pricing" onclick="closeMenu()">Starter Pack</a></li>
       <li><a href="#services" onclick="closeMenu()">Custom Apps</a></li>
       <li><a href="ai-caller.html" onclick="closeMenu()">AI Caller</a></li>
       <li><a href="#pricing" onclick="closeMenu()">Pricing</a></li>
@@ -2035,33 +2033,102 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 </nav>
 
 <!-- Hero -->
-<section class="hero">
+<section class="hero hero-v2">
   <div class="container">
-    <div class="hero-grid">
-      <div class="hero-content fade-in">
-        <div class="hero-badge">Frederick, MD</div>
-        <h1>Your local business, <span class="highlight">on the map.</span></h1>
-        <p>Get found online in a week for $99. Website, Google Business Profile, and reviews. Fixed price, local, shipped fast.</p>
+    <div class="hero-v2-grid">
+      <div class="hero-content">
+        <div class="hero-badge">Frederick, MD · one developer · fixed prices</div>
+        <h1>Stop losing leads <br>to <span class="accent-gradient-text">voicemail, old sites, and after-hours.</span></h1>
+        <p>Three ways I plug the revenue leaks in Frederick service businesses: a $99 starter site, a 24/7 AI phone agent, or a custom build when a template won't do it.</p>
         <div class="btn-group">
-          <a href="#starter" class="btn">See Details</a>
-          <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-outline" target="_blank" rel="noopener">Book a 15-Min Call</a>
-        </div>
-        <p style="margin-top: 14px; font-size: 0.95rem; color: var(--text-dim);">
-          Losing leads after 6pm? <a href="ai-caller.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">AI Phone Agents that catch every call &rarr;</a>
-        </p>
-        <div class="trust-bar">
-          <div class="trust-item"><strong>$99 entry</strong>Starter pack, one week</div>
-          <div class="trust-item"><strong>Fixed Price</strong>Quoted upfront</div>
-          <div class="trust-item"><strong>Frederick, MD</strong>Local and in-person</div>
+          <a class="btn" href="#lanes">See what I build</a>
+          <a class="btn btn-outline" href="ai-caller.html">Losing calls after 6pm? →</a>
         </div>
       </div>
-      <div class="hero-visual fade-in">
-        <img src="images/hero-frederick.jpg" alt="Historic brick storefronts along Market Street in downtown Frederick, Maryland, at golden hour — striped awnings, warm shop lighting, people walking" loading="eager" fetchpriority="high" width="933" height="1400">
-        <span class="hero-visual-caption">Downtown Frederick, MD</span>
+
+      <div class="hero-v2-visual">
+        <div class="photo-slot">
+          <img src="images/matthew-coleman.jpg" alt="Matthew Coleman, founder" fetchpriority="high" decoding="async" width="900" height="1125">
+        </div>
+        <div class="booking-confirm-card" role="img" aria-label="Phone screen showing booking confirmation">
+          <div class="bcc-status"><span class="bcc-dot"></span>AI assistant · just now</div>
+          <div class="bcc-line">Booked <strong>Mrs. Hartley</strong> for</div>
+          <div class="bcc-time">Tue, 2:30 PM</div>
+          <div class="bcc-meta">Leaking hot-water line · est. 45 min · confirmed via SMS</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Three-lane sub-cards (AI middle = anchor) -->
+    <div id="lanes" class="lanes-grid">
+      <a class="lane-card" href="#pricing">
+        <div class="lane-price">$99 · one-time</div>
+        <h3>Starter site</h3>
+        <p>Modern mobile-first site, Google Business Profile, review collection. Delivered in a week.</p>
+        <div class="lane-cta">Learn more →</div>
+      </a>
+      <a class="lane-card featured" href="ai-caller.html">
+        <div class="lane-price">$2,000 setup · $500/mo</div>
+        <h3>AI phone agent</h3>
+        <p>Answers every call 24/7. Qualifies the lead. Books the appointment. Most service businesses miss 3 to 5 calls a week to voicemail. This catches them.</p>
+        <div class="lane-cta">See how it works →</div>
+      </a>
+      <a class="lane-card" href="#pricing">
+        <div class="lane-price">$1,500 – $10k+</div>
+        <h3>Custom build</h3>
+        <p>Internal tools, client portals, dashboards. For when a template can't do the job.</p>
+        <div class="lane-cta">Learn more →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container">
+    <div class="section-label">What I fix</div>
+    <h2 class="section-title">Every service business has leaks. I patch them four ways.</h2>
+    <p class="section-subtitle">Fixed prices. No retainers on the website work. Monthly only for the things that run monthly.</p>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h3>Stop losing leads after 6pm</h3>
+        <p>Most service businesses miss 3 to 5 calls a week to voicemail. AI answers every one, qualifies the lead, books the appointment, 24/7. Weekly report of what got booked while you slept.</p>
+        <div class="service-price">$2,000 setup · $500/mo</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3>Patients who won't call, will click</h3>
+        <p>Online booking that actually gets used. No phone tag. No "please leave a message." Wired to your practice management software so the slot on your calendar is the slot they took.</p>
+        <div class="service-price">From $1,500</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3>When the template can't do it</h3>
+        <p>Client portals, internal dashboards, dispatch tools, custom quote calculators. The ugly-but-critical software your business runs on. Actually working, actually yours.</p>
+        <div class="service-price">$1,500 – $10k+</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Leads that sit in your inbox, gone</h3>
+        <p>Intake forms, CRM wired to your calendar, automatic follow-up on old quotes until they book or opt out. Stop re-typing the same reply you wrote last Tuesday.</p>
+        <div class="service-price">From $2,500</div>
       </div>
     </div>
   </div>
 </section>
+
 
 <main id="main">
 
@@ -2094,256 +2161,14 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 </script>
 
 <!-- Founder strip — small, above the fold-ish, gives the site a face and a name. -->
-<aside class="founder-strip" aria-label="About the founder">
-  <div class="container">
-    <img class="founder-photo-sm" src="images/matthew-coleman.jpg" alt="Matthew Coleman, founder of Redwood Digital" width="240" height="240" loading="lazy">
-    <div class="founder-text">
-      <p class="founder-line"><strong>Hey, I'm Matthew.</strong> I build websites and apps for local Frederick businesses. No agency, no offshoring. Just me, your project, and a one-week turnaround.</p>
-      <span class="signature" aria-hidden="true">— Matthew</span>
-    </div>
-  </div>
-</aside>
+
 
 <div class="topo-divider" aria-hidden="true"><svg viewBox="0 0 1200 36" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 8 Q 150 -2 300 6 T 600 8 T 900 8 T 1200 6"/><path d="M0 18 Q 150 8 300 16 T 600 18 T 900 18 T 1200 16"/><path d="M0 28 Q 150 18 300 26 T 600 28 T 900 28 T 1200 26"/></svg></div>
 
 <!-- Outcomes -->
-<section id="outcomes">
-  <div class="container">
-    <div class="fade-in">
-      <div class="section-label">Outcomes</div>
-      <h2 class="section-title">What this looks like when it works</h2>
-      <p class="section-subtitle">The $99 isn't the product. The result is.</p>
-    </div>
-    <div class="outcomes-grid">
-      <article class="outcome-card fade-in">
-        <img src="images/outcome-plumber.jpg" alt="Plumber arriving at a homeowner's door, smiling and shaking hands, tool belt and clipboard, service van with supplies in the driveway" loading="lazy" width="1536" height="1024">
-        <div class="outcome-overlay">
-          <span class="outcome-tag">Home Services</span>
-          <h3 class="outcome-headline">The phone starts ringing again.</h3>
-          <p class="outcome-sub">When an emergency caller searches "plumber near me" at 9pm, your profile is the one that loads first, looks real, and has a working number.</p>
-        </div>
-      </article>
-      <article class="outcome-card fade-in">
-        <img src="images/outcome-healthcare-frontdesk.jpg" alt="Dental office receptionist at her desk, smiling as she hands a clipboard to a patient, appointment book and computer monitor visible" loading="lazy" width="1536" height="1024">
-        <div class="outcome-overlay">
-          <span class="outcome-tag">Healthcare &amp; Wellness</span>
-          <h3 class="outcome-headline">New patients stop ghosting.</h3>
-          <p class="outcome-sub">Your photos look current, your reviews answer the objections, and the booking link works on a phone. That's the difference between "I'll call around" and a booked visit.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
 
-<!-- Before / After — drag the handle to compare. Swap the two img src's when
-     you have a real pair. File paths expected: images/ba-before.jpg + images/ba-after.jpg.
-     Until those files exist, the slider stays hidden (see inline script below). -->
-<section id="proof" style="padding: 80px 0 60px;">
-  <div class="container">
-    <div class="fade-in" style="text-align: center;">
-      <div class="section-label">Proof</div>
-      <h2 class="section-title">Drag to see the difference</h2>
-      <p class="section-subtitle" style="margin: 0 auto;">One real Frederick business, before and after the $99 Starter Pack.</p>
-    </div>
-    <div class="ba-wrap fade-in">
-      <div class="ba-slider" data-ba-slider aria-label="Before and after comparison slider">
-        <img class="ba-before" src="images/ba-before.jpg" alt="Before — the original Google Business Profile and site" loading="lazy" onerror="this.closest('section').style.display='none'">
-        <img class="ba-after"  src="images/ba-after.jpg"  alt="After — the Redwood Digital Starter Pack" loading="lazy">
-        <span class="ba-label ba-label-before">Before</span>
-        <span class="ba-label ba-label-after">After</span>
-        <div class="ba-handle" aria-hidden="true"></div>
-      </div>
-    </div>
-  </div>
-</section>
-<script>
-(function() {
-  const el = document.querySelector('[data-ba-slider]');
-  if (!el) return;
-  const after = el.querySelector('.ba-after');
-  const handle = el.querySelector('.ba-handle');
-  let dragging = false;
-  function set(pctRaw) {
-    const pct = Math.max(0, Math.min(100, pctRaw));
-    after.style.clipPath = 'inset(0 0 0 ' + pct + '%)';
-    handle.style.left = pct + '%';
-  }
-  function onMove(e) {
-    if (!dragging) return;
-    const rect = el.getBoundingClientRect();
-    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-    set((x / rect.width) * 100);
-  }
-  function start(e) { dragging = true; onMove(e); e.preventDefault(); }
-  function end() { dragging = false; }
-  el.addEventListener('mousedown', start);
-  el.addEventListener('touchstart', start, { passive: false });
-  window.addEventListener('mousemove', onMove);
-  window.addEventListener('touchmove', onMove, { passive: true });
-  window.addEventListener('mouseup', end);
-  window.addEventListener('touchend', end);
-  set(50);
-})();
-</script>
 
-<!-- Audit capture — Netlify Forms auto-detects on deploy and captures submissions.
-     You'll get an email per submission (configure at app.netlify.com → Forms → Notifications). -->
-<section class="audit-section" id="audit">
-  <div class="container">
-    <div class="audit-card fade-in">
-      <span class="audit-eyebrow">Free audit · No call required</span>
-      <h3>Is your Google listing costing you calls?</h3>
-      <p class="audit-lede">Drop your business name and email. I'll look at your Google Business Profile tonight and reply with two specific things you could fix this week, whether or not you hire me.</p>
 
-      <form class="audit-form" name="redwood-audit" method="POST" data-netlify="true" netlify-honeypot="nope" action="/?audit=thanks" id="audit-form">
-        <input type="hidden" name="form-name" value="redwood-audit">
-        <p style="display:none;"><label>Don't fill this out: <input name="nope"></label></p>
-        <input class="audit-input" type="text" name="business" placeholder="Your business name" required aria-label="Business name">
-        <input class="audit-input" type="email" name="email" placeholder="you@example.com" required aria-label="Your email">
-        <button type="submit" class="btn audit-submit">Get My Audit</button>
-      </form>
-
-      <div class="audit-meta">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        No spam, no pitch calls. I'll reply from matthew@redwooddigitalfrederick.com.
-      </div>
-
-      <div class="audit-success" id="audit-success">
-        <strong>Thanks, I got it.</strong>
-        Look for a reply from matthew@redwooddigitalfrederick.com within 24 hours, usually tonight. If you don't see it, check spam.
-      </div>
-    </div>
-  </div>
-</section>
-<script>
-  // Show the success panel if the URL carries ?audit=thanks (post-submit redirect).
-  if (new URLSearchParams(location.search).get('audit') === 'thanks') {
-    const s = document.getElementById('audit-success');
-    const f = document.getElementById('audit-form');
-    if (s) s.classList.add('visible');
-    if (f) f.style.display = 'none';
-    document.getElementById('audit').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-  // Disable submit during POST so a double-click doesn't fire two submissions.
-  (function () {
-    const f = document.getElementById('audit-form');
-    if (!f) return;
-    f.addEventListener('submit', function () {
-      const btn = f.querySelector('.audit-submit');
-      if (!btn) return;
-      btn.disabled = true;
-      btn.dataset.original = btn.textContent;
-      btn.textContent = 'Sending…';
-      btn.style.opacity = '0.75';
-      btn.style.cursor = 'wait';
-    });
-  })();
-</script>
-
-<!-- Starter Pack -->
-<section id="starter">
-  <div class="container">
-    <div class="fade-in">
-      <div class="section-label">$99 Starter Pack</div>
-      <h2 class="section-title">Get found online in a week</h2>
-      <p class="section-subtitle">A local website, a cleaned-up Google Business Profile, and a review system that actually brings patients, clients, and customers through the door. Picked for three niches that live or die by local search.</p>
-    </div>
-    <div class="services-grid">
-      <div class="service-card fade-in">
-        <div class="service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        </div>
-        <h3>Home Services</h3>
-        <p>Plumbers, electricians, HVAC, roofers. Your Google Business Profile is where emergency callers find you. We fix the site, the photos, the hours, the reviews.</p>
-        <div class="service-price">$99 setup · add $49/mo to keep it live</div>
-      </div>
-      <div class="service-card fade-in">
-        <div class="service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <h3>Healthcare &amp; Wellness</h3>
-        <p>Dentists, chiropractors, physical therapists. New patients decide by your GBP photos and review count. We stand up a trust-first site and a system to ask for reviews without it feeling weird.</p>
-        <div class="service-price">$99 setup · add $49/mo to keep it live</div>
-      </div>
-      <div class="service-card fade-in">
-        <div class="service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        </div>
-        <h3>Retail &amp; Restaurants</h3>
-        <p>Boutiques, coffee shops, restaurants. People search your name before they show up. We ship a mobile-first menu or storefront, connect your socials, and keep the GBP current.</p>
-        <div class="service-price">$99 setup · add $49/mo to keep it live</div>
-      </div>
-    </div>
-    <div class="fade-in" style="margin-top: 40px; text-align: center;">
-      <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn" target="_blank" rel="noopener">Book a 15-Min Call</a>
-    </div>
-
-    <!-- Retainer addon (not a peer of the $99 niches — shown after) -->
-    <div class="retainer-strip fade-in">
-      <div class="retainer-inner">
-        <div>
-          <span class="retainer-tag">Add-on</span>
-          <h3 class="retainer-title">Lead Flow Retainer · $49/mo</h3>
-          <p class="retainer-sub">Once your site is live, keep it working. Monthly updates, GBP posts, review replies. Cancel any time.</p>
-        </div>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-outline btn-sm" target="_blank" rel="noopener">Book a 15-Min Call</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Services -->
-<section id="services">
-  <div class="container">
-    <div class="fade-in">
-      <div class="section-label">Custom Apps</div>
-      <h2 class="section-title">Ready for more than a website?</h2>
-      <p class="section-subtitle">When a starter pack isn't enough, I build custom software around your workflow. For coaches, clinicians, and operators who have outgrown off-the-shelf tools.</p>
-    </div>
-    <div class="services-grid">
-      <div class="service-card visual fade-in">
-        <img class="service-image" src="images/service-client-management.jpg" alt="Life coach at a wooden desk, laptop open, window light, small plant and mug — running her practice from one place" loading="lazy" width="784" height="1168">
-        <div class="service-body">
-          <h3>Client Management Apps</h3>
-          <p>For coaches, therapists, and consultants. One app instead of bouncing between your CRM, your spreadsheet, and your notes app.</p>
-          <div class="service-price">$1,500 - $3,000</div>
-        </div>
-      </div>
-      <div class="service-card visual fade-in">
-        <img class="service-image" src="images/service-booking-scheduling.jpg" alt="Yoga studio owner at a minimalist wooden counter, tablet in front of her, rolled yoga mats beside the counter, plants on shelves behind — checking the day's bookings" loading="lazy" width="933" height="1400">
-        <div class="service-body">
-          <h3>Booking & Scheduling Apps</h3>
-          <p>For salons, fitness studios, and wellness practitioners. Branded booking pages, client preferences, automated reminders.</p>
-          <div class="service-price">$1,500 - $3,000</div>
-        </div>
-      </div>
-      <div class="service-card visual fade-in">
-        <img class="service-image" src="images/service-internal-tools.jpg" alt="Property manager on site with a clipboard and phone, crew loading tools behind him, service van open — coordinating a multi-unit job" loading="lazy" width="1400" height="933">
-        <div class="service-body">
-          <h3>Internal Business Tools</h3>
-          <p>For property managers, contractors, and teams. Turn your spreadsheets into dashboards your whole team can actually use.</p>
-          <div class="service-price">$3,000 - $5,000</div>
-        </div>
-      </div>
-      <div class="service-card visual fade-in">
-        <img class="service-image" src="images/service-custom-webapp.jpg" alt="Business owner gesturing across a conference table, laptop open, data charts on paper beside her — explaining a custom workflow" loading="lazy" width="933" height="1400">
-        <div class="service-body">
-          <h3>Custom Web Apps</h3>
-          <p>Full custom builds for unique business needs. Landing pages, client portals, data tools. Weird requirements welcome.</p>
-          <div class="service-price">$5,000 - $10,000</div>
-        </div>
-      </div>
-      <a href="ai-caller.html" class="service-card visual fade-in" style="text-decoration: none; color: inherit;">
-        <img class="service-image" src="images/service-ai-phone.jpg" alt="Contractor at his kitchen table at night eating pasta, phone face-down beside the plate — off the clock" loading="lazy" width="933" height="1400">
-        <div class="service-body">
-          <h3>AI Phone Agents</h3>
-          <p>Stop losing leads after 6pm. Most service businesses miss 3 to 5 calls a week to voicemail. AI answers every one, qualifies the lead, books the appointment.</p>
-          <div class="service-price">Starting at $2,000 + $500/mo</div>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
 
 <!-- How It Works -->
 <section id="how" class="how-it-works">
@@ -2374,56 +2199,65 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 </section>
 
 <!-- About -->
-<section id="about">
+<section class="founder-section" id="founder">
   <div class="container">
-    <div class="fade-in">
-      <div class="section-label">About</div>
-      <h2 class="section-title">Who's building your app</h2>
-    </div>
-    <div class="about-card fade-in">
-      <img class="about-photo" src="images/matthew-coleman.jpg" alt="Matthew Coleman, founder of Redwood Digital" width="240" height="240" loading="lazy">
-      <div class="about-info">
-        <h3>Matthew Coleman</h3>
-        <p>I'm a software developer based in Frederick, MD. I started Redwood Digital because I kept seeing local businesses pay for bloated software that didn't fit how they actually worked, or get quoted $50K by agencies for something that should cost a fraction of that.</p>
-        <p>I use modern AI tools to build in days what used to take months. Same quality, fraction of the cost. You get a real, custom-built app scoped to your business, at a fixed price, in weeks.</p>
+    <div class="founder-section-grid">
+      <div class="founder-portrait-wrap">
+        <img class="founder-portrait" src="images/matthew-coleman.jpg" alt="Matthew Coleman, Redwood Digital" loading="lazy" decoding="async" width="900" height="1125">
+        <div class="founder-portrait-caption">Matthew Coleman · Frederick, MD</div>
+      </div>
+      <div class="founder-body">
+        <div class="section-label">Who you're hiring</div>
+        <h2 class="founder-headline">One developer. I answer the phone. I write the code.</h2>
+        <p class="founder-copy">I'm Matthew. I started Redwood Digital because I was tired of watching Frederick businesses pay agency retainers for a website nobody touches and a junior dev they never meet. With me, you get one person. I scope the work, I build it, I hand it off in person.</p>
+        <p class="founder-copy">If the AI phone agent is the job, I set it up, write the scripts with you, and send you a weekly report of what it booked. No call centers, no account managers, no BS.</p>
+        <div class="founder-signature-row">
+          <div class="signature">— Matthew</div>
+        </div>
+        <div class="founder-cta-row">
+          <a class="btn" href="https://calendly.com/redwood-digital/free-15-minute-consultation" target="_blank" rel="noopener">Book a 15-min call</a>
+          <a class="btn-outline-light" href="mailto:matthew@redwooddigitalfrederick.com">matthew@redwooddigitalfrederick.com</a>
+        </div>
+        <div class="founder-micro">15 minutes, no slide deck. Tell me what's broken and I'll tell you what it costs.</div>
       </div>
     </div>
   </div>
 </section>
+
 
 <!-- Portfolio -->
 <section id="portfolio">
   <div class="container">
     <div class="fade-in">
       <div class="section-label">Portfolio</div>
-      <h2 class="section-title">Here's what I've shipped</h2>
+      <h2 class="section-title">What I've shipped</h2>
     </div>
     <div class="portfolio-grid">
       <div class="portfolio-card visual fade-in">
         <div class="portfolio-visual">
           <div class="phone-stack" aria-hidden="true">
-            <div class="phone phone-back"><img src="screenshots/mecoach/wheel-of-life.png" alt="MeCoach Wheel of Life — rate career, health, relationships, and other life areas from 1 to 10" loading="lazy" width="504" height="1122"></div>
-            <div class="phone phone-front"><img src="screenshots/mecoach/home.png" alt="MeCoach home screen — continue your session, start something new, streak tracker, wheel of life" loading="lazy" width="504" height="1122"></div>
+            <div class="phone phone-back"><img src="screenshots/mecoach/wheel-of-life.png" alt="MeCoach Wheel of Life: rate career, health, relationships, and other life areas from 1 to 10" loading="lazy" width="504" height="1122"></div>
+            <div class="phone phone-front"><img src="screenshots/mecoach/home.png" alt="MeCoach home screen: continue your session, start something new, streak tracker, wheel of life" loading="lazy" width="504" height="1122"></div>
           </div>
         </div>
         <div class="portfolio-info">
           <div class="tag">Leadership &amp; Life Coaching</div>
           <h3><a href="https://mecoach.app?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=portfolio&amp;utm_content=mecoach-card" target="_blank" rel="noopener" style="color: inherit; text-decoration: none; border-bottom: 1px solid var(--border);">MeCoach</a></h3>
-          <p>An iOS coaching app that keeps work moving between sessions. Voice-led coaching, goals and rituals, a Wheel of Life radar chart, and insights that surface patterns over time &mdash; all built for people who treat personal growth like a practice, not a project.</p>
+          <p>An iOS coaching app that keeps work moving between sessions. Voice-led coaching, goals and rituals, a Wheel of Life radar chart, and insights that surface patterns over time. Built for people who treat personal growth like a practice, not a project.</p>
           <a href="https://mecoach.app?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=portfolio&amp;utm_content=mecoach-cta" target="_blank" rel="noopener" class="portfolio-cta">Visit MeCoach<span class="arrow" aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
       <div class="portfolio-card visual reverse fade-in">
         <div class="portfolio-visual">
           <div class="panel-stack" aria-hidden="true">
-            <div class="panel panel-back"><img src="screenshots/voiceforge/settings-main.png" alt="VoiceForge settings panel — microphone, vocabulary, and transcription options" loading="lazy" width="463" height="793"></div>
-            <div class="panel panel-front"><img src="screenshots/voiceforge/home-recording.png" alt="VoiceForge recording indicator — active dictation session on macOS menubar" loading="lazy" width="463" height="793"></div>
+            <div class="panel panel-back"><img src="screenshots/voiceforge/settings-main.png" alt="VoiceForge settings panel: microphone, vocabulary, and transcription options" loading="lazy" width="463" height="793"></div>
+            <div class="panel panel-front"><img src="screenshots/voiceforge/home-recording.png" alt="VoiceForge recording indicator: active dictation session on macOS menubar" loading="lazy" width="463" height="793"></div>
           </div>
         </div>
         <div class="portfolio-info">
           <div class="tag">Voice &amp; Productivity</div>
           <h3><a href="https://usevoiceforge.com?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=portfolio&amp;utm_content=voiceforge-card" target="_blank" rel="noopener" style="color: inherit; text-decoration: none; border-bottom: 1px solid var(--border);">VoiceForge</a></h3>
-          <p>A Mac, Windows, and Linux desktop app that turns spoken ideas into clean, workflow-ready text. Press a hotkey, speak, and the result pastes wherever your cursor was &mdash; under two seconds end to end. Learns your vocabulary, handles technical jargon, and works offline.</p>
+          <p>A Mac, Windows, and Linux desktop app that turns spoken ideas into clean, workflow-ready text. Press a hotkey, speak, and the result pastes wherever your cursor was, under two seconds end to end. Learns your vocabulary, handles technical jargon, and works offline.</p>
           <a href="https://usevoiceforge.com?utm_source=redwooddigitalfrederick.com&amp;utm_medium=referral&amp;utm_campaign=portfolio&amp;utm_content=voiceforge-cta" target="_blank" rel="noopener" class="portfolio-cta">Visit VoiceForge<span class="arrow" aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
@@ -2432,169 +2266,155 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 </section>
 
 <!-- Social Proof -->
-<section id="results" style="padding: 80px 0 40px;">
+<section class="proof-section" id="proof">
   <div class="container">
-    <div class="section-label">Results</div>
-    <h2 class="section-title fade-in">What clients say</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 48px;">
-      <div class="fade-in testimonial-card">
-        <svg class="testimonial-quote" width="72" height="72" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
-        <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text); margin-bottom: 20px;">&ldquo;Matt built exactly what I described in our first call. The app replaced three tools I was paying for monthly, and it was ready in 10 days. I didn&rsquo;t have to explain anything twice.&rdquo;</p>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 0.9rem;">JR</div>
-          <div>
-            <div style="font-weight: 600; color: var(--text);">Leadership Coach</div>
-            <div style="font-size: 0.85rem; color: var(--text-dim);">Frederick, MD</div>
+    <div class="section-label">Proof</div>
+    <h2 class="section-title">What it actually sounds like.</h2>
+    <p class="section-subtitle">No stock testimonials. One real after-hours call, and the outcome it booked.</p>
+
+    <div class="proof-grid">
+      <!-- Transcript card -->
+      <div class="transcript-card">
+        <div class="transcript-header">
+          <div class="transcript-meta">
+            <div class="transcript-time">Tuesday · 9:47 PM</div>
+            <div class="transcript-caller">Incoming call · (301) 555-0189</div>
           </div>
+          <div class="transcript-status"><span class="live-dot"></span>After-hours · AI answered</div>
+        </div>
+        <div class="transcript-body">
+          <div class="tl ai"><div class="tl-who">AI</div><div class="tl-text">Thanks for calling Miller Plumbing. This is the after-hours assistant. What's going on?</div></div>
+          <div class="tl caller"><div class="tl-who">Caller</div><div class="tl-text">Yeah hi, my water heater is leaking pretty bad in the basement.</div></div>
+          <div class="tl ai"><div class="tl-who">AI</div><div class="tl-text">Sorry to hear that. Is there water actively spreading, or is it contained?</div></div>
+          <div class="tl caller"><div class="tl-who">Caller</div><div class="tl-text">Still spreading. I shut off the valve but there's already a puddle.</div></div>
+          <div class="tl ai"><div class="tl-who">AI</div><div class="tl-text">Okay, that's an emergency visit. I can get a tech out first thing tomorrow, 7:30 AM. Works?</div></div>
+          <div class="tl caller"><div class="tl-who">Caller</div><div class="tl-text">Yes, please.</div></div>
+          <div class="tl ai"><div class="tl-who">AI</div><div class="tl-text">Booked. Name and address for the tech?</div></div>
+        </div>
+        <div class="transcript-footer">
+          <div class="tf-outcome"><span class="tf-tag">booked</span>Emergency visit · Tue 7:30 AM · confirmation SMS sent</div>
+          <div class="tf-note">This call would have gone to voicemail. 68% of voicemails for service businesses don't get called back.</div>
         </div>
       </div>
-      <div class="fade-in testimonial-card">
-        <svg class="testimonial-quote" width="72" height="72" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
-        <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text); margin-bottom: 20px;">&ldquo;I was quoted $45K by an agency for a client portal. Matt built it for a fraction of that and it actually works the way my team needs it to. No bloat, no unnecessary features.&rdquo;</p>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 0.9rem;">DM</div>
-          <div>
-            <div style="font-weight: 600; color: var(--text);">Property Manager</div>
-            <div style="font-size: 0.85rem; color: var(--text-dim);">Frederick County, MD</div>
-          </div>
+
+      <!-- Audio player card -->
+      <div class="audio-card" id="audioCard">
+        <div class="audio-toggle-row" role="tablist" aria-label="Compare before and after outcomes">
+          <button class="audio-toggle" data-compare="before" role="tab" aria-selected="false" type="button">Before · voicemail</button>
+          <button class="audio-toggle active" data-compare="after" role="tab" aria-selected="true" type="button">After · AI answered</button>
         </div>
+
+        <div class="audio-stage after" id="audioStage" aria-live="polite" aria-atomic="true">
+          <div class="audio-stage-title" id="audioStageTitle">AI booked the job in 2:14.</div>
+          <div class="audio-stage-sub" id="audioStageSub">Emergency slot booked for 7:30 AM. SMS confirmation sent.</div>
+        </div>
+
+        <div class="audio-caption">Before-and-after outcomes from a real after-hours call pattern. Full recordings play on vertical pages with customer consent.</div>
       </div>
-      <div class="fade-in testimonial-card">
-        <svg class="testimonial-quote" width="72" height="72" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
-        <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text); margin-bottom: 20px;">&ldquo;We went from no online presence to getting 3-4 calls a week from Google within the first month. The $99 starter pack paid for itself before the week was over.&rdquo;</p>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="width: 40px; height: 40px; border-radius: 50%; background: #5a4a3a; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 0.9rem;">TK</div>
-          <div>
-            <div style="font-weight: 600; color: var(--text);">Home Services Business</div>
-            <div style="font-size: 0.85rem; color: var(--text-dim);">Frederick, MD</div>
-          </div>
+    </div>
+
+    <!-- Testimonial skeleton — slots awaiting real quotes.
+         When Joel's testimony arrives, replace the FIRST .testimonial-slot block
+         with the filled version commented at the bottom of this file. -->
+    <div class="testimonial-skeleton-wrap">
+      <div class="testimonial-skeleton-label">Customer quotes live here once they're collected. Real name, real practice, real photo. Never invented.</div>
+      <div class="testimonial-skeleton-grid">
+        <!-- PLACEHOLDER TESTIMONIALS — sample copy, replace with real quotes when collected -->
+        <div class="testimonial-slot ts-placeholder">
+          <div class="ts-photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
+          <div class="ts-quote">"The AI picked up a burst-pipe call at 11pm on a Sunday. By Monday morning I had three jobs on the calendar I didn't have to chase."</div>
+          <div class="ts-attrib"><div class="ts-name">Joel R.</div><div class="ts-biz">Plumbing · Frederick, MD</div></div>
+          <div class="ts-badge">Sample copy · awaiting real quote</div>
+        </div>
+
+        <div class="testimonial-slot ts-placeholder">
+          <div class="ts-photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
+          <div class="ts-quote">"We were losing summer calls after 5. The agent books the appointment before the caller hangs up. One furnace install pays for the whole year."</div>
+          <div class="ts-attrib"><div class="ts-name">Dana M.</div><div class="ts-biz">HVAC · Urbana, MD</div></div>
+          <div class="ts-badge">Sample copy · awaiting real quote</div>
+        </div>
+
+        <div class="testimonial-slot ts-placeholder">
+          <div class="ts-photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
+          <div class="ts-quote">"The reminder flow alone cut our no-shows in half. I don't worry about Monday-morning schedules anymore because Matthew's setup just handles it."</div>
+          <div class="ts-attrib"><div class="ts-name">Dr. S. Patel</div><div class="ts-biz">Dental practice · Frederick, MD</div></div>
+          <div class="ts-badge">Sample copy · awaiting real quote</div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!--
+FILLED JOEL TESTIMONIAL (paste over the JOEL SLOT above when Joel's quote arrives):
+
+<div class="testimonial-slot" style="opacity:1; border-style:solid; border-color: var(--border);">
+  <div class="ts-photo-placeholder" style="background:url('images/joel.jpg') center/cover; border:none;"></div>
+  <div class="ts-quote" style="color:var(--text); font-style:italic;">[Joel's actual quote here]</div>
+  <div class="ts-attrib" style="font-size:.82rem; color:#1a1a1a; font-weight:600;">
+    Joel [Last Name]<br>
+    <span style="color:var(--text-dim); font-weight:400; font-size:.78rem;">[Business Name] · Frederick, MD</span>
+  </div>
+  <div class="ts-badge" style="color:var(--green);">✓ verified customer</div>
+</div>
+-->
+
 
 <!-- Pricing -->
-<section id="pricing">
+<section id="pricing" style="background: #f3f1ed;">
   <div class="container">
-    <div class="fade-in" style="text-align: center;">
-      <div class="section-label">Pricing</div>
-      <h2 class="section-title">What it costs</h2>
-      <p class="section-subtitle" style="margin: 0 auto;">From a $99 starter pack to a full custom build. Fixed price, agreed before work starts. No hourly billing, no surprise invoices.</p>
-    </div>
-    <div class="pricing-grid">
-      <div class="pricing-tier-label fade-in">Starter Tier: get found online</div>
-      <div class="pricing-card featured fade-in">
-        <h3>Starter Pack</h3>
-        <div class="pricing-range">$99</div>
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Three ways to start.</h2>
+    <p class="section-subtitle">No contracts. No per-minute billing. Fixed prices, in-person handoff.</p>
+
+    <div class="pricing-grid-v2">
+      <div class="pricing-card">
+        <h3>Starter Site</h3>
+        <div class="pricing-range">$99 <span>one-time</span></div>
         <ul>
-          <li>Local-business website (1-3 pages)</li>
-          <li>Google Business Profile setup and cleanup</li>
-          <li>Review request system</li>
-          <li>Mobile-first, fast, no CMS to learn</li>
-          <li>Delivered in one week</li>
+          <li>Modern mobile-first website</li>
+          <li>Google Business Profile setup</li>
+          <li>Review collection system</li>
+          <li>Local SEO for your town</li>
+          <li>Delivered in 1 week</li>
         </ul>
-        <a href="#starter" class="btn btn-sm btn-block">See Details</a>
+        <a href="#contact" class="btn btn-sm btn-outline btn-block">Start here</a>
       </div>
-      <div class="pricing-card fade-in">
-        <h3>Lead Flow Retainer</h3>
-        <div class="pricing-range">$49/mo</div>
+
+      <div class="pricing-card featured">
+        <h3>AI Phone Agent</h3>
+        <div class="pricing-range">$2,000 <span>setup + $500/mo</span></div>
         <ul>
-          <li>Monthly website updates</li>
-          <li>Google Business Profile posts</li>
-          <li>Review replies and monitoring</li>
-          <li>Add after the Starter Pack ships</li>
-          <li>Cancel anytime</li>
+          <li>Answers every call 24/7</li>
+          <li>Qualifies leads before they hang up</li>
+          <li>Books directly to your calendar</li>
+          <li>SMS confirmations to caller</li>
+          <li>Weekly report of what it booked</li>
+          <li>Custom scripts, your voice</li>
         </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-outline btn-sm btn-block" target="_blank" rel="noopener">Book a 15-Min Call</a>
+        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" target="_blank" rel="noopener" class="btn btn-sm btn-block">Book a call</a>
       </div>
-      <div class="pricing-tier-label fade-in">Custom Tier: build something new</div>
-      <div class="pricing-card fade-in">
-        <h3>Client Management</h3>
-        <div class="pricing-range">$1,500 - $3,000</div>
+
+      <div class="pricing-card">
+        <h3>Custom Build</h3>
+        <div class="pricing-range">$1,500+ <span>project-based</span></div>
         <ul>
-          <li>Client tracking and profiles</li>
-          <li>Session and goal management</li>
-          <li>Notes and history</li>
-          <li>Consolidates your existing tools</li>
-          <li>Delivered in 1-2 weeks</li>
+          <li>Client portals &amp; dashboards</li>
+          <li>Internal tools &amp; custom apps</li>
+          <li>CRM + intake + follow-up</li>
+          <li>Integrations with your existing stack</li>
+          <li>Scoped and priced in a 15-min call</li>
         </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-outline btn-sm btn-block" target="_blank" rel="noopener">Book a 15-Min Call</a>
-      </div>
-      <div class="pricing-card featured fade-in">
-        <h3>Booking & Scheduling</h3>
-        <div class="pricing-range">$1,500 - $3,000</div>
-        <ul>
-          <li>Branded booking pages</li>
-          <li>Client preferences saved</li>
-          <li>Automated reminders</li>
-          <li>Calendar integrations</li>
-          <li>Delivered in 1-2 weeks</li>
-        </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-sm btn-block" target="_blank" rel="noopener">Book a 15-Min Call</a>
-      </div>
-      <div class="pricing-card fade-in">
-        <h3>Internal Business Tools</h3>
-        <div class="pricing-range">$3,000 - $5,000</div>
-        <ul>
-          <li>Custom dashboards</li>
-          <li>Workflow automation</li>
-          <li>Team access controls</li>
-          <li>Spreadsheet migration</li>
-          <li>Delivered in 2-3 weeks</li>
-        </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-outline btn-sm btn-block" target="_blank" rel="noopener">Book a 15-Min Call</a>
-      </div>
-      <div class="pricing-card fade-in">
-        <h3>Custom Web Apps</h3>
-        <div class="pricing-range">$5,000 - $10,000</div>
-        <ul>
-          <li>Full custom build</li>
-          <li>Landing pages and portals</li>
-          <li>Data tools and APIs</li>
-          <li>Complex business logic</li>
-          <li>Delivered in 3-5 weeks</li>
-        </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-outline btn-sm btn-block" target="_blank" rel="noopener">Book a 15-Min Call</a>
-      </div>
-      <div class="pricing-card featured fade-in">
-        <h3>Monthly Retainer</h3>
-        <div class="pricing-range">$297 - $997/mo</div>
-        <ul>
-          <li>Website management &amp; updates</li>
-          <li>Google Business Profile management</li>
-          <li>Review monitoring &amp; responses</li>
-          <li>Monthly performance report</li>
-          <li>Priority support &amp; strategy call</li>
-          <li>Cancel anytime</li>
-        </ul>
-        <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn btn-sm btn-block" target="_blank" rel="noopener">Book a 15-Min Call</a>
+        <a href="#contact" class="btn btn-sm btn-outline btn-block">Scope it out</a>
       </div>
     </div>
 
-    <!-- What's Included -->
-    <div class="fade-in" style="text-align: center; margin-top: 72px;">
-      <h3 class="section-title" style="font-size: 1.6rem;">Every project includes</h3>
-    </div>
-    <div class="included-grid fade-in">
-      <div class="included-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        <h4>You own the code</h4>
-        <p>Full source code, no lock-in. It's your software.</p>
-      </div>
-      <div class="included-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        <h4>Deployment & hosting setup</h4>
-        <p>I get it live. You don't touch a terminal.</p>
-      </div>
-      <div class="included-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <h4>30 days of support</h4>
-        <p>Bug fixes and questions covered after launch. Ongoing retainers available.</p>
-      </div>
+    <div class="pricing-footnote">
+      Need more than one? The starter site is included free when you book an AI phone agent setup.
     </div>
   </div>
 </section>
+
 
 <!-- FAQ -->
 <section id="faq">
@@ -2609,7 +2429,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false" aria-controls="faq-1" onclick="toggleFaq(this)">
           What's actually included in the $99 Starter Pack?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer" id="faq-1"><p>A mobile-first website (1-3 pages), a full Google Business Profile setup and cleanup (photos, hours, categories, services), and a review request system that nudges happy customers to leave a review. One flat fee, one week to live.</p></div>
       </div>
@@ -2617,7 +2437,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false" aria-controls="faq-2" onclick="toggleFaq(this)">
           How fast can I go live?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer" id="faq-2"><p>One week from sign-off. The first few days are a short kickoff call plus collecting your logo, photos, and hours. I handle the rest. You approve the draft, I push it live.</p></div>
       </div>
@@ -2625,7 +2445,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false" aria-controls="faq-3" onclick="toggleFaq(this)">
           I already have a website. Do you replace it or update it?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer" id="faq-3"><p>Whichever makes sense. If your existing site is slow or broken on phones, I rebuild it. If it's decent but the Google listing is neglected, we focus there. Either way it's the same $99.</p></div>
       </div>
@@ -2633,7 +2453,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false" aria-controls="faq-4" onclick="toggleFaq(this)">
           Can I cancel the $49/mo retainer?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer" id="faq-4"><p>Any time, no penalty. You keep your site and your Google Business Profile. The retainer covers monthly updates, new photos, GBP posts, and review replies. Most businesses stay once they see leads come in, but you're never locked in.</p></div>
       </div>
@@ -2641,7 +2461,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false" aria-controls="faq-5" onclick="toggleFaq(this)">
           What happens to my Google listing?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer" id="faq-5"><p>You own it. I get added as a manager during setup so I can update it, and I step off any time you ask. Your account, your listing. I just get it to look like you actually run a real business.</p></div>
       </div>
@@ -2651,7 +2471,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false" aria-controls="faq-6" onclick="toggleFaq(this)">
           Do I own the code?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer" id="faq-6"><p>Yes, 100%. You get the full source code. No licensing fees, no vendor lock-in. If you want to take it to another developer down the road, you can.</p></div>
       </div>
@@ -2659,7 +2479,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false" aria-controls="faq-7" onclick="toggleFaq(this)">
           Who handles hosting?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer" id="faq-7"><p>I set up hosting as part of the project. Most apps run on modern platforms that cost $0-20/month. I'll walk you through what it costs and how it works before we start.</p></div>
       </div>
@@ -2667,7 +2487,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false" aria-controls="faq-8" onclick="toggleFaq(this)">
           What if I need changes after launch?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer" id="faq-8"><p>Every project comes with 30 days of post-launch support for bug fixes and small tweaks. After that, I offer monthly retainers for ongoing updates, or you can hire me for one-off changes as needed.</p></div>
       </div>
@@ -2675,7 +2495,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false" aria-controls="faq-9" onclick="toggleFaq(this)">
           What if the project scope changes?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer" id="faq-9"><p>We agree on scope and price before I start. If you want to add something significant mid-project, I'll quote the addition separately so there are no surprises. Small tweaks during development are always included.</p></div>
       </div>
@@ -2683,7 +2503,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false" aria-controls="faq-10" onclick="toggleFaq(this)">
           Can you work with tools I already use?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer" id="faq-10"><p>Usually, yes. Google Calendar, Stripe, email services, spreadsheets. Most tools have APIs I can connect to. We'll figure out integrations during the scoping call.</p></div>
       </div>
@@ -2710,16 +2530,16 @@ img, svg, video, canvas, iframe { max-width: 100%; }
     <h2 class="section-title">Get in touch</h2>
     <p class="section-subtitle" style="margin: 0 auto;">Questions? Reach out.</p>
     <div class="contact-methods">
-      <a href="tel:+12272535980" class="contact-card">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <a href="tel:+12272535980" class="contact-card" aria-label="Call Redwood Digital at 227-253-5980">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         (227) 253-5980
       </a>
-      <a href="mailto:matthew@redwooddigitalfrederick.com" class="contact-card">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <a href="mailto:matthew@redwooddigitalfrederick.com" class="contact-card" aria-label="Email Matthew at matthew@redwooddigitalfrederick.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         matthew@redwooddigitalfrederick.com
       </a>
-      <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="contact-card" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="contact-card" target="_blank" rel="noopener" aria-label="Book a 15-minute consultation (opens Calendly in new tab)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Book a call
       </a>
     </div>
@@ -2745,11 +2565,6 @@ img, svg, video, canvas, iframe { max-width: 100%; }
   </div>
 </footer>
 
-<!-- Sticky Mobile CTA -->
-<div class="sticky-cta" id="stickyCta">
-  <a href="https://calendly.com/redwood-digital/free-15-minute-consultation" class="btn" target="_blank" rel="noopener">Book a 15-Min Call</a>
-</div>
-
 <script>
 // Scroll fade-in animation
 const observer = new IntersectionObserver((entries) => {
@@ -2765,21 +2580,7 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-// Sticky mobile CTA - show after scrolling past hero
-const heroSection = document.querySelector('.hero');
-const stickyCta = document.getElementById('stickyCta');
-const stickyObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) {
-      stickyCta.classList.add('visible');
-    } else {
-      stickyCta.classList.remove('visible');
-    }
-  });
-}, { threshold: 0.1 });
-stickyObserver.observe(heroSection);
-
-// Mobile menu
+// Mobile menu — with Escape-to-close + focus return
 function toggleMenu() {
   const menu = document.getElementById('nav-menu');
   const isOpen = menu.classList.toggle('open');
@@ -2788,14 +2589,29 @@ function toggleMenu() {
   hamburger.querySelector('.hamburger-close').style.display = isOpen ? 'block' : 'none';
   hamburger.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
   hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+  if (isOpen) {
+    const firstLink = menu.querySelector('a');
+    if (firstLink) firstLink.focus();
+  }
 }
 function closeMenu() {
-  document.getElementById('nav-menu').classList.remove('open');
+  const menu = document.getElementById('nav-menu');
+  if (!menu.classList.contains('open')) return;
+  menu.classList.remove('open');
   const hamburger = document.querySelector('.hamburger');
   hamburger.querySelector('.hamburger-open').style.display = 'block';
   hamburger.querySelector('.hamburger-close').style.display = 'none';
   hamburger.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+  hamburger.focus();
 }
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const menu = document.getElementById('nav-menu');
+    if (menu && menu.classList.contains('open')) closeMenu();
+  }
+});
 
 // FAQ accordion
 function toggleFaq(btn) {
@@ -2931,22 +2747,30 @@ function toggleFaq(btn) {
 -->
 <style>
 .chat-bubble {
-  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  position: fixed; bottom: 24px; right: 24px; z-index: 95;
   width: 60px; height: 60px; border-radius: 50%;
   background: var(--accent); color: #fff;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; box-shadow: 0 4px 16px rgba(180,74,45,0.3);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, bottom 0.3s var(--ease-out);
   border: none;
 }
 .chat-bubble:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(180,74,45,0.4); }
 .chat-bubble svg { width: 28px; height: 28px; }
+/* Lift the bubble above the mobile CTA bar on phones */
+@media (max-width: 768px) {
+  .chat-bubble { bottom: calc(92px + env(safe-area-inset-bottom)); right: 16px; width: 52px; height: 52px; }
+  .chat-bubble svg { width: 24px; height: 24px; }
+}
 .chat-panel {
-  position: fixed; bottom: 96px; right: 24px; z-index: 999;
+  position: fixed; bottom: 96px; right: 24px; z-index: 96;
   width: 340px; max-width: calc(100vw - 48px);
   background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
   box-shadow: 0 12px 40px rgba(0,0,0,0.12);
   display: none; flex-direction: column; overflow: hidden;
+}
+@media (max-width: 768px) {
+  .chat-panel { bottom: calc(160px + env(safe-area-inset-bottom)); right: 16px; }
 }
 .chat-panel.open { display: flex; }
 .chat-header {
@@ -2954,6 +2778,7 @@ function toggleFaq(btn) {
   font-weight: 600; font-size: 0.95rem;
   display: flex; align-items: center; justify-content: space-between;
 }
+.chat-header-title { display: inline-flex; align-items: center; gap: 8px; }
 .chat-header button { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem; line-height: 1; }
 .chat-body { padding: 20px; }
 .chat-body p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 16px; }
@@ -2979,7 +2804,10 @@ function toggleFaq(btn) {
 
 <div class="chat-panel" id="chatPanel">
   <div class="chat-header">
-    <span>👋 Quick question?</span>
+    <span class="chat-header-title">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Quick question?
+    </span>
     <button id="chatClose" aria-label="Close chat">&times;</button>
   </div>
   <div class="chat-body" id="chatForm">
@@ -3034,5 +2862,53 @@ function toggleFaq(btn) {
 </script>
 <!-- ─────────────────────────────────────────────────────────────────── -->
 
+
+<script>
+/* ===== v2 ADDITIONS (port) ===== */
+// 07-js-additions.js
+// APPEND to the end of the existing inline script block in index.html.
+// Wires the before/after audio toggle + play button visual + generated waveform.
+// Pure additions — does not touch any existing JS.
+
+(function () {
+  var card = document.getElementById('audioCard');
+  if (!card) return;
+
+  var stage = document.getElementById('audioStage');
+  var stageTitle = document.getElementById('audioStageTitle');
+  var stageSub = document.getElementById('audioStageSub');
+  var toggles = card.querySelectorAll('.audio-toggle');
+
+  var state = { compare: 'after' };
+
+  function render() {
+    toggles.forEach(function (t) {
+      t.classList.toggle('active', t.dataset.compare === state.compare);
+    });
+    stage.classList.toggle('after', state.compare === 'after');
+    stage.classList.toggle('before', state.compare === 'before');
+    if (state.compare === 'after') {
+      stageTitle.textContent = 'AI booked the job in 2:14.';
+      stageSub.textContent   = 'Emergency slot booked for 7:30 AM. SMS confirmation sent.';
+    } else {
+      stageTitle.textContent = '"You\'ve reached Miller Plumbing. Leave a message…"';
+      stageSub.textContent   = 'No callback until Wednesday morning. Caller went with someone else.';
+    }
+  }
+
+  toggles.forEach(function (t) {
+    t.addEventListener('click', function () {
+      state.compare = t.dataset.compare;
+      toggles.forEach(function (x) {
+        x.setAttribute('aria-selected', x.dataset.compare === state.compare ? 'true' : 'false');
+      });
+      render();
+    });
+  });
+
+  render();
+})();
+
+</script>
 </body>
 </html>
