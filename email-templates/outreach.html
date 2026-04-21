@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <title>Redwood Digital</title>
+  <!--
+    VARIABLES (Jinja2-style):
+      {{name}}                 first name, e.g. "Joel"
+      {{business_name}}        e.g. "AllCounty Carpet Cleaning"
+      {{personalization_hook}} one sentence referencing them specifically
+      {{pain_point_example}}   one concrete example for their industry
+      {{demo_number}}          default: "(240) 415-6185"
+      {{calendar_link}}        default: https://calendar.app.google/72xGWLJ4tVZJxpni6
+      {{unsubscribe_link}}     required for CAN-SPAM compliance
+      {{physical_address}}     required for CAN-SPAM (business address + city/state)
+
+    PREHEADER: the hidden preview text at the top of the inbox.
+    Keep it under 100 chars and on-brand.
+  -->
+</head>
+<body style="margin:0;padding:0;background:#f4eee2;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#3d3a36;-webkit-font-smoothing:antialiased;">
+
+  <!-- Hidden preheader — shows in inbox preview row, invisible in email body -->
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;font-size:1px;line-height:1px;color:#f4eee2;">
+    Call (240) 415-6185. Say "my AC is out." Hear the product in 90 seconds.
+  </div>
+
+  <!-- Outer wrapper — Gmail/iOS safe padding + warm cream bg -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4eee2;">
+    <tr>
+      <td align="center" style="padding:24px 12px;">
+
+        <!-- Main card: 600px max, centered, inner cream-white -->
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#fbf7ef;border:1px solid #e8e4df;border-radius:14px;">
+
+          <!-- Header: logo mark + wordmark + location tag -->
+          <tr>
+            <td style="padding:22px 28px 14px;border-bottom:1px solid #f0eadb;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="vertical-align:middle;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="width:28px;height:28px;background:#b44a2d;border-radius:6px;color:#ffffff;font-size:15px;font-weight:700;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:28px;">R</td>
+                        <td style="padding-left:10px;font-size:16px;font-weight:700;color:#1a1a1a;letter-spacing:-0.2px;">Redwood <span style="color:#b44a2d;">Digital</span></td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td align="right" style="vertical-align:middle;font-size:11px;font-weight:600;color:#b44a2d;background:rgba(180,74,45,0.08);padding:5px 10px;border-radius:100px;letter-spacing:0.04em;">
+                    FREDERICK, MD
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Hero title -->
+          <tr>
+            <td style="padding:28px 28px 8px;">
+              <h1 style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:26px;line-height:1.2;font-weight:800;letter-spacing:-0.5px;color:#1a1a1a;">
+                Hey {{name}} — quick experiment.
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Body copy -->
+          <tr>
+            <td style="padding:8px 28px 4px;font-size:15px;line-height:1.6;color:#3d3a36;">
+              <p style="margin:0 0 14px;">
+                {{personalization_hook}}
+              </p>
+              <p style="margin:0 0 14px;">
+                Most {{business_name}}-style shops miss 3 to 5 calls a week to voicemail. {{pain_point_example}} That's real money walking to the next number in the caller's phone.
+              </p>
+              <p style="margin:0 0 14px;">
+                I built an AI phone agent that answers every one of those calls, triages the problem, and books the job to your calendar. It's already running on my end. You can call it right now and see what it does.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Live demo callout — green-tinted card, matches the site's "Try it live" language -->
+          <tr>
+            <td style="padding:10px 28px 18px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:linear-gradient(180deg,rgba(45,138,104,0.08),rgba(45,138,104,0.02));background-color:#eff5f1;border:1px solid rgba(45,138,104,0.3);border-radius:12px;">
+                <tr>
+                  <td style="padding:18px 20px;">
+                    <div style="font-size:11px;font-weight:700;color:#206850;text-transform:uppercase;letter-spacing:0.14em;margin-bottom:6px;">● Live demo</div>
+                    <a href="tel:{{demo_number}}" style="display:inline-block;font-size:22px;font-weight:800;color:#1a1a1a;letter-spacing:-0.3px;text-decoration:none;margin-bottom:8px;">
+                      {{demo_number}}
+                    </a>
+                    <p style="margin:4px 0 0;font-size:14px;line-height:1.5;color:#3d3a36;">
+                      Call it from your phone. Say something like "my AC is out" (or whatever your most common emergency call sounds like). It triages, offers you a slot, and texts you a confirmation.
+                    </p>
+                    <p style="margin:10px 0 0;font-size:12px;line-height:1.5;color:#6a645a;">
+                      About two minutes. It's a demo agent, not a real business. Your number isn't stored after the session.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Secondary body + primary CTA -->
+          <tr>
+            <td style="padding:0 28px 8px;font-size:15px;line-height:1.6;color:#3d3a36;">
+              <p style="margin:0 0 18px;">
+                If you're underwhelmed, delete this email. If you're not, I'd love 15 minutes on the phone to talk about what a version tuned for {{business_name}} would look like. $2,000 setup, $500 a month, no contract, delivered in a week.
+              </p>
+            </td>
+          </tr>
+
+          <!-- CTA button -->
+          <tr>
+            <td style="padding:0 28px 26px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center" bgcolor="#b44a2d" style="background:#b44a2d;border-radius:10px;">
+                    <a href="{{calendar_link}}" target="_blank" style="display:inline-block;padding:13px 28px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
+                      Book a 15-min call
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Signature -->
+          <tr>
+            <td style="padding:0 28px 28px;border-top:1px solid #f0eadb;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="padding-top:18px;font-size:14px;line-height:1.5;color:#3d3a36;">
+                    <p style="margin:0 0 4px;color:#6a645a;">— Matthew</p>
+                    <p style="margin:0;">
+                      <strong style="color:#1a1a1a;">Matthew Coleman</strong> · Redwood Digital<br>
+                      <a href="mailto:matthew@redwooddigitalfrederick.com" style="color:#b44a2d;text-decoration:none;">matthew@redwooddigitalfrederick.com</a>
+                      · <a href="tel:+12272535980" style="color:#b44a2d;text-decoration:none;">(227) 253-5980</a>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+
+        <!-- Footer (outside the card, subtle) — location pill + compliance -->
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
+          <tr>
+            <td align="center" style="padding:18px 16px 12px;font-size:12px;line-height:1.5;color:#6a645a;">
+              <span style="display:inline-block;padding:4px 12px 4px 10px;background:rgba(180,74,45,0.07);border:1px solid rgba(180,74,45,0.18);border-radius:100px;color:#b44a2d;font-weight:600;font-size:11px;letter-spacing:0.02em;">
+                📍 Built in Frederick, MD
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:4px 16px 18px;font-size:11px;line-height:1.5;color:#6a645a;">
+              You're receiving this because I thought Redwood Digital might be a fit for {{business_name}}.<br>
+              Not interested? <a href="{{unsubscribe_link}}" style="color:#6a645a;">Unsubscribe</a> and I won't email you again.<br>
+              {{physical_address}}
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
