@@ -58,6 +58,19 @@
 
 html { color-scheme: light; }
 
+/* Scrollbar — thin, warm-tinted, matches the palette */
+html { scrollbar-width: thin; scrollbar-color: rgba(180, 74, 45, 0.5) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(180, 74, 45, 0.28);
+  border-radius: 100px;
+  border: 2px solid var(--bg);
+  transition: background 0.25s;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(180, 74, 45, 0.55); }
+::-webkit-scrollbar-thumb:active { background: var(--accent); }
+
 /* Scroll-progress bar — thin accent-colored line across the top edge */
 .scroll-progress {
   position: fixed;
@@ -366,6 +379,15 @@ nav .container {
   flex-shrink: 0;
   filter: drop-shadow(0 2px 6px rgba(180, 74, 45, 0.25));
   transition: transform 0.5s var(--ease-spring);
+  animation: logo-intro 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
+}
+@keyframes logo-intro {
+  0%   { transform: scale(0.4) rotate(-18deg); opacity: 0; }
+  60%  { opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-mark { animation: none; }
 }
 .logo:hover .logo-mark { transform: rotate(-6deg); }
 .logo-text { font-family: inherit; font-style: normal; }
@@ -699,6 +721,34 @@ section[style*="text-align"] .section-title,
   opacity: 0;
   transition: opacity 0.45s var(--ease-out);
   pointer-events: none;
+}
+/* One-shot shimmer when the card enters view */
+.services-grid.cascade .service-card {
+  position: relative;
+  overflow: hidden;
+}
+.services-grid.cascade .service-card {
+  background-image: linear-gradient(105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 60%
+  );
+  background-size: 260% 100%;
+  background-repeat: no-repeat;
+  background-position: 160% 0;
+  background-color: var(--bg-card);
+  animation: svc-shine 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.services-grid.cascade .service-card:nth-child(1) { animation-delay: 0.05s; }
+.services-grid.cascade .service-card:nth-child(2) { animation-delay: 0.22s; }
+.services-grid.cascade .service-card:nth-child(3) { animation-delay: 0.39s; }
+.services-grid.cascade .service-card:nth-child(4) { animation-delay: 0.56s; }
+@keyframes svc-shine {
+  0%   { background-position: 160% 0; }
+  100% { background-position: -60% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .services-grid.cascade .service-card { animation: none; background-image: none; }
 }
 .service-card:hover {
   border-color: rgba(180, 74, 45, 0.3);
@@ -1567,6 +1617,26 @@ footer p {
   font-size: 0.85rem;
   color: var(--text-dim);
 }
+.footer-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.footer-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px 4px 10px;
+  background: rgba(180, 74, 45, 0.07);
+  border: 1px solid rgba(180, 74, 45, 0.18);
+  border-radius: 100px;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.005em;
+}
+.footer-sep { color: var(--border); font-weight: 600; }
 .footer-links {
   display: flex;
   gap: 6px;
@@ -1918,13 +1988,48 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 
 .audio-card { background:#fbf7ef; border:1px solid var(--border); border-radius:14px;
   padding:20px; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:18px; }
-.audio-toggle-row { display:grid; grid-template-columns:1fr 1fr; gap:4px;
-  padding:4px; background:#ede5d2; border-radius:10px; }
-.audio-toggle { padding:8px 10px; background:transparent; border:none; border-radius:7px;
-  font-size:.8rem; color:var(--text-dim); font-family:inherit; font-weight:500;
-  cursor:pointer; transition: background .2s, color .2s; }
-.audio-toggle.active { background:#fbf7ef; color:#1a1a1a;
-  box-shadow: 0 1px 2px rgba(20,18,14,.06); }
+.audio-toggle-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  background: #ede5d2;
+  border-radius: 10px;
+  isolation: isolate;
+}
+/* Sliding indicator — absolutely positioned pill that animates between toggle positions */
+.audio-toggle-row::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 6px);
+  height: calc(100% - 8px);
+  background: #fbf7ef;
+  border-radius: 7px;
+  box-shadow: 0 1px 2px rgba(20, 18, 14, 0.08), 0 2px 6px rgba(20, 18, 14, 0.04);
+  transition: transform 0.42s cubic-bezier(0.33, 1, 0.68, 1);
+  z-index: 0;
+}
+.audio-toggle-row[data-active="after"]::before {
+  transform: translateX(calc(100% + 4px));
+}
+.audio-toggle {
+  padding: 8px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  font-size: .8rem;
+  color: var(--text-dim);
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color .25s var(--ease-out);
+  position: relative;
+  z-index: 1;
+}
+.audio-toggle.active { color: var(--ink); }
 
 .audio-stage { padding:22px 20px; border-radius:10px; border:1px solid var(--border); background:var(--bg);
   transition: background 0.45s var(--ease-out), border-color 0.45s var(--ease-out); position: relative; overflow: hidden; }
@@ -2453,7 +2558,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 
       <!-- Audio player card -->
       <div class="audio-card" id="audioCard">
-        <div class="audio-toggle-row" role="tablist" aria-label="Compare before and after outcomes">
+        <div class="audio-toggle-row" role="tablist" aria-label="Compare before and after outcomes" data-active="after">
           <button class="audio-toggle" data-compare="before" role="tab" aria-selected="false" type="button">Before · voicemail</button>
           <button class="audio-toggle active" data-compare="after" role="tab" aria-selected="true" type="button">After · AI answered</button>
         </div>
@@ -2706,7 +2811,14 @@ FILLED JOEL TESTIMONIAL (paste over the JOEL SLOT above when Joel's quote arrive
 <footer>
   <div class="container">
     <div class="footer-inner">
-      <p>&copy; 2026 Redwood Digital Frederick LLC. Based in Frederick, MD.</p>
+      <p class="footer-copy">
+        <span class="footer-mark">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Built in Frederick, MD
+        </span>
+        <span class="footer-sep" aria-hidden="true">·</span>
+        &copy; 2026 Redwood Digital Frederick LLC
+      </p>
       <ul class="footer-links">
         <li><a href="#services">Services</a></li>
         <li><a href="#pricing">Pricing</a></li>
@@ -2768,6 +2880,18 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     });
   }, { threshold: 0.4 });
   io.observe(steps);
+})();
+
+// Services grid one-shot shimmer on entry
+(function() {
+  const grid = document.querySelector('.services-grid');
+  if (!grid) return;
+  const io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { grid.classList.add('cascade'); io.disconnect(); }
+    });
+  }, { threshold: 0.25 });
+  io.observe(grid);
 })();
 
 // Hero photo subtle parallax on scroll
@@ -3137,6 +3261,8 @@ function toggleFaq(btn) {
     toggles.forEach(function (t) {
       t.classList.toggle('active', t.dataset.compare === state.compare);
     });
+    const row = card.querySelector('.audio-toggle-row');
+    if (row) row.setAttribute('data-active', state.compare);
     stage.classList.toggle('after', state.compare === 'after');
     stage.classList.toggle('before', state.compare === 'before');
     if (state.compare === 'after') {
