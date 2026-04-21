@@ -30,6 +30,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23b44a2d'/><text x='16' y='22' font-size='18' font-weight='bold' text-anchor='middle' fill='white'>R</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="images/matthew-coleman.jpg" fetchpriority="high">
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
 
@@ -2120,16 +2121,22 @@ img, svg, video, canvas, iframe { max-width: 100%; }
    Uses existing CSS variables (--accent, --bg, etc.) so no token changes.
    ========================================================================= */
 
-/* -------------------- HERO v2 (text-only) overrides -------------------- */
-.hero.hero-v2 { padding: 128px 0 60px; min-height: 0; }
+/* -------------------- HERO v2 overrides -------------------- */
+.hero.hero-v2 { padding: 112px 0 72px; min-height: 0; }
 .hero-v2 .hero-badge,
 .hero-v2 h1,
-.hero-v2 .hero-content p {
+.hero-v2 .hero-content p,
+.hero-v2 .btn-group,
+.hero-v2 .hero-micro,
+.hero-v2 .photo-slot {
   animation: hero-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .hero-v2 .hero-badge { animation-delay: 0.1s; }
 .hero-v2 h1 { animation-delay: 0.22s; }
 .hero-v2 .hero-content p { animation-delay: 0.34s; }
+.hero-v2 .btn-group { animation-delay: 0.46s; }
+.hero-v2 .hero-micro { animation-delay: 0.58s; }
+.hero-v2 .photo-slot { animation-delay: 0.2s; animation-duration: 0.9s; }
 @keyframes hero-rise {
   0%   { opacity: 0; transform: translateY(14px); }
   100% { opacity: 1; transform: translateY(0); }
@@ -2137,20 +2144,24 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   .hero-v2 .hero-badge,
   .hero-v2 h1,
-  .hero-v2 .hero-content p { animation: none; }
+  .hero-v2 .hero-content p,
+  .hero-v2 .btn-group,
+  .hero-v2 .hero-micro,
+  .hero-v2 .photo-slot { animation: none; }
 }
-/* Single-column centered hero */
-.hero-text-only .hero-content {
-  max-width: 780px;
-  margin: 0 auto;
-  text-align: center;
+.hero-v2 .hero-v2-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+  gap: 56px; align-items: center;
 }
-.hero-text-only .hero-badge { margin-bottom: 24px; }
-.hero-text-only h1 { margin-left: auto; margin-right: auto; }
-.hero-text-only p {
-  max-width: 56ch;
-  margin: 0 auto 32px;
+@media (max-width: 960px) { .hero-v2 .hero-v2-grid { grid-template-columns: 1fr; gap: 40px; } }
+.hero-v2 .hero-micro {
+  margin-top: 18px;
+  font-size: 0.88rem;
+  color: var(--text-dim);
 }
+.hero-v2 .hero-micro a { color: var(--accent); font-weight: 500; }
+.hero-v2 .hero-micro a:hover { color: var(--accent-light); }
 .hero-v2 h1 {
   font-size: clamp(2.2rem, 5.4vw, 3.5rem);
   line-height: 1.04;
@@ -3123,34 +3134,38 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 </nav>
 
 <!-- Hero -->
-<section class="hero hero-v2 hero-text-only">
+<section class="hero hero-v2">
+  <div class="hero-scroll-hint" id="heroScrollHint" aria-hidden="true">
+    <span class="hero-scroll-hint-label">scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
   <div class="container">
-    <div class="hero-content">
-      <div class="hero-badge">Frederick, MD · one developer · fixed prices</div>
-      <h1>Stop losing leads to <span class="accent-gradient-text">voicemail, old sites, and after-hours.</span></h1>
-      <p>Fixed prices. In-person handoff. No retainers you can't cancel. Three ways to start:</p>
-    </div>
+    <div class="hero-v2-grid">
+      <div class="hero-content">
+        <div class="hero-badge">Frederick, MD · one developer · fixed prices</div>
+        <h1>An <span class="accent-gradient-text">AI phone agent</span> that answers every call and books the job.</h1>
+        <p>24/7 call answering for Frederick service businesses. It qualifies the lead, schedules the appointment to your calendar, and texts both of you a confirmation. $2,000 setup, $500/mo, no contract.</p>
+        <div class="btn-group">
+          <a class="btn" href="tel:+12404156185"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call the live demo</a>
+          <a class="btn btn-outline btn-arrow" href="ai-caller.html">See how it works<span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+        <p class="hero-micro">Or browse <a href="#services">everything else I build</a> — starter sites, custom apps, lead systems.</p>
+      </div>
 
-    <!-- Three-lane sub-cards (AI middle = anchor) -->
-    <div id="lanes" class="lanes-grid">
-      <a class="lane-card" href="#pricing">
-        <div class="lane-price">$99 · one-time</div>
-        <h3>Starter site</h3>
-        <p>Modern mobile-first site, Google Business Profile setup, and a review-collection system so your happy customers actually leave reviews.</p>
-        <div class="lane-cta">Learn more<span class="arrow" aria-hidden="true">→</span></div>
-      </a>
-      <a class="lane-card featured" href="ai-caller.html">
-        <div class="lane-price">$2,000 setup · $500/mo</div>
-        <h3>AI phone agent</h3>
-        <p>Answers every call 24/7. Qualifies the lead. Books the appointment. Most service businesses miss 3 to 5 calls a week to voicemail. This catches them.</p>
-        <div class="lane-cta">See how it works<span class="arrow" aria-hidden="true">→</span></div>
-      </a>
-      <a class="lane-card" href="#pricing">
-        <div class="lane-price">$1,500 – $10k+</div>
-        <h3>Custom build</h3>
-        <p>Internal tools, client portals, dashboards. For when a template can't do the job.</p>
-        <div class="lane-cta">Learn more<span class="arrow" aria-hidden="true">→</span></div>
-      </a>
+      <div class="hero-v2-visual">
+        <div class="photo-slot">
+          <img src="images/matthew-coleman.jpg" alt="Matthew Coleman, founder" fetchpriority="high" decoding="async" width="900" height="1125">
+        </div>
+        <div class="booking-confirm-card" role="img" aria-label="Phone screen showing booking confirmation">
+          <div class="bcc-status"><span class="bcc-dot"></span>AI assistant · just now</div>
+          <div class="bcc-line">Booked <strong>Mrs. Hartley</strong> for</div>
+          <div class="bcc-time">Tue, 2:30 PM</div>
+          <div class="bcc-meta">Leaking hot-water line · est. 45 min · confirmed via SMS</div>
+          <span class="bcc-check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -3672,6 +3687,41 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     });
   }, { threshold: 0.25 });
   io.observe(grid);
+})();
+
+// Hero photo subtle parallax on scroll
+(function() {
+  const slot = document.querySelector('.hero-v2 .photo-slot');
+  if (!slot) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let ticking = false;
+  function update() {
+    const y = window.scrollY;
+    const offset = Math.max(-12, Math.min(0, -y * 0.06));
+    slot.style.transform = 'translate3d(0, ' + offset + 'px, 0)';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function() {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  update();
+})();
+
+// Hero scroll hint — visible briefly on load, fades after 120px of scroll
+(function() {
+  const hint = document.getElementById('heroScrollHint');
+  if (!hint) return;
+  setTimeout(function() { hint.classList.add('visible'); }, 1400);
+  let removed = false;
+  function onScroll() {
+    if (removed) return;
+    if (window.scrollY > 120) {
+      hint.classList.remove('visible');
+      removed = true;
+      window.removeEventListener('scroll', onScroll);
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
 })();
 
 // Logo wordmark character stagger — wraps each letter so it can animate up individually
