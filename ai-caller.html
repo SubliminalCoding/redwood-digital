@@ -1237,7 +1237,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
     <h2 class="section-title">Call the live demo</h2>
     <p class="section-subtitle">Our Frederick HVAC demo agent is on the other end of this number. Call it, say your AC is out, and it will triage you and book a slot. You'll get an SMS confirmation when it's done.</p>
     <div class="demo-call-block">
-      <a class="demo-call-number-big" href="tel:+12404156185" aria-label="Call the live AI demo at 240-415-6185">
+      <a class="demo-call-number-big" href="https://penny.ngrok.app/demo/frederick-hvac" aria-label="Open the live AI demo">
         <span class="demo-call-live-dot" aria-hidden="true"></span>
         <span class="demo-call-number-text">(240) 415-6185</span>
       </a>
@@ -1380,7 +1380,7 @@ function closeMenu() {
       });
     });
   });
-  document.querySelectorAll('a[href="tel:+12404156185"]').forEach(function(a) {
+  document.querySelectorAll('a[href="tel:+12404156185"], a[href*="penny.ngrok.app/demo"]').forEach(function(a) {
     a.addEventListener('click', function() {
       track('demo_call_click', {
         location: ((a.closest('section, header, nav, footer') || {}).id) || 'unknown'

@@ -3209,7 +3209,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
         <h1>An <span class="accent-gradient-text">AI phone agent</span> that answers every call and books the job.</h1>
         <p>24/7 call answering for Frederick service businesses. It qualifies the lead, schedules the appointment to your calendar, and texts both of you a confirmation. $2,000 setup, $500/mo, no contract.</p>
         <div class="btn-group">
-          <a class="btn" href="tel:+12404156185"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call the live demo</a>
+          <a class="btn" href="https://penny.ngrok.app/demo/frederick-hvac"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call the live demo</a>
           <a class="btn btn-outline btn-arrow" href="ai-caller.html">See how it works<span class="arrow" aria-hidden="true">→</span></a>
         </div>
         <p class="hero-micro">Or browse <a href="#services">everything else I build</a> — starter sites, custom apps, lead systems.</p>
@@ -3395,7 +3395,7 @@ img, svg, video, canvas, iframe { max-width: 100%; }
     <h2 class="section-title">What it actually sounds like.</h2>
     <p class="section-subtitle">No stock testimonials. One real after-hours call, and the outcome it booked.</p>
 
-    <a class="demo-call-card" href="tel:+12404156185" aria-label="Call the live AI demo at 240-415-6185">
+    <a class="demo-call-card" href="https://penny.ngrok.app/demo/frederick-hvac" aria-label="Open the live AI demo">
       <span class="demo-call-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       </span>
@@ -4077,8 +4077,11 @@ function toggleFaq(btn) {
     });
   });
 
-  // Live demo call — visitor tapped the Frederick HVAC AI number
-  document.querySelectorAll('a[href="tel:+12404156185"]').forEach(function(a) {
+  // Live demo CTA — visitor tapped a link to the Penny live demo page
+  // (or the legacy tel: number, kept for any straggler links). Event name
+  // preserved as `demo_call_click` for analytics continuity even though the
+  // action is now a navigation rather than a tel: dial.
+  document.querySelectorAll('a[href="tel:+12404156185"], a[href*="penny.ngrok.app/demo"]').forEach(function(a) {
     a.addEventListener('click', function() {
       track('demo_call_click', {
         location: ((a.closest('section, header, nav, footer') || {}).id) || 'unknown'
