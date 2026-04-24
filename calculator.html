@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f4eee2">
+<title>Missed-Call Revenue Calculator | Redwood Digital Frederick</title>
+<meta name="description" content="See how much revenue your home-services business is likely losing to after-hours voicemail. Conservative, directional estimates for HVAC and plumbing owners in Frederick, MD.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.redwooddigitalfrederick.com/calculator.html">
+<meta property="og:title" content="Missed-Call Revenue Calculator | Redwood Digital">
+<meta property="og:description" content="See what after-hours calls are actually costing your home-services business.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.redwooddigitalfrederick.com/calculator.html">
+<meta property="og:image" content="https://www.redwooddigitalfrederick.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23b44a2d'/><text x='16' y='22' font-size='18' font-weight='bold' text-anchor='middle' fill='white'>R</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/calculator.css">
+
+<script>
+  window.GA_MEASUREMENT_ID = 'G-N13XHE3262';
+  window.__gaEnabled = location.hostname.endsWith('redwooddigitalfrederick.com');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N13XHE3262"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  if (window.__gaEnabled) { gtag('js', new Date()); gtag('config', window.GA_MEASUREMENT_ID, { send_page_view: true, anonymize_ip: true }); }
+</script>
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #f4eee2; --bg-card: #fbf7ef; --bg-card-hover: #ede5d2; --border: #e8e4df;
+  --text: #3d3a36; --text-dim: #5f5a52;
+  --accent: #b44a2d; --accent-light: #c2654a; --green: #2d8a68;
+  --radius: 12px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --shadow-sm: 0 1px 2px rgba(20,18,14,0.04), 0 2px 8px rgba(20,18,14,0.04);
+  --shadow-md: 0 4px 12px rgba(20,18,14,0.06), 0 12px 32px rgba(20,18,14,0.08);
+}
+body { font-family: 'Inter', -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-light); }
+.container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+.nav { position: sticky; top: 0; z-index: 100; background: rgba(244, 238, 226, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 16px 0; }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+.nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--text); display: flex; align-items: center; gap: 8px; }
+.nav-logo svg { width: 28px; height: 28px; }
+
+.hero { padding: 72px 0 28px; text-align: left; }
+.hero-badge { display: inline-block; padding: 6px 14px; background: rgba(180, 74, 45, 0.08); border: 1px solid rgba(180, 74, 45, 0.2); border-radius: 100px; font-size: 0.8rem; color: var(--accent); margin-bottom: 18px; }
+.hero h1 { font-size: clamp(2rem, 5.2vw, 3rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.025em; color: #1a1a1a; margin-bottom: 18px; max-width: 22ch; }
+.hero h1 em { font-style: normal; background: linear-gradient(135deg, var(--accent), var(--accent-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero p.sub { font-size: 1.1rem; color: var(--text-dim); max-width: 60ch; line-height: 1.65; margin: 0; }
+
+.calc-wrap { padding: 0 0 72px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 32px; background: var(--accent); color: #fff; font-weight: 600; font-size: 1rem; border-radius: var(--radius); transition: transform 0.25s var(--ease-spring), background 0.2s, box-shadow 0.25s; text-decoration: none; border: none; cursor: pointer; }
+.btn:hover { background: var(--accent-light); color: #fff; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-outline { background: transparent; color: var(--accent); border: 2px solid var(--accent); }
+.btn-outline:hover { background: var(--accent); color: #fff; }
+.btn-group { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+.cta-section { padding: 72px 0 96px; text-align: center; background: var(--bg-card-hover); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.cta-section h2 { font-size: clamp(1.6rem, 3.6vw, 2.1rem); font-weight: 800; margin-bottom: 14px; color: #1a1a1a; letter-spacing: -0.02em; }
+.cta-section p { font-size: 1.05rem; color: var(--text-dim); margin: 0 auto 28px; max-width: 56ch; line-height: 1.65; }
+.demo-live-dot { display: inline-block; width: 8px; height: 8px; background: var(--green); border-radius: 50%; margin-right: 8px; animation: pulse 1.8s ease-in-out infinite; vertical-align: middle; }
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.3); }
+}
+@media (prefers-reduced-motion: reduce) { .demo-live-dot { animation: none; } }
+
+footer { padding: 40px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-dim); font-size: 0.85rem; }
+footer a { color: var(--text-dim); }
+
+@media (max-width: 640px) {
+  .hero { padding: 48px 0 20px; }
+  .cta-section { padding: 56px 0 72px; }
+}
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .hero h1 { font-size: 1.7rem; line-height: 1.15; }
+  .hero p.sub { font-size: 0.98rem; }
+  .btn { padding: 12px 22px; font-size: 0.95rem; width: 100%; }
+  .btn-group { flex-direction: column; align-items: stretch; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#b44a2d"/><text x="16" y="22" font-size="18" font-weight="bold" text-anchor="middle" fill="white">R</text></svg>
+      Redwood Digital
+    </a>
+    <div style="display: flex; gap: 16px; align-items: center;">
+      <a href="tel:+12403949285" style="color: var(--text-dim); font-size: 0.9rem;">(240) 394-9285</a>
+      <a href="/ai-caller.html" class="btn" style="padding: 10px 20px; font-size: 0.9rem;">AI Phone Agent</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">Free · No signup · 60 seconds</div>
+    <h1>How much is <em>voicemail</em> costing you?</h1>
+    <p class="sub">Slide in your real numbers. You'll see a conservative estimate of what after-hours calls cost a home-services business every month — and the break-even price for an AI receptionist that plugs the leak.</p>
+  </div>
+</section>
+
+<section class="calc-wrap">
+  <div class="container">
+    <div class="leak-calc">
+      <form class="panel" id="leakForm" onsubmit="return false;">
+        <h3>Your numbers</h3>
+        <p>Rough estimates are fine. Nothing leaves this page.</p>
+
+        <label class="leak-field">
+          <span>Monthly incoming calls</span>
+          <input type="number" data-leak="monthlyCalls" value="100" min="0" max="10000" inputmode="numeric">
+        </label>
+
+        <label class="leak-field range-field">
+          <span>Calls that go unanswered</span>
+          <strong data-leak-out="missedCallDisplay" aria-hidden="true">30%</strong>
+          <input type="range" data-leak="missedCallPercent" min="0" max="100" value="30">
+        </label>
+
+        <label class="leak-field range-field">
+          <span>Missed calls that happen after hours</span>
+          <strong data-leak-out="afterHoursDisplay" aria-hidden="true">40%</strong>
+          <input type="range" data-leak="afterHoursPercent" min="0" max="100" value="40">
+        </label>
+
+        <label class="leak-field range-field">
+          <span>Booked-job rate if the call is answered</span>
+          <strong data-leak-out="bookingRateDisplay" aria-hidden="true">60%</strong>
+          <input type="range" data-leak="bookingRate" min="0" max="100" value="60">
+        </label>
+
+        <label class="leak-field">
+          <span>Average booked job value</span>
+          <div class="money-input"><span>$</span><input type="number" data-leak="avgJobValue" value="500" min="0" max="1000000" inputmode="decimal"></div>
+        </label>
+
+        <label class="leak-field range-field">
+          <span>Gross margin on those jobs</span>
+          <strong data-leak-out="grossMarginDisplay" aria-hidden="true">40%</strong>
+          <input type="range" data-leak="grossMargin" min="0" max="100" value="40">
+        </label>
+      </form>
+
+      <section class="panel">
+        <h3>Estimated monthly leak</h3>
+        <p>The <strong>break-even</strong> number is the real pricing anchor.</p>
+
+        <div class="metric primary" aria-live="polite" aria-atomic="true">
+          <span class="metric-label">Monthly gross revenue at risk</span>
+          <strong data-leak-out="monthlyLostRevenue">$0</strong>
+        </div>
+        <div class="metric-grid">
+          <div class="metric">
+            <span class="metric-label">Yearly gross revenue at risk</span>
+            <strong data-leak-out="yearlyLostRevenue">$0</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Jobs likely lost / month</span>
+            <strong data-leak-out="jobsLost">0</strong>
+          </div>
+          <div class="metric highlight">
+            <span class="metric-label">Estimated gross profit at risk</span>
+            <strong data-leak-out="grossProfitAtRisk">$0</strong>
+          </div>
+          <div class="metric highlight">
+            <span class="metric-label">Break-even monthly receptionist cost</span>
+            <strong data-leak-out="breakEvenPrice">$0</strong>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="leak-comparison">
+      <article class="card before">
+        <h4>Today</h4>
+        <p><strong data-leak-out="currentMissedCalls">0</strong> after-hours calls slip through every month.</p>
+        <p class="money" data-leak-out="currentLostRevenue">$0</p>
+        <span class="sub">gross revenue potentially lost</span>
+      </article>
+      <article class="card after">
+        <h4>With Penny answering</h4>
+        <p>Recover even a fraction of those calls and it pays for itself.</p>
+        <p class="money" data-leak-out="recoveredRevenue">$0</p>
+        <span class="sub">gross revenue back in play</span>
+      </article>
+    </div>
+
+    <p class="leak-caveat">"Monthly gross revenue at risk" is the size of the pond, not guaranteed recovery. The <strong>break-even monthly receptionist cost</strong> is the better pricing anchor: if an AI receptionist costs less than that, it likely pays for itself on profit alone.</p>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <h2>Want to hear what an answered call sounds like?</h2>
+    <p>Our Frederick HVAC demo agent is live right now. Call it, say your AC is out, and it will triage you and book a slot. Two-minute call, no signup.</p>
+    <div class="btn-group">
+      <a class="btn" href="https://penny.ngrok.app/demo/frederick-hvac" target="_blank" rel="noopener">
+        <span class="demo-live-dot" aria-hidden="true"></span>Call the live demo
+      </a>
+      <a class="btn btn-outline" href="https://calendar.app.google/72xGWLJ4tVZJxpni6" target="_blank" rel="noopener">Book a 15-min call with Matt</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 Redwood Digital Frederick LLC. Based in Frederick, MD.</p>
+    <p style="margin-top: 8px;"><a href="/">Home</a> · <a href="/ai-caller.html">AI Phone Agents</a> · <a href="/hvac/">HVAC</a> · <a href="/plumbers/">Plumbers</a> · <a href="tel:+12403949285">(240) 394-9285</a></p>
+  </div>
+</footer>
+
+<script src="/calculator.js" defer></script>
+<script>
+(function () {
+  function track(name, params) {
+    if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
+  }
+  document.querySelectorAll('a[href*="penny.ngrok.app/demo"]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      track('demo_call_click', { location: 'calculator_page' });
+    });
+  });
+  document.querySelectorAll('a[href*="calendar.app.google"]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      track('book_call_click', { location: 'calculator_page' });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

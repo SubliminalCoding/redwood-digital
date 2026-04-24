@@ -1,0 +1,309 @@
+/* Missed-call revenue calculator — drop-in widget.
+   Relies on each host page's design tokens (--bg, --accent, etc).
+   Works on ai-caller.html, hvac/, plumbers/, and /calculator.html. */
+
+.leak-calc {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 20px;
+  align-items: start;
+  margin-top: 32px;
+}
+.leak-calc .panel {
+  background: var(--bg-card, #fbf7ef);
+  border: 1px solid var(--border, #e8e4df);
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 1px 2px rgba(20, 18, 14, 0.04), 0 6px 16px rgba(20, 18, 14, 0.04);
+}
+.leak-calc h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+.leak-calc .panel > p {
+  color: var(--text-dim, #5a544b);
+  font-size: 0.9rem;
+  margin: 0 0 20px;
+  line-height: 1.55;
+}
+
+/* ---- Input fields ---- */
+.leak-field {
+  display: grid;
+  gap: 10px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border, #e8e4df);
+}
+.leak-field:first-of-type { border-top: 0; padding-top: 4px; }
+.leak-field > span {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text, #3d3a36);
+}
+.leak-field.range-field {
+  grid-template-columns: 1fr auto;
+  column-gap: 12px;
+  row-gap: 8px;
+}
+.leak-field.range-field > span { grid-column: 1 / 2; }
+.leak-field.range-field strong {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  align-self: center;
+  justify-self: end;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent, #b44a2d);
+  background: rgba(180, 74, 45, 0.1);
+  border-radius: 999px;
+  padding: 3px 11px;
+  min-width: 52px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.leak-field.range-field input[type="range"] {
+  grid-column: 1 / -1;
+  grid-row: 2 / 3;
+}
+
+.leak-calc input[type="number"] {
+  width: 100%;
+  border: 1px solid var(--border, #e8e4df);
+  border-radius: 10px;
+  padding: 11px 12px;
+  font: inherit;
+  font-weight: 600;
+  color: #1a1a1a;
+  background: #fff;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.leak-calc input[type="number"]:focus {
+  outline: none;
+  border-color: var(--accent, #b44a2d);
+  box-shadow: 0 0 0 3px rgba(180, 74, 45, 0.14);
+}
+.leak-calc .money-input {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 8px;
+}
+.leak-calc .money-input > span {
+  color: var(--text-dim, #5a544b);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* ---- Range slider (custom cross-browser) ---- */
+.leak-calc input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+.leak-calc input[type="range"]:focus { outline: none; }
+.leak-calc input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--accent, #b44a2d) 0%,
+    var(--accent, #b44a2d) var(--leak-range-pct, 0%),
+    rgba(180, 74, 45, 0.18) var(--leak-range-pct, 0%),
+    rgba(180, 74, 45, 0.18) 100%
+  );
+}
+.leak-calc input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(180, 74, 45, 0.18);
+}
+.leak-calc input[type="range"]::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent, #b44a2d);
+}
+.leak-calc input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--accent, #b44a2d);
+  margin-top: -7px;
+  box-shadow: 0 2px 6px rgba(180, 74, 45, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.leak-calc input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--accent, #b44a2d);
+  box-shadow: 0 2px 6px rgba(180, 74, 45, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.leak-calc input[type="range"]:hover::-webkit-slider-thumb,
+.leak-calc input[type="range"]:focus::-webkit-slider-thumb {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(180, 74, 45, 0.4), 0 0 0 5px rgba(180, 74, 45, 0.12);
+}
+.leak-calc input[type="range"]:hover::-moz-range-thumb,
+.leak-calc input[type="range"]:focus::-moz-range-thumb {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(180, 74, 45, 0.4), 0 0 0 5px rgba(180, 74, 45, 0.12);
+}
+
+/* ---- Outputs ---- */
+.leak-calc .metric {
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: var(--bg, #f4eee2);
+  border: 1px solid var(--border, #e8e4df);
+}
+.leak-calc .metric-label {
+  display: block;
+  color: var(--text-dim, #5a544b);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.leak-calc .metric strong {
+  display: block;
+  font-size: clamp(1.3rem, 3.2vw, 2rem);
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.leak-calc .metric.primary {
+  background: linear-gradient(135deg, var(--accent, #b44a2d), var(--accent-light, #c2654a));
+  border-color: transparent;
+  color: #fff;
+  margin-bottom: 14px;
+  box-shadow: 0 10px 24px -8px rgba(180, 74, 45, 0.45);
+  position: relative;
+  overflow: hidden;
+}
+.leak-calc .metric.primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top right, rgba(255,255,255,0.22), transparent 60%);
+  pointer-events: none;
+}
+.leak-calc .metric.primary .metric-label { color: rgba(255, 255, 255, 0.88); }
+.leak-calc .metric.primary strong {
+  color: #fff;
+  font-size: clamp(1.9rem, 5vw, 2.9rem);
+  letter-spacing: -0.035em;
+}
+.leak-calc .metric.highlight {
+  background: #fff;
+  border-color: rgba(180, 74, 45, 0.28);
+  box-shadow: 0 1px 2px rgba(180, 74, 45, 0.04);
+}
+.leak-calc .metric-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ---- Before/after comparison ---- */
+.leak-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+.leak-comparison .card {
+  background: var(--bg-card, #fbf7ef);
+  border: 1px solid var(--border, #e8e4df);
+  border-radius: 14px;
+  padding: 22px 22px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.leak-comparison .card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+}
+.leak-comparison .card.before::before {
+  background: linear-gradient(90deg, #b42318, #d9392d);
+}
+.leak-comparison .card.after::before {
+  background: linear-gradient(90deg, #206850, var(--green, #2d8a68));
+}
+.leak-comparison .card h4 {
+  margin: 0 0 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim, #5a544b);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.leak-comparison .card.before h4::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #b42318;
+}
+.leak-comparison .card.after h4::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green, #2d8a68);
+}
+.leak-comparison .card p {
+  margin: 0 0 4px;
+  color: var(--text, #3d3a36);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.leak-comparison .card .money {
+  font-size: clamp(1.6rem, 4.2vw, 2.3rem);
+  font-weight: 800;
+  color: #1a1a1a;
+  letter-spacing: -0.03em;
+  margin: 8px 0 2px;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+.leak-comparison .card .sub {
+  font-size: 0.82rem;
+  color: var(--text-dim, #5a544b);
+}
+
+.leak-caveat {
+  margin-top: 18px;
+  font-size: 0.82rem;
+  color: var(--text-dim, #5a544b);
+  line-height: 1.6;
+  max-width: 72ch;
+}
+
+@media (max-width: 820px) {
+  .leak-calc {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .leak-calc .panel { padding: 22px; }
+  .leak-calc .metric-grid { grid-template-columns: 1fr; }
+  .leak-comparison { grid-template-columns: 1fr; }
+}

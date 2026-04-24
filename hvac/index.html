@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/calculator.css">
 
 <script>
   window.GA_MEASUREMENT_ID = 'G-N13XHE3262';
@@ -188,6 +189,100 @@ footer a { color: var(--text-dim); }
   </div>
 </section>
 
+<section id="calculator" style="padding: 72px 0;">
+  <div class="container">
+    <div class="sec-label">The leak</div>
+    <h2 class="sec-title">What's the 10pm AC call actually worth?</h2>
+    <p class="sec-sub">Slide in your own numbers. The break-even figure below is what you'd need to save each month for an AI receptionist to pay for itself.</p>
+
+    <div class="leak-calc">
+      <form class="panel" onsubmit="return false;">
+        <h3>Your numbers</h3>
+        <p>Rough estimates are fine. Nothing leaves this page.</p>
+
+        <label class="leak-field">
+          <span>Monthly incoming calls</span>
+          <input type="number" data-leak="monthlyCalls" value="120" min="0" max="10000" inputmode="numeric">
+        </label>
+
+        <label class="leak-field range-field">
+          <span>Calls that go unanswered</span>
+          <strong data-leak-out="missedCallDisplay" aria-hidden="true">30%</strong>
+          <input type="range" data-leak="missedCallPercent" min="0" max="100" value="30">
+        </label>
+
+        <label class="leak-field range-field">
+          <span>Missed calls that happen after hours</span>
+          <strong data-leak-out="afterHoursDisplay" aria-hidden="true">45%</strong>
+          <input type="range" data-leak="afterHoursPercent" min="0" max="100" value="45">
+        </label>
+
+        <label class="leak-field range-field">
+          <span>Booked-job rate if the call is answered</span>
+          <strong data-leak-out="bookingRateDisplay" aria-hidden="true">60%</strong>
+          <input type="range" data-leak="bookingRate" min="0" max="100" value="60">
+        </label>
+
+        <label class="leak-field">
+          <span>Average booked job value</span>
+          <div class="money-input"><span>$</span><input type="number" data-leak="avgJobValue" value="550" min="0" max="1000000" inputmode="decimal"></div>
+        </label>
+
+        <label class="leak-field range-field">
+          <span>Gross margin on those jobs</span>
+          <strong data-leak-out="grossMarginDisplay" aria-hidden="true">40%</strong>
+          <input type="range" data-leak="grossMargin" min="0" max="100" value="40">
+        </label>
+      </form>
+
+      <section class="panel">
+        <h3>Estimated monthly leak</h3>
+        <p>The <strong>break-even</strong> number is the real pricing anchor.</p>
+
+        <div class="metric primary" aria-live="polite" aria-atomic="true">
+          <span class="metric-label">Monthly gross revenue at risk</span>
+          <strong data-leak-out="monthlyLostRevenue">$0</strong>
+        </div>
+        <div class="metric-grid">
+          <div class="metric">
+            <span class="metric-label">Yearly gross revenue at risk</span>
+            <strong data-leak-out="yearlyLostRevenue">$0</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Jobs likely lost / month</span>
+            <strong data-leak-out="jobsLost">0</strong>
+          </div>
+          <div class="metric highlight">
+            <span class="metric-label">Estimated gross profit at risk</span>
+            <strong data-leak-out="grossProfitAtRisk">$0</strong>
+          </div>
+          <div class="metric highlight">
+            <span class="metric-label">Break-even monthly receptionist cost</span>
+            <strong data-leak-out="breakEvenPrice">$0</strong>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="leak-comparison">
+      <article class="card before">
+        <h4>Today</h4>
+        <p><strong data-leak-out="currentMissedCalls">0</strong> after-hours calls slip through every month.</p>
+        <p class="money" data-leak-out="currentLostRevenue">$0</p>
+        <span class="sub">gross revenue potentially lost</span>
+      </article>
+      <article class="card after">
+        <h4>With an AI agent answering</h4>
+        <p>Recover even a fraction of those calls and it pays for itself.</p>
+        <p class="money" data-leak-out="recoveredRevenue">$0</p>
+        <span class="sub">gross revenue back in play</span>
+      </article>
+    </div>
+
+    <p class="leak-caveat">Compare the <strong>break-even</strong> number above to the <strong>AI Phone Agent</strong> plan below — if break-even is higher, it pays for itself on profit alone.</p>
+  </div>
+</section>
+
 <section class="solution">
   <div class="container">
     <div class="sec-label">What we build</div>
@@ -254,5 +349,6 @@ footer a { color: var(--text-dim); }
   </div>
 </footer>
 
+<script src="/calculator.js" defer></script>
 </body>
 </html>
